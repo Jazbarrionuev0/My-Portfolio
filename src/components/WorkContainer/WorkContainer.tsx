@@ -7,7 +7,7 @@ type Props = {
 export default async function WorkContainer({works}:Props) {
   return (
     <div>
-      {works.map( (work: WorkType, i: number) => <Work key={i} title={work.title} position={work.position} duration={work.duration} description={work.description}/>)}
+      {works.map( (work: WorkType, i: number) => <Work key={i} title={work.title} position={work.position} duration={work.duration} description={work.description} link={work.link}/>)}
     </div>
   )
 }

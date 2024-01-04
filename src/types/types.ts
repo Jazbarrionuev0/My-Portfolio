@@ -2,10 +2,19 @@ export type Work = {
     title: string,
     position: string,
     duration: string,
-    description: string
+    description: string,
+    link?: string
 }
 
-export type Blog = {
+export type Project = {
     title: string,
-    views: number
+    description: string,
+    image: string,
+    link: string,
+    repoLink: string
+}
+
+export type Tag = {
+    title: string,
+    className: string
 }
