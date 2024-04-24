@@ -12,17 +12,19 @@ const webDevelopmentTags: Tag[] = [
     { title: 'Next.js', className: 'devicon-nextjs-original'},
     { title: 'Node.js', className: 'devicon-nodejs-plain'},
     { title: 'git', className: 'devicon-git-plain'},
-    { title: 'Django Rest Framework', className: 'devicon-django-plain'},
+    { title: 'Django', className: 'devicon-django-plain'},
+    { title: 'Django Rest Framework', className: 'devicon-djangorest-plain colored'},
+    { title: 'HTML5', className: 'devicon-html5-plain' },
     { title: 'SCSS', className: 'devicon-sass-original'},
     { title: 'Tailwind', className: 'devicon-tailwindcss-plain'},
-    { title: 'Figma', className: 'devicon-figma-plain'},
     { title: 'Bootstrap', className: 'devicon-bootstrap-plain'},
-    { title: 'Django', className: 'devicon-django-plain'},
+    
 ]
 
 const databaseTags: Tag[] = [
     { title: 'MySQL', className: 'devicon-mysql-plain'},
     { title: 'SQL Server', className: 'devicon-microsoftsqlserver-plain'},
+    { title: 'PostgreSQL', className: 'devicon-postgresql-plain'},
 ]
 
 const devOpsTags: Tag[] = [
@@ -30,6 +32,8 @@ const devOpsTags: Tag[] = [
     { title: 'Kubernetes', className: 'devicon-kubernetes-plain'},
     { title: 'Jenkins', className: 'devicon-jenkins-line'},
     { title: 'Linux', className: 'devicon-linux-plain'},
+    { title: 'AWS', className: 'devicon-amazonwebservices-plain-wordmark'},
+    { title: 'Digital Ocean', className: 'devicon-digitalocean-original'},
     
 ]
 

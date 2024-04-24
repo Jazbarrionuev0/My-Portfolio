@@ -5,11 +5,10 @@ import projects from "../utils/projects";
 
 export default async function Home() {
   return (
-    <main className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
-      <AboutMe/>
-      <Skills/>
-      <ProjectContainer projects={projects}/>
-    </main>
-  )
-}
+    <main className="max-w-7xl  mx-auto md:mt-0 ">
+      <AboutMe />
 
+      <ProjectContainer projects={projects} />
+    </main>
+  );
+}

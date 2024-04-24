@@ -1,22 +1,24 @@
-'use client'
-import Link from "next/link"
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Props = {
-    link: string,
-    activeLink: string,
-    handleClick: (link: string) => void,
-    children: React.ReactNode
-}
+  link: string;
+  children: React.ReactNode;
+};
 
-export default function HeaderLink({ link, activeLink, handleClick, children }: Props) {
-    return (
-        <Link href={link}>
-            <span
-                className={`p-5 hover:text-black transition-colors duration-300 ${activeLink === link ? 'text-black font-bold' : 'text-gray-500'}`}
-                onClick={() => handleClick(link)}
-            >
-                {children}
-            </span>
-        </Link>
-    )
+export default function HeaderLink({ link, children }: Props) {
+  const pathname = usePathname();
+
+  return (
+    <Link href={link} className="">
+      <span
+        className={`p-5 hover:text-black transition-colors duration-300 ${
+          pathname === link ? "underline decoration-[#FF00CC] decoration-4 " : "slide pb-0"
+        }`}
+      >
+        {children}
+      </span>
+    </Link>
+  );
 }

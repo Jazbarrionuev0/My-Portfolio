@@ -1,15 +1,20 @@
-import { Project as ProjectType} from "@/src/types/types"
-import Project from "../../../../portfolio/src/components/Project/Project"
+import { Project as ProjectType } from "@/src/types/types";
+import Project from "../Projects/Project";
 
 type Props = {
-  projects: ProjectType[]
-}
+  projects: ProjectType[];
+};
 
 export default async function ProjectContainer({ projects }: Props) {
   return (
-    <div>
+    <div className="">
       <h3 className="font-medium text-2xl pb-4">Projects</h3>
-      {projects.map(({ title, description, image, link, repoLink }: ProjectType, i: number) => <Project key={i} title={title} description={description} image={image} link={link} repoLink={repoLink}/>)}
+      <div className="flex gap-7 flex-wrap">
+        {" "}
+        {projects.map(({ title, description, image, link, repoLink }: ProjectType, i: number) => (
+          <Project key={i} title={title} description={description} image={image} link={link} repoLink={repoLink} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }

@@ -1,24 +1,15 @@
-import Image from "next/image"
-
 export default async function AboutMe() {
   return (
-    <section className="flex items-center flex-col md:flex-row justify-center">
-      <div className="pr-4 md:pr-8">
-        <h1 className="text-3xl md:text-5xl font-bold">Jazmin Barrionuevo</h1>
-        <h4 className="text-base md:text-lg text-gray-600 font-semibold">Sofware Developer</h4>
-        <p className="pt-2 md:pt-4 text-gray-900 font-normal text-sm md:text-base">
-          idk
+    <section className="flex items-center flex-col md:flex-row  min-h-80">
+      <div className="pr-4 md:pr-8 flex flex-col gap-3">
+        <h4 className="text-base md:text-lg text-[#FF00CC] font-semibold ">HELLO, MY NAME IS JAZMIN</h4>
+        <h1 className="text-7xl">I'm a software developer.</h1>
+        <p className="text-3xl">
+          I’m a software developer and co-founder of{" "}
+          <span className="slid cursor-pointer underline decoration-[#FF00CC] decoration-8 "> NeoPixel Software </span>{" "}
+          , a software studio in Argentina.
         </p>
       </div>
-      <div className="mt-4 md:mt-0 ml-0 md:ml-8 min-w-40 w-40">
-        <Image
-          className="rounded-full"
-          src={'/jazfoto.png'}
-          alt="Jazmin Barrionuevo"
-          width={200}
-          height={200}
-        />
-      </div>
     </section>
-  )
+  );
 }
