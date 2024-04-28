@@ -1,5 +1,5 @@
 "use client";
-import { Project } from "@/src/types/types";
+import { Project as ProjectType } from "@/src/types/types";
 import Image from "next/image";
 import * as React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export default function Project({ title, description, image, repoLink, link }: Project) {
+export default function Project({ title, description, image, repoLink, link }: ProjectType) {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
 
   return (
