@@ -4,7 +4,8 @@ const programmingTags: Tag[] = [
     { title: 'JavaScript', className: 'devicon-javascript-plain'},
     { title: 'TypeScript', className: 'devicon-typescript-plain'},
     { title: 'Python', className: 'devicon-python-plain'},
-    { title: 'bash', className: 'devicon-bash-plain'},
+    { title: 'Bash', className: 'devicon-bash-plain'},
+    { title: 'Genexus', className: 'd'},
 ]
 
 const webDevelopmentTags: Tag[] = [
@@ -46,9 +47,15 @@ const artificialIntelligenceTags: Tag[] = [
     { title: 'spaCy', className: 'devicon-vscode-plain'},
     { title: 'OpenCV', className: 'devicon-opencv-plain'},
 ]
+const testingTags: Tag[] = [
+    { title: 'Pytest', className: 'devicon-pytest-plain'},
+]
+
 
 const communicationProtocolsTags: Tag[] = [
     { title: 'RESTful APIs', className: ''},
+    { title: 'FastAPI', className: ''},
+
 ]
 
 const projectManagmentTags: Tag[] = [
@@ -57,4 +64,4 @@ const projectManagmentTags: Tag[] = [
 ]
 
 
-export { programmingTags, webDevelopmentTags, databaseTags, devOpsTags,artificialIntelligenceTags, communicationProtocolsTags, projectManagmentTags }
+export { programmingTags, webDevelopmentTags, databaseTags, devOpsTags,artificialIntelligenceTags, communicationProtocolsTags, projectManagmentTags,testingTags }

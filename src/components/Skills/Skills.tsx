@@ -6,6 +6,7 @@ import {
   programmingTags,
   projectManagmentTags,
   webDevelopmentTags,
+  testingTags,
 } from "@/src/utils/tags";
 import TagContainer from "../TagContainer/TagContainer";
 
@@ -14,7 +15,7 @@ export default async function Skills() {
     <div className="py-12">
       <ul className="text-black">
         <li>
-          <h4 className="font-normal">Programming Languages</h4> <TagContainer tags={programmingTags} />
+          <h4 className="font-normal">Code</h4> <TagContainer tags={programmingTags} />
         </li>
         <li>
           <h4 className="font-normal">Web Development</h4> <TagContainer tags={webDevelopmentTags} />
@@ -24,6 +25,9 @@ export default async function Skills() {
         </li>
         <li>
           <h4 className="font-normal">Database</h4> <TagContainer tags={databaseTags} />
+        </li>
+        <li>
+          <h4 className="font-normal">Testing</h4> <TagContainer tags={testingTags} />
         </li>
         <li>
           <h4 className="font-normal">DevOps</h4> <TagContainer tags={devOpsTags} />
