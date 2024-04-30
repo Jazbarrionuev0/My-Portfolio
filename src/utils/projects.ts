@@ -13,14 +13,14 @@ const projects: Project[] = [
     title: "Restaurant Managament",
     description: 'A whole project to manage the website, digital menu and bookings of a restaurant',
     repoLink: 'roof-puertonorte.com.ar',
-    link: ''
+    link: '/projects/'
   },
   {
     image: '/project2.jpg',
     title: 'QR Menu Website',
     description: 'Designed and deployed a QR menu website for a thematic bar. ',
     repoLink: 'https://github.com/Jazbarrionuev0/Area51-',
-    link: 'http://area51bartematico.com/'
+    link: '/projects/QR-menu'
   },
 
   {
@@ -28,14 +28,21 @@ const projects: Project[] = [
     title: 'Casino Web Application',
     description: 'This project creates a virtual casino environment with various games',
     repoLink: 'https://github.com/Jazbarrionuev0/Casino',
-    link: ''
+    link: '/projects/casino'
+  },
+  {
+    image: '/project3.jpg',
+    title: 'Whispering Tales',
+    description: 'A website dedicated to publishing your short stories',
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/whispering-tales'
   },
   {
     image: '/project4.jpg',
     title: 'Menu de scripts en Bash',
     description: 'Developed a collection of Bash scripts designed to automate routine tasks when working with a specified text.',
     repoLink: 'https://github.com/Jazbarrionuev0/TP_Final_Entorno',
-    link: ''
+    link: '/projects/bash-scripts-menu'
   },
   {
     image: '/project3.jpg',
