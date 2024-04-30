@@ -18,13 +18,7 @@ const Header = () => {
     <header className=" w-full py-4 my-2 md:py-8 md:my-4 flex justify-between ">
       <Link href="/" className="hover:text-[#FF00CC] font-semibold ml-4 md:ml-0">
         <div className="flex items-center gap-3 ">
-          <Image
-            className="rounded-full w-10"
-            src={"/jazfoto.jpeg"}
-            alt="Jazmin Barrionuevo"
-            width={200}
-            height={200}
-          />
+          <Image className="rounded-full w-10" src={"/jazfoto.jpg"} alt="Jazmin Barrionuevo" width={200} height={200} />
           <p>Jazmin Barrionuevo</p>
         </div>
       </Link>
