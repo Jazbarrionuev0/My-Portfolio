@@ -3,9 +3,9 @@ import Image from "next/image";
 export default async function Home() {
   return (
     <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
-      <h2 className="font-normal text-center text-7xl min-h-28">Crossword puzzle</h2>
-      <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2023</h2>
-      <p className="mt-4 md:mt-6 lg:mt-8 text-sm md:text-base lg:text-lg">
+      <h2 className="font-normal text-center text-6xl md:text-7xl min-h-20 md:min-h-28">Crossword puzzle</h2>
+      <h2 className="font-semibold text-gray-500 text-center text-xl min-h-14">2023</h2>
+      <p className=" md:mt-6 lg:mt-8 text-base md:text-base lg:text-lg">
         Esto nace de mi pasion por los juegos de mesa pero mi bajo limite en la tarjeta para poder comprarlos. Todos los
         viernes con mis amigos nos juntamos a jugar juegos de mesa en un lugar llamado La fortaleza, un lugar lleno de
         juegos donde nos pasabamos toda la noche divirtiendonos. Uno de esos juegos era{" "}
@@ -15,7 +15,7 @@ export default async function Home() {
         <Image className="rounded-md " src={"/crosswordIMG2.jpg"} alt="crossclues" width={200} height={420} />
         <Image className="rounded-md " src={"/crosswordIMG.jpg"} alt="crossclues" width={890} height={420} />
       </div>
-      <p className="mt-4 md:mt-6 lg:mt-8 text-sm md:text-base lg:text-lg">
+      <p className="mt-4 md:mt-6 lg:mt-8 text-base md:text-base lg:text-lg">
         No nos parecio complejo el mecanismo de juego, asi que que con un amigo decidimos recrearlo virtualmente para
         poder jugarlo entre nosotros.
       </p>
@@ -28,7 +28,7 @@ export default async function Home() {
       </div>
 
       <h2 className="font-normal text-3xl ">El Desarrollo</h2>
-      <p className="mt-4 md:mt-6 lg:mt-8 text-sm md:text-base lg:text-lg">
+      <p className="mt-4 md:mt-6 lg:mt-8 text-base md:text-base lg:text-lg">
         No nos parecio complejo el mecanismo de juego, asi que que con un amigo decidimos recrearlo virtualmente para
         poder jugarlo entre nosotros.
       </p>
