@@ -142,7 +142,7 @@ exit 0`} language={"bash"} showLineNumbers={true} />
           <Rio code={``} language={"bash"} showLineNumbers={true} />
         </ol>
         <p className="text-xl font-bold my-3">Usage</p>
-        <p>Upon running the container, you'll be presented with a menu interface. The menu offers six options, select an option by entering the corresponding number. Each option (except the last) will perform a specific analysis on the predetermined text and display the results. Note: This project uses a predefined text for all analyses. The text is included in the Docker image and is not modifiable during runtime.
+        <p>Upon running the container, you&apos;ll be presented with a menu interface. The menu offers six options, select an option by entering the corresponding number. Each option (except the last) will perform a specific analysis on the predetermined text and display the results. Note: This project uses a predefined text for all analyses. The text is included in the Docker image and is not modifiable during runtime.
         </p>
       </div>
     </div>
