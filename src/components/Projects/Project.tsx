@@ -14,12 +14,12 @@ export default function Project({ title, description, image, repoLink, link }: P
     <Link href={link}>
       <div className="w-screen md:w-[260px]">
         <div
-          className="flex my-4 transition duration-300 mx-4 md:mx-0 md:w-[260px] h-[320px] bg-gray-100 rounded-lg cursor-pointer relative hover:scale-105"
+          className="flex my-4 transition duration-300 mx-4 md:mx-0 md:w-[260px] h-[320px]  rounded-lg cursor-pointer relative hover:scale-105 bg-black"
           onMouseOver={() => setIsHovered(true)}
           onMouseOut={() => setIsHovered(false)}
         >
           <Image
-            className="inset-0 w-full h-full object-cover rounded-lg"
+            className="inset-0 w-full h-full object-cover rounded-lg opacity-65"
             src={image}
             alt="Jazmin Barrionuevo"
             layout="fill"

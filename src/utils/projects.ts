@@ -49,7 +49,7 @@ const projects: Project[] = [
     title: 'Rio de Janeiro Data Analysis',
     description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
+    link: '/projects/data-analysis'
   },
   // {
   //   image: '/project3.jpg',
