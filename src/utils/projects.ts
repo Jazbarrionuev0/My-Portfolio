@@ -23,63 +23,69 @@ const projects: Project[] = [
     link: '/projects/QR-menu'
   },
 
+  // {
+  //   image: '/project5.jpg',
+  //   title: 'Casino Web Application',
+  //   description: 'This project creates a virtual casino environment with various games',
+  //   repoLink: 'https://github.com/Jazbarrionuev0/Casino',
+  //   link: '/projects/casino'
+  // },
   {
-    image: '/project5.jpg',
-    title: 'Casino Web Application',
-    description: 'This project creates a virtual casino environment with various games',
-    repoLink: 'https://github.com/Jazbarrionuev0/Casino',
-    link: '/projects/casino'
-  },
-  {
-    image: '/project3.jpg',
+    image: '/tales.jpg',
     title: 'Whispering Tales',
     description: 'A website dedicated to publishing your short stories',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: '/projects/whispering-tales'
   },
   {
-    image: '/project4.jpg',
+    image: '/bash.jpg',
     title: 'Menu de scripts en Bash',
     description: 'Developed a collection of Bash scripts designed to automate routine tasks when working with a specified text.',
     repoLink: 'https://github.com/Jazbarrionuev0/TP_Final_Entorno',
     link: '/projects/bash-scripts-menu'
   },
   {
-    image: '/project3.jpg',
+    image: '/data.jpg',
     title: 'Rio de Janeiro Data Analysis',
     description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
   },
+  // {
+  //   image: '/project3.jpg',
+  //   title: 'Computer Vision',
+  //   description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
+  //   repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+  //   link: ''
+  // },
   {
-    image: '/project3.jpg',
-    title: 'Computer Vision',
+    image: '/supermarket.jpg',
+    title: 'Supermarket Comparison Web Scraping',
     description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
   },
   {
-    image: '/project3.jpg',
-    title: 'NPL: Web Scraping',
-    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
+    image: '/redes.jpg',
+    title: 'Machine Learning Mix',
+    description: 'A mix of machine learning projects',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
   },
   {
-    image: '/project3.jpg',
-    title: 'Machine Learning',
-    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
-  },
-  {
-    image: '/project3.jpg',
+    image: '/search.jpg',
     title: 'Algorithms',
-    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
+    description: 'Path Finder implemented in Python. This project includes the implementation of various search algorithms',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
   },
-
+  {
+    image: '/chatbot.jpg',
+    title: 'Chatbots',
+    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: ''
+  },
 
 ];
 

@@ -5,9 +5,9 @@ export default async function AboutMe() {
         <h4 className="text-base md:text-lg text-[#FF00CC] font-semibold ">HELLO, MY NAME IS JAZMIN</h4>
         <h1 className="text-7xl">I'm a software developer.</h1>
         <p className="text-3xl">
-          I’m a software developer and co-founder of{" "}
-          <span className="slid cursor-pointer underline decoration-[#FF00CC] decoration-8 "> NeoPixel Software </span>{" "}
-          , a software studio in Argentina.
+          I’m a software developer focus on frontend and artificial intelligence development.
+          {/* <span className="slid cursor-pointer underline decoration-[#FF00CC] decoration-8 "> frontend </span> and <span className="slid cursor-pointer underline decoration-[#FF00CC] decoration-8 "> artificial intelligence </span> development. */}
+
         </p>
       </div>
     </section>
