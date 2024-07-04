@@ -10,9 +10,9 @@ export default async function Home() {
       <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2023</h2>
       <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12 text-justify">
 
-        <p className="my-3">This project is dedicated to implementing various algorithms using Python that I have developed during my Associate's Degree in Artificial Intelligence. The project features a range of algorithms, including some  <Link className="font-semibold" href="#sorting">sorting methods</Link>, <Link className="font-semibold" href="#binarytree">binary tree structures</Link>, and <Link className="font-semibold" href="#pathfinding">pathfinding techniques</Link>. </p>
+        <p className="my-3">This project is dedicated to implementing various algorithms using Python that I have developed during my Associate&apos;s Degree in Artificial Intelligence. The project features a range of algorithms, including some  <Link className="font-semibold" href="#sorting">sorting methods</Link>, <Link className="font-semibold" href="#binarytree">binary tree structures</Link>, and <Link className="font-semibold" href="#pathfinding">pathfinding techniques</Link>. </p>
 
-        <p className="my-3"> Apart from what I learned at the university, I also enjoy reading. Here are some of the books that have helped me learn and improve my understanding of algorithms: <Link className="font-semibold" href="https://www.amazon.com/Learning-Algorithms-Programmers-Writing-Better/dp/1492091065">Learning Algorithms: A Programmer’s Guide to Writing Better Code by O'Reilly</Link> and <Link className="font-semibold" href="https://www.amazon.com/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275">Data Structures & Algorithms in Python by Michael T. Goodrich</Link>. </p>
+        <p className="my-3"> Apart from what I learned at the university, I also enjoy reading. Here are some of the books that have helped me learn and improve my understanding of algorithms: <Link className="font-semibold" href="https://www.amazon.com/Learning-Algorithms-Programmers-Writing-Better/dp/1492091065">Learning Algorithms: A Programmer’s Guide to Writing Better Code by O&apos;Reilly</Link> and <Link className="font-semibold" href="https://www.amazon.com/Structures-Algorithms-Python-Michael-Goodrich/dp/1118290275">Data Structures & Algorithms in Python by Michael T. Goodrich</Link>. </p>
 
         <p className="my-3">I wont be showing all the algorithms but you can find the complete code <Link className="font-semibold" href="https://colab.research.google.com/drive/1Oubs8a1bNVjz4P8MJyidJAOx3LcnuFxH#scrollTo=vwFYbWdOaJuE">here</Link>. </p>
 
@@ -211,7 +211,7 @@ class Tree:
     return 1 + max(altural, alturar)`} language={"python"} showLineNumbers={true} />
 
           <li className="text-xl font-bold my-2 flex items-center">Binary Search Tree</li>
-          <p>This algorithm is a special type of binary tree that focus on efficient searching, insertion, and deletion operations. And like George Heineman says, it is "the godfather of all recursive data structures".</p>
+          <p>This algorithm is a special type of binary tree that focus on efficient searching, insertion, and deletion operations. And like George Heineman says, it is &apos;the godfather of all recursive data structures&apos;.</p>
           <Rio code={`%%file test_binary_search_tree.py
 
 from test_tree import Tree
