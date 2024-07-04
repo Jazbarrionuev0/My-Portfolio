@@ -111,39 +111,108 @@ exit 0`} language={"bash"} showLineNumbers={true} />
 
           <li className="text-xl font-bold my-2 flex items-center"><ArrowRight />statsSentences.sh</li>
           <p>Analyzes sentence statistics</p>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
+          <Rio code={`#!/usr/bin/bash
+
+file=$(cat $1)
+
+cantidaddeoraciones='echo $file | tr -cd "\." | wc -c'
+OIFS=$IFS
+IFS='.'
+letrasoracionlarga=0
+letrasoracioncorta=1000
+
+
+for oracion in $file
+do
+  if [[ $ {#oracion} -gt $letrasoracionlarga ]]
+  then
+    letrasoracionlarga=$ {#oracion}
+  fi
+  if [[ $ {#oracion} -lt $letrasoracioncorta ]]
+  then
+    letrasoracioncorta=$ {#oracion}
+  fi
+  promedio=$(($promedio + $ {#oracion}))
+done
+
+promedio=$(($promedio/$cantidaddeoraciones))
+
+echo "La oración más larga: "$letrasoracionlarga "letras."
+echo "La oración más corta: "$letrasoracioncorta "letras."
+echo "Ell promedio de las oraciones es de "$promedio "letras."
+
+IFS=$OIFS
+unset OIFS
+
+exit 0`} language={"bash"} showLineNumbers={true} />
 
           <li className="text-xl font-bold my-2 flex items-center"> <ArrowRight /> statsUsageWords.sh</li>
           <p>Analyzes word usage statistics</p>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
+          <Rio code={`#!/usr/bin/bash
+texto=$(cat $1)
+
+declare -A diccionario
+
+for palabra in $texto
+do 
+	largopalabra=$ {#palabra}
+	if [[ $largopalabra -lt 4 ]]
+	then
+		diccionario[$palabra]=$(($ {diccionario[$palabra]} + 1))
+	fi
+done 
+
+echo "Top 10 palabras más  usadas"
+
+for i in $ {!diccionario[@]}
+do
+       echo $i ' - ' $ {diccionario[$i]}
+done | sort -rn -k3 | head -n 10`} language={"bash"} showLineNumbers={true} />
 
           <li className="text-xl font-bold my-2 flex items-center"> <ArrowRight />statsWords.sh</li>
           <p>Provides general word statistics</p>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
+          <Rio code={`#!/usr/bin/bash
+
+texto=$(cat $1)
+
+palabralarga=0
+palabracorta=30
+suma=0
+cantidad=0
+for x in $texto
+do 
+	echo $x | tr -d [".",",",":","-"] >> textosinpuntos.txt
+done
+
+for i in $(cat textosinpuntos.txt)
+do
+	palabra=$(echo $ {#i})
+	if [[ $palabra -lt $palabracorta ]];then
+		palabracorta=$(($palabra))
+        fi
+
+	if [[ $palabra -gt $palabralarga ]]; then
+		palabralarga=$(($palabra))
+	fi
+
+	suma=$(($suma + $palabra))
+	cantidad=$(($cantidad + 1))
+
+done
+
+promedio=$(($suma/$cantidad))
+echo "Cantidad de letras de la palabra más corta: $palabracorta"
+echo "Cantidad de letras de la palabra más larga : $palabralarga"
+echo "El promedio de longitud de palabras es de $promedio letras"
+
+rm textosinpuntos.txt
+exit 0`} language={"bash"} showLineNumbers={true} />
 
         </ol>
 
         <p className="my-3">I have improved and optimized the code but here you can find the original in this <Link className="font-semibold" href="https://github.com/Jazbarrionuev0/TP_Final_Entorno">repository</Link>. </p>
 
-        <h1 className="text-xl font-bold mt-10">How to run</h1>
-        <p>To run this project, follow these steps:</p>
-        <ol className="flex flex-col gap-3">
 
-          <li className="text-xl my-3">1. Clone the repository:</li>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
-
-          <li className="text-xl  my-3">2. Navigate to the project directory:</li>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
-
-          <li className="text-xl my-3">3. Build the Docker image:</li>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
-
-          <li className="text-xl my-3">4. Run the Docker container:</li>
-          <Rio code={``} language={"bash"} showLineNumbers={true} />
-        </ol>
-        <p className="text-xl font-bold my-3">Usage</p>
-        <p>Upon running the container, you&apos;ll be presented with a menu interface. The menu offers six options, select an option by entering the corresponding number. Each option (except the last) will perform a specific analysis on the predetermined text and display the results. Note: This project uses a predefined text for all analyses. The text is included in the Docker image and is not modifiable during runtime.
-        </p>
       </div>
     </div>
   );
