@@ -77,7 +77,7 @@ const projects: Project[] = [
     title: 'Algorithms',
     description: 'Path Finder implemented in Python. This project includes the implementation of various search algorithms',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
+    link: '/projects/algorithm'
   },
   {
     image: '/chatbot.jpg',
