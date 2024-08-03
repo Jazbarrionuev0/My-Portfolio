@@ -2,6 +2,14 @@ import { Work } from "../types/types";
 
 export const works: Work[] = [
     {
+        title: "Freelance Project: Digital Menu and Restaurant Management System",
+        position: "Fullstack developer",
+        duration: "2024",
+        description: `
+        In collaboration with a colleague, I developed a comprehensive digital menu and restaurant management system for a client, including a website and an administrative app. We implemented best practices such as a clean infrastructure using RESTful APIs, microservices, and containerization with Docker. Our tech stack included TypeScript, Next.js, SQL, AWS, and NestJS. We established a CI/CD pipeline with automated testing and secure coding standards. Adopting an agile approach, we ensured iterative development and continuous client feedback. Our focus on UX/UI provided an intuitive and engaging experience for both customers and administrators, enhancing the restaurant's operations and overall user satisfaction.
+        `,
+    },
+    {
         title: "Valkimia, Rosario, AR",
         position: "Genexus Analyst and DevOps",
         duration: "2023 - Present",

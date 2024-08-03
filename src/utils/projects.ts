@@ -13,7 +13,7 @@ const projects: Project[] = [
     title: "Restaurant Managament",
     description: 'A whole project to manage the website, digital menu and bookings of a restaurant',
     repoLink: 'roof-puertonorte.com.ar',
-    link: '/projects/'
+    link: '/projects/restaurant-managament'
   },
   {
     image: '/project2.jpg',
@@ -82,6 +82,13 @@ const projects: Project[] = [
   {
     image: '/chatbot.jpg',
     title: 'Chatbots',
+    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: ''
+  },
+  {
+    image: '/speech.jpg',
+    title: 'Speech to text',
     description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
