@@ -4,7 +4,7 @@ const programmingTags: Tag[] = [
     { title: 'JavaScript', className: 'devicon-javascript-plain' },
     { title: 'TypeScript', className: 'devicon-typescript-plain' },
     { title: 'Python', className: 'devicon-python-plain' },
-    { title: 'C#', className: 'devicon-csharp-plain' },
+    // { title: 'C#', className: 'devicon-csharp-plain' },
     { title: 'Bash', className: 'devicon-bash-plain' },
     { title: 'Genexus', className: 'd' },
 
@@ -12,7 +12,7 @@ const programmingTags: Tag[] = [
 
 const webDevelopmentTags: Tag[] = [
     { title: 'React', className: 'devicon-react-original' },
-    { title: 'Net', className: 'devicon-dot-net-plain' },
+    // { title: 'Net', className: 'devicon-dot-net-plain' },
     { title: 'Next.js', className: 'devicon-nextjs-original' },
     { title: 'Node.js', className: 'devicon-nodejs-plain' },
     { title: 'git', className: 'devicon-git-plain' },
