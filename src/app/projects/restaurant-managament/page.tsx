@@ -39,7 +39,7 @@ export default async function Home() {
             <Image className="my-10 rounded-sm " src={"/figma.png"} alt="Jazmin Barrionuevo" width={674} height={420} />
 
 
-            <p className="my-3">The digital menu and management system significantly enhanced the restaurant's operations, providing an intuitive user experience for both customers and staff. The project demonstrated our capability to deliver robust, high-quality software solutions tailored to client requirements.</p>
+            <p className="my-3">The digital menu and management system significantly enhanced the restaurant&apos;s operations, providing an intuitive user experience for both customers and staff. The project demonstrated our capability to deliver robust, high-quality software solutions tailored to client requirements.</p>
         </div>
     );
 }
