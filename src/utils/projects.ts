@@ -38,11 +38,25 @@ const projects: Project[] = [
     link: '/projects/whispering-tales'
   },
   {
+    image: '/sign.jpg',
+    title: 'Sign Language Detection',
+    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/sign-detection'
+  },
+  {
     image: '/bash.jpg',
     title: 'Menu de scripts en Bash',
     description: 'Developed a collection of Bash scripts designed to automate routine tasks when working with a specified text.',
     repoLink: 'https://github.com/Jazbarrionuev0/TP_Final_Entorno',
     link: '/projects/bash-scripts-menu'
+  },
+  {
+    image: '/hand.jpg',
+    title: 'Handwritten recognition',
+    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/handwritten-recognition'
   },
   {
     image: '/data.jpg',
@@ -86,13 +100,8 @@ const projects: Project[] = [
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: ''
   },
-  {
-    image: '/speech.jpg',
-    title: 'Speech to text',
-    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
-  },
+
+
 
 ];
 
