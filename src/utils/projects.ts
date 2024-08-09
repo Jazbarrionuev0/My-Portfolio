@@ -1,12 +1,13 @@
 import { Project } from "../types/types";
 
 const projects: Project[] = [
+
   {
-    image: '/project.jpg',
-    title: 'Cross Clues',
-    description: 'Created an interactive crossword puzzle game with a user-friendly interface, offering an enjoyable and challenging experience for puzzle enthusiasts.',
-    repoLink: 'https://github.com/Jazbarrionuev0/crossword-puzzle',
-    link: '/projects/crossword-puzzle'
+    image: '/gan.jpg',
+    title: ' Generative Adversarial Neural Network ',
+    description: 'Consisting of two neural networks: a generator that creates synthetic data and a discriminator that evaluates its authenticity.',
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: ''
   },
   {
     image: '/project6.jpg',
@@ -16,12 +17,14 @@ const projects: Project[] = [
     link: '/projects/restaurant-managament'
   },
   {
-    image: '/project2.jpg',
-    title: 'QR Menu Website',
-    description: 'Designed and deployed a QR menu website for a thematic bar. ',
-    repoLink: 'https://github.com/Jazbarrionuev0/Area51-',
-    link: '/projects/QR-menu'
+    image: '/sign.jpg',
+    title: 'Sign Language Detection',
+    description: "The model is trained to recognize and classify hand signs corresponding to different letters or words.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/sign-detection'
   },
+ 
+
 
   // {
   //   image: '/project5.jpg',
@@ -37,13 +40,7 @@ const projects: Project[] = [
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: '/projects/whispering-tales'
   },
-  {
-    image: '/sign.jpg',
-    title: 'Sign Language Detection',
-    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: '/projects/sign-detection'
-  },
+
   {
     image: '/bash.jpg',
     title: 'Menu de scripts en Bash',
@@ -73,6 +70,13 @@ const projects: Project[] = [
   //   link: ''
   // },
   {
+    image: '/project2.jpg',
+    title: 'QR Menu Website',
+    description: 'Designed and deployed a QR menu website for a thematic bar. ',
+    repoLink: 'https://github.com/Jazbarrionuev0/Area51-',
+    link: '/projects/QR-menu'
+  },
+  {
     image: '/supermarket.jpg',
     title: 'Supermarket Comparison Web Scraping',
     description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
@@ -80,11 +84,11 @@ const projects: Project[] = [
     link: ''
   },
   {
-    image: '/redes.jpg',
-    title: 'Machine Learning Mix',
-    description: 'A mix of machine learning projects',
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
+    image: '/project.jpg',
+    title: 'Cross Clues',
+    description: 'Created an interactive crossword puzzle game with a user-friendly interface, offering an enjoyable and challenging experience for puzzle enthusiasts.',
+    repoLink: 'https://github.com/Jazbarrionuev0/crossword-puzzle',
+    link: '/projects/crossword-puzzle'
   },
   {
     image: '/search.jpg',
