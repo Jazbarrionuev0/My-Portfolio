@@ -7,13 +7,13 @@ const projects: Project[] = [
     title: ' Generative Adversarial Neural Network ',
     description: 'Consisting of two neural networks: a generator that creates synthetic data and a discriminator that evaluates its authenticity.',
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
+    link: '/projects/GAN'
   },
   {
     image: '/project6.jpg',
     title: "Restaurant Managament",
     description: 'A whole project to manage the website, digital menu and bookings of a restaurant',
-    repoLink: 'roof-puertonorte.com.ar',
+    repoLink: 'menu.roof-puertonorte.com.ar',
     link: '/projects/restaurant-managament'
   },
   {
@@ -23,16 +23,6 @@ const projects: Project[] = [
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: '/projects/sign-detection'
   },
- 
-
-
-  // {
-  //   image: '/project5.jpg',
-  //   title: 'Casino Web Application',
-  //   description: 'This project creates a virtual casino environment with various games',
-  //   repoLink: 'https://github.com/Jazbarrionuev0/Casino',
-  //   link: '/projects/casino'
-  // },
   {
     image: '/tales.jpg',
     title: 'Whispering Tales',
@@ -40,13 +30,19 @@ const projects: Project[] = [
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: '/projects/whispering-tales'
   },
-
   {
-    image: '/bash.jpg',
-    title: 'Menu de scripts en Bash',
-    description: 'Developed a collection of Bash scripts designed to automate routine tasks when working with a specified text.',
-    repoLink: 'https://github.com/Jazbarrionuev0/TP_Final_Entorno',
-    link: '/projects/bash-scripts-menu'
+    image: '/snake.jpg',
+    title: 'Snake Game',
+    description: "The model is trained to recognize and classify hand signs corresponding to different letters or words.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/snake-game'
+  },
+  {
+    image: '/chatbot.jpg',
+    title: 'Chatbots',
+    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/chatbots'
   },
   {
     image: '/hand.jpg',
@@ -69,27 +65,21 @@ const projects: Project[] = [
   //   repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
   //   link: ''
   // },
-  {
-    image: '/project2.jpg',
-    title: 'QR Menu Website',
-    description: 'Designed and deployed a QR menu website for a thematic bar. ',
-    repoLink: 'https://github.com/Jazbarrionuev0/Area51-',
-    link: '/projects/QR-menu'
-  },
-  {
-    image: '/supermarket.jpg',
-    title: 'Supermarket Comparison Web Scraping',
-    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
-  },
-  {
-    image: '/project.jpg',
-    title: 'Cross Clues',
-    description: 'Created an interactive crossword puzzle game with a user-friendly interface, offering an enjoyable and challenging experience for puzzle enthusiasts.',
-    repoLink: 'https://github.com/Jazbarrionuev0/crossword-puzzle',
-    link: '/projects/crossword-puzzle'
-  },
+
+  // {
+  //   image: '/supermarket.jpg',
+  //   title: 'Supermarket Comparison Web Scraping',
+  //   description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
+  //   repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+  //   link: ''
+  // },
+  // {
+  //   image: '/project.jpg',
+  //   title: 'Cross Clues',
+  //   description: 'Created an interactive crossword puzzle game with a user-friendly interface, offering an enjoyable and challenging experience for puzzle enthusiasts.',
+  //   repoLink: 'https://github.com/Jazbarrionuev0/crossword-puzzle',
+  //   link: '/projects/crossword-puzzle'
+  // },
   {
     image: '/search.jpg',
     title: 'Algorithms',
@@ -98,11 +88,18 @@ const projects: Project[] = [
     link: '/projects/algorithm'
   },
   {
-    image: '/chatbot.jpg',
-    title: 'Chatbots',
-    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: ''
+    image: '/bash.jpg',
+    title: 'Menu de scripts en Bash',
+    description: 'Developed a collection of Bash scripts designed to automate routine tasks when working with a specified text.',
+    repoLink: 'https://github.com/Jazbarrionuev0/TP_Final_Entorno',
+    link: '/projects/bash-scripts-menu'
+  },
+  {
+    image: '/project2.jpg',
+    title: 'QR Menu Website',
+    description: 'Designed and deployed a QR menu website for a thematic bar. ',
+    repoLink: 'https://github.com/Jazbarrionuev0/Area51-',
+    link: '/projects/QR-menu'
   },
 
 
