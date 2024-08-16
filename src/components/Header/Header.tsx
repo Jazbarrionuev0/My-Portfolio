@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className=" w-full py-4 my-2 md:py-8 md:my-4 flex justify-between  ">
       <Link href="/" className="hover:text-[#FF00CC] font-semibold ml-4 md:ml-0">
-        <div className="flex items-center gap-3 fixed md:relative  z-20">
+        <div className="flex items-center gap-3 md:relative  z-20">
           <Image className="rounded-full w-10" src={"/jazfoto.jpg"} alt="Jazmin Barrionuevo" width={200} height={200} />
           <p>Jazmin Barrionuevo</p>
         </div>
@@ -29,7 +29,7 @@ const Header = () => {
         <HeaderLink link="/about">About</HeaderLink>
       </div>
       <div className="md:hidden w-screen">
-        <div className="fixed z-50 right-0">
+        <div className="absolute z-50 right-0">
           <Hamburger toggled={isOpen} size={28} toggle={setOpen} color="#FF00CC" />
         </div>
 
