@@ -1,3 +1,5 @@
+import TagContainer from "@/src/components/TagContainer/TagContainer";
+import { GAN } from "@/src/utils/projectstags";
 import Image from "next/image";
 
 export default async function Home() {
@@ -5,6 +7,11 @@ export default async function Home() {
     <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
       <h2 className="font-normal text-center text-7xl min-h-28">Generative Adversarial Neural Network </h2>
       <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2024</h2>
+      <div className="flex justify-between items-center">
+        <TagContainer tags={GAN} />
+        <p className="mb-3 text-sm text-right ">3-minute read</p>
+      </div>
+
 
       <p className="my-3">This might be one of my favorite machine learning algorithms: the Generative Adversarial Network (GAN). It involves two AI models competing against each other, allowing the GAN to effectively supervise itself.</p>
       <p className="my-3">It consists of two submodels: a generator and a discriminator. The generator creates fake samples, while the discriminator determines whether these samples are fake or real.</p>
@@ -16,32 +23,32 @@ export default async function Home() {
       <p className="my-3">At this point, the generator will take a random input vector (like a t-shirt) and use it to generate its own fake t-shirt image. This image is then passed to the discriminator, which must decide whether the image is real or fake.</p>
       <p className="my-3">The result of this decision is shared with both the generator and the discriminator, and they adjust their behavior accordingly based on the feedback.</p>
       <p className="my-3">Here, our generator starts with a set of 128 random values and outputs a matrix (image) with the shape of 28 by 28 by 1. </p>
-      <Image className="w-full rounded-sm p-10 " src={"/matrix.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10 " src={"/matrix.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
       <p className="my-3">Conversely, our discriminator performs the opposite task. It takes the generator&apos;s output—an image with the shape of 28 by 28 by 1—and produces a single value between zero and one to determine whether the image is real or fake.</p>
-      <Image className="w-full rounded-sm p-16" src={"/nn.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-16" src={"/nn.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
       <p className="my-3">At the start, the images produced by the generator don&apos;t look great, as you can see here. However, after training, the generator will improve significantly, eventually creating more accurate and realistic visualizations of fashion items.</p>
-      <Image className="w-full rounded-sm p-10" src={"/images.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10" src={"/images.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
 
       <p className="my-3">Training GANs can be challenging because you need to strike a balance between how quickly the discriminator learns and how fast the generator improves.</p>
 
       <p className="my-3">You can see d_loss and g_loss balancing, we don&apos;t want one to decrease  and the other one to increase really fast. We want them to stay steady and stable over the long term. </p>
-      <Image className="w-full rounded-sm p-10" src={"/loss.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10" src={"/loss.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
 
       <p className="my-3">Using pyplot, I can evaluate the performance of my trained model. The plot shows the loss trends for both the discriminator (d_loss) and the generator (g_loss). The fluctuation in loss values is expected, especially in the early stages of training. The generator&apos;s loss shows a gradual stabilization over time, while the discriminator&apos;s loss remains more volatile. This indicates that the generator is learning to create more realistic data, making it progressively harder for the discriminator to differentiate between real and fake data. This balance is crucial for the model&apos;s overall performance.</p>
 
-      <Image className="w-full rounded-sm p-10" src={"/plot.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10" src={"/plot.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
       <p className="my-3">Because we would need around 2000 epochs to train the model properly, I used a pretrained model to generate the images. </p>
 
       <h1 id="sorting" className="text-xl font-bold my-3 ">20 epochs:</h1>
-      <Image className="w-full rounded-sm p-10" src={"/20epocs.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10" src={"/20epocs.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
       <h1 id="sorting" className="text-xl font-bold my-3 ">2000 epochs: </h1>
-      <Image className="w-full rounded-sm p-10 " src={"/2000epocs.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image className="w-full rounded-sm md:p-10 " src={"/2000epocs.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
 
 
 
