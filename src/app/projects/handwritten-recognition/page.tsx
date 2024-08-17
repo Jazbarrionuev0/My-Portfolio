@@ -43,11 +43,11 @@ export default async function Home() {
       <Rio
         code={`model = tf.keras.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(128, activation=&apos;relu&apos;),
     tf.keras.layers.Dropout(0.2),  
-    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(128, activation=&apos;relu&apos;),
     tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(10, activation='softmax')
+    tf.keras.layers.Dense(10, activation=&apos;softmax&apos;)
 ])
 `}
         language={"python"}
@@ -59,9 +59,9 @@ export default async function Home() {
         overfitting.
       </p>
       <p className="my-3">
-        To better monitor the model's performance during training, we can add validation data. This allows us to observe
-        how well the model performs on a separate set of data that it hasn't seen during training, providing a more
-        accurate measure of its real world effectiveness.
+        To better monitor the model&apos;s performance during training, we can add validation data. This allows us to
+        observe how well the model performs on a separate set of data that it hasn&apos;t seen during training,
+        providing a more accurate measure of its real world effectiveness.
       </p>
       <Rio
         code={`model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))`}
