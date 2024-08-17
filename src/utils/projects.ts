@@ -47,7 +47,7 @@ const projects: Project[] = [
   {
     image: '/hand.jpg',
     title: 'Handwritten recognition',
-    description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+    description: "Handwritten digit recognition project using TensorFlow and Keras. The neural network is trained on the MNIST dataset and accurately predicts digits from images.",
     repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
     link: '/projects/handwritten-recognition'
   },
