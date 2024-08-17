@@ -9,9 +9,10 @@ export default async function Home() {
     <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
       <h2 className="font-normal text-center text-7xl min-h-28">Snake Game</h2>
       <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2024</h2>
-      <div className="flex justify-between items-center">
-        <TagContainer tags={SnakeGame} />
+      <div className="">
         <p className="mb-3 text-sm text-right ">3-minute read</p>
+        <TagContainer tags={SnakeGame} />
+
       </div>
       <p className="my-3">So, I decided to make the <span className="font-bold">Snake Game</span>, but with a twist—I’m using hand tracking to control it! I’m working with the <span className="italic">cvzone.HandTrackingModule.HandDetector</span> class, which lets me detect hand landmarks like the tip of your index finger.</p>
       <Image className="w-full rounded-sm md:p-10 " src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/completegame.gif"} alt="Jazmin Barrionuevo" width={564} height={420} />

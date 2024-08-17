@@ -1,3 +1,5 @@
+import TagContainer from "@/src/components/TagContainer/TagContainer";
+import { Neopixel } from "@/src/utils/projectstags";
 import Image from "next/image";
 
 export default async function Home() {
@@ -5,6 +7,11 @@ export default async function Home() {
         <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12 text-justify">
             <h2 className="font-normal text-center text-7xl min-h-28">Restaurant Managament</h2>
             <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2024</h2>
+            <div className="">
+                <p className="mb-3 text-sm text-right ">3-minute read</p>
+                <TagContainer tags={Neopixel} />
+
+            </div>
             <p className="my-3">In collaboration with a colleague, I embarked on a project requested by a potential client to develop a comprehensive digital menu and website for their restaurant. This project evolved into a full-fledged restaurant management system, including an administrative app.</p>
 
             <h1 id="sorting" className="text-2xl font-bold my-3 text-gray-500">Key Features and Practices</h1>
