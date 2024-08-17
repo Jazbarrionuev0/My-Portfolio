@@ -1,4 +1,6 @@
 import Rio from "@/src/components/Code/Rio";
+import TagContainer from "@/src/components/TagContainer/TagContainer";
+import { Bash } from "@/src/utils/projectstags";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +10,10 @@ export default async function Home() {
     <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
       <h2 className="font-normal text-center text-7xl min-h-28">Bash Scripts Menu</h2>
       <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2022</h2>
+      <div className="">
+        <p className="mb-3 text-sm text-right ">2-minute read</p>
+        <TagContainer tags={Bash} />
+      </div>
       <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12 text-justify">
 
         <p className="my-3">This project consists of a set of Bash scripts that perform various text analysis operations on a predetermined text. The scripts are packaged into a Docker image for easy execution. </p>

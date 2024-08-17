@@ -41,12 +41,14 @@ const devOpsTags: Tag[] = [
 
 const artificialIntelligenceTags: Tag[] = [
     // { title: 'Pytorch', className: 'devicon-pytorch-original' },
-    { title: 'Pytest', className: 'devicon-pytest-plain' },
     { title: 'Scikit-learn', className: 'devicon-vscode-plain' },
-    { title: 'Numpy', className: 'devicon-numpy-original' },
     { title: 'TensorFlow', className: 'devicon-tensorflow-original' },
-    { title: 'spaCy', className: 'devicon-vscode-plain' },
     { title: 'OpenCV', className: 'devicon-opencv-plain' },
+    { title: 'Numpy', className: 'devicon-numpy-original' },
+    { title: 'Matplotlib', className: 'devicon-matplotlib-plain' },
+    { title: 'spaCy', className: 'devicon-vscode-plain' },
+    { title: 'Pytest', className: 'devicon-pytest-plain' },
+
 ]
 const testingTags: Tag[] = [
     { title: 'Pytest', className: 'devicon-pytest-plain' },
