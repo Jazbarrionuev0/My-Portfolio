@@ -9,12 +9,12 @@ export default async function WorkPage() {
       <div className="md:flex justify-center items-center">
         <Image
           className="w-72 rounded-sm md:mr-5 m-auto"
-          src={"/travel.jpg"}
+          src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/mainphoto.jpg"}
           alt="Jazmin Barrionuevo"
           width={564}
           height={420}
         />
-        <p className="mt-4 md:mt-6 lg:mt-8 md:text-base text-base lg:text-lg text-justify">
+        <p className="mt-4 md:mt-0 lg:mt-0 md:text-base text-base lg:text-lg text-justify">
           Hi, I&apos;m Jazmin, a frontend and AI software developer with a passion for blending technology and
           creativity. My journey began in an unexpected place—studying translation after high school. I&apos;ve always
           been fascinated by languages, literature, and the art of communication. It seemed like the perfect fit. But as
@@ -22,7 +22,7 @@ export default async function WorkPage() {
         </p>
       </div>
       <p className="mt-4 md:mt-6 lg:mt-8 md:text-base text-base lg:text-lg text-justify">
-        I vividly remember the thrill of bringing my first project to life—a small bird that could fly when hungry and
+        I vividly remember the thrill of bringing my first project to life—a small bird that could fly, stop when hungry and
         soar with energy after eating. It was simple, yet it felt like magic. I realized then that the possibilities
         were limitless, and I was hooked. That sense of wonder has driven me ever since, pushing me to constantly learn
         and create.
@@ -57,96 +57,99 @@ export default async function WorkPage() {
         There&apos;s something incredibly satisfying about crafting a game from the ground up, from conceptual planning
         to the final touches. You&apos;ll likely notice some of my projects reflect this enthusiasm.
       </p>
+      <div className="flex justify-center items-center w-full ">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5">
+          <div className="grid gap-4">
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevotenis.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/game.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5 ">
-        <div className="grid gap-4">
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/game.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/bariloche.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
           </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
+          <div className="grid gap-4">
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevojuego.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/book2.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevojuegomesa.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
           </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/game.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/game.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
-          </div>
-          <div>
-            <Image
-              className="h-auto max-w-full rounded-lg"
-              src={"/travel.jpg"}
-              alt="Jazmin Barrionuevo"
-              width={564}
-              height={420}
-            />
+          <div className="md:grid gap-4 hidden ">
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/code.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/book.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
+            <div>
+              <Image
+                className="h-auto max-w-40 rounded-lg"
+                src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevocordoba.jpg"}
+                alt="Jazmin Barrionuevo"
+                width={564}
+                height={420}
+              />
+            </div>
           </div>
         </div>
       </div>
+
 
       <p className="mt-4 md:mt-6 lg:mt-8 md:text-base text-base lg:text-lg text-justify">
         As cliche as it may sound, the best part of my job is being able to explore the world while doing what I love.
