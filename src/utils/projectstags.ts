@@ -75,5 +75,11 @@ const Algorithm: Tag[] = [
     { title: 'Python', className: 'devicon-python-plain' },
 
 ]
+const FaceRecognition: Tag[] = [
+    { title: 'Python', className: 'devicon-python-plain' },
+    { title: 'OpenCV', className: 'devicon-opencv-plain' },
+    { title: 'Deepface', className: 'devicon--plain' },
+]
 
-export { GAN, SnakeGame, ObjectDetection, Handwritten, Whispering, Neopixel, QR, Bash, Data, Algorithm }
+
+export { GAN, SnakeGame, ObjectDetection, Handwritten, Whispering, Neopixel, QR, Bash, Data, Algorithm, FaceRecognition }

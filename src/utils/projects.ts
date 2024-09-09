@@ -38,6 +38,13 @@ const projects: Project[] = [
     link: '/projects/snake-game'
   },
   {
+    image: '/snake.jpg',
+    title: 'Face recognition',
+    description: "This project demonstrates a real-time face recognition system using Python, DeepFace, and OpenCV.",
+    repoLink: 'https://github.com/Jazbarrionuev0/FaceRecognition',
+    link: '/projects/face-recognition'
+  },
+  {
     image: '/chatbot.jpg',
     title: 'Chatbots',
     description: "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
