@@ -38,7 +38,7 @@ const projects: Project[] = [
     link: '/projects/snake-game'
   },
   {
-    image: '/snake.jpg',
+    image: '/face.jpg',
     title: 'Face recognition',
     description: "This project demonstrates a real-time face recognition system using Python, DeepFace, and OpenCV.",
     repoLink: 'https://github.com/Jazbarrionuev0/FaceRecognition',
