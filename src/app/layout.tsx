@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react"
 import { Poppins } from "next/font/google";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -13,6 +14,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Jazmin Barrionuevo",
   description: "Jazmin Barrionuevo Website",
+
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -21,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
       </head>
+
       <body className={`${jost.className} bg-[#F6F6EF] max-w-6xl mx-auto `}>
         <Header />
 

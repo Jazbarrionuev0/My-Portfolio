@@ -13,9 +13,8 @@ export default function HeaderLink({ link, children }: Props) {
   return (
     <Link href={link} className="">
       <span
-        className={`p-5 hover:text-black transition-colors duration-300 ${
-          pathname === link ? "underline decoration-[#FF00CC] decoration-4 " : "slide pb-0"
-        }`}
+        className={`p-5 pb-1 hover:text-black transition-colors duration-300 ${pathname === link ? "underline decoration-[#FF00CC] decoration-4 " : "slide pb-0"
+          }`}
       >
         {children}
       </span>
