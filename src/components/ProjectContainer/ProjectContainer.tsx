@@ -12,7 +12,7 @@ export default async function ProjectContainer({ projects }: Props) {
       <div className="flex gap-7 flex-wrap">
         {" "}
         {projects.map(({ title, description, image, link, repoLink }: ProjectType, i: number) => (
-          <Project key={i} title={title} description={description} image={image} link={link} repoLink={repoLink} />
+          <Project key={i} title={title} description={description} image={image} link={link} repoLink={repoLink} category="All" />
         ))}
       </div>
     </div>

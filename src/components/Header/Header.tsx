@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className=" w-full py-4 my-2 md:py-8 md:my-4 flex justify-between  ">
       <Link href="/" className="hover:text-[#FF00CC] font-semibold ml-4 md:ml-0">
-        <div className="flex items-center gap-3 md:relative  z-20">
+        <div className="flex items-center gap-3 md:relative z-20">
           <Image className="rounded-full w-10" src={"/jazfoto.jpg"} alt="Jazmin Barrionuevo" width={200} height={200} />
           <p>Jazmin Barrionuevo</p>
         </div>
@@ -41,7 +41,7 @@ const Header = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed h-[100vh] z-40 left-0    shadow-4xl right-0 top-0 p-5 pt-24  bg-neutral-950 "
+                className="fixed h-[100vh] z-40 left-0 shadow-4xl right-0 top-0 p-5 pt-24  bg-neutral-950 "
               >
                 <ul className="grid gap-2">
                   {routes.map((route, idx) => {
@@ -56,7 +56,7 @@ const Header = () => {
                           delay: 0.1 + idx / 10,
                         }}
                         key={route.title}
-                        className="w-full text-3xl p-[0.08rem]  hover:underline decoration-[#FF00CC] decoration-4 rounded-xl text-white "
+                        className="w-full text-3xl p-[0.08rem] hover:underline decoration-[#FF00CC] decoration-4 rounded-xl text-white "
                       >
                         <a
                           onClick={() => setOpen((prev) => !prev)}
