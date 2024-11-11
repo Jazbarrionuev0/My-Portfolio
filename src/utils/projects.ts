@@ -58,14 +58,7 @@ const projects: Project[] = [
     link: '/projects/handwritten-recognition',
     category: 'Computer vision'
   },
-  {
-    image: '/data.jpg',
-    title: 'Rio de Janeiro Data Analysis',
-    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
-    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
-    link: '/projects/data-analysis',
-    category: 'Data science'
-  },
+
   // {
   //   image: '/project3.jpg',
   //   title: 'Computer Vision',
@@ -112,9 +105,30 @@ const projects: Project[] = [
     link: '/projects/QR-menu',
     category: 'Web Development'
   },
-
-
-
+  {
+    image: '/MoviesSubgenre.jpg',
+    title: 'Movies Subgenre Popularity Overtime',
+    description: 'Analyzed IMDb Top 1000 dataset to uncover trends in movie ratings, genres, and directors. Cleaned and processed data for insights into popularity, release patterns, and top actors using visualizations.',
+    repoLink: 'https://github.com/Jazbarrionuev0/MoviesSubgenrePopularityOverTime',
+    link: '/projects/Movies-subgenre',
+    category: 'Data science'
+  },
+  {
+    image: '/Celebrities.jpg',
+    title: 'Celeberity Image Classification',
+    description: 'Celebrity image classifier using CNNs. Data preprocessing and cleaning ensured accuracy, followed by model training. A Flask web app provides real-time predictions',
+    repoLink: 'https://github.com/Jazbarrionuev0/Celebrities-ImageClassification',
+    link: '/projects/Celebrity-classifier',
+    category: 'Data science'
+  },
+  {
+    image: '/data.jpg',
+    title: 'Rio de Janeiro Data Analysis',
+    description: 'Python scripts for analyzing Airbnb data in Rio de Janeiro. The primary goal of this project is to utilize Python scripts to extract, process, and analyze key aspects of Airbnb data.',
+    repoLink: 'https://github.com/Jazbarrionuev0/Estadisticas-Airbnb',
+    link: '/projects/data-analysis',
+    category: 'Data science'
+  },
 ];
 
 export default projects;
