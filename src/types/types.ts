@@ -11,10 +11,12 @@ export type Project = {
     description: string,
     image: string,
     link: string,
-    repoLink: string
+    repoLink: string,
+    category: "All" | "Data science" | "Computer vision" | "NLP" | "Deep Learning" | "Web Development" | "Other";
 }
 
 export type Tag = {
     title: string,
     className: string
 }
+
