@@ -65,6 +65,23 @@ const projectManagmentTags: Tag[] = [
     { title: 'SCRUM', className: 'devicon-spring-plain' },
     { title: 'Jira', className: 'devicon-jira-plain' },
 ]
+const MoviesSubgenre: Tag[] = [
+    { title: 'Python', className: 'devicon-spring-plain' },
+    { title: 'Pandas', className: 'devicon-pandas-plain' },
+    { title: 'Jupyter', className: 'devicon-opencv-plain' },
+    { title: 'Numpy', className: 'devicon-numpy-original' },
+    { title: 'Matplotlib', className: 'devicon-matplotlib-plain' },
+    { title: 'Sklearn', className: 'devicon-matplotlib-plain' },
+]
+const CelebrityClassifier: Tag[] = [
+    { title: 'Python', className: 'devicon-spring-plain' },
+    { title: 'Jupyter', className: 'devicon-opencv-plain' },
+    { title: 'Numpy', className: 'devicon-numpy-original' },
+    { title: 'Matplotlib', className: 'devicon-matplotlib-plain' },
+    { title: 'OpenCV', className: 'devicon-opencv-plain' },
+]
 
 
-export { programmingTags, webDevelopmentTags, databaseTags, devOpsTags, artificialIntelligenceTags, communicationProtocolsTags, projectManagmentTags, testingTags }
+
+
+export { programmingTags, webDevelopmentTags, databaseTags, devOpsTags, artificialIntelligenceTags, communicationProtocolsTags, projectManagmentTags, testingTags, MoviesSubgenre, CelebrityClassifier }
