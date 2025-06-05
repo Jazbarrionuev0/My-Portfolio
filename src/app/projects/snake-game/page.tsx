@@ -26,6 +26,11 @@ export default async function Home() {
         height={420}
       />
 
+      <video className="w-full rounded-md md:p-10 my-6" autoPlay muted loop playsInline>
+        <source src="/253435.mp4" type="video/mp4" className="rounded-lg" />
+        Your browser does not support the video tag.
+      </video>
+
       <p className="my-3">
         Basically, <span className="text-green-700">lmList</span> is a list of landmarks (points) on the hand. Each landmark is represented by a list
         or tuple containing the x and y coordinates, and sometimes the z coordinate (which represents depth):

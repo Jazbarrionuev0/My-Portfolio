@@ -18,7 +18,6 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Extract unique categories from projects
   const categories: Category[] = ["All", "Data science", "Computer vision", "NLP", "Deep Learning", "Web Development", "Other"];
 
   const filteredProjects = projects.filter((project) => (selectedCategory === "All" ? true : project.category === selectedCategory));
@@ -26,7 +25,6 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
   return (
     <div className="container mx-auto px-4 ">
       <div className="flex flex-col items-start gap-6">
-        {/* Filter Buttons */}
         <div className="flex flex-wrap gap-4 mb-8">
           {categories.map((category) => (
             <Button
@@ -47,7 +45,6 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
           ))}
         </div>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {filteredProjects.map((project, i) => (
             <Link key={i} href={project.link}>

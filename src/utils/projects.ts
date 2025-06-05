@@ -17,22 +17,22 @@ const projects: Project[] = [
     link: "/projects/restaurant-managament",
     category: "Web Development",
   },
-  {
-    image: "/projects/sign.jpg",
-    title: "Sign Language Detection",
-    description: "The model is trained to recognize and classify hand signs corresponding to different letters or words.",
-    repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
-    link: "/projects/sign-detection",
-    category: "Computer vision",
-  },
-  {
-    image: "/projects/tales.jpg",
-    title: "Whispering Tales",
-    description: "A website dedicated to publishing your short stories",
-    repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
-    link: "/projects/whispering-tales",
-    category: "Web Development",
-  },
+  // {
+  //   image: "/projects/sign.jpg",
+  //   title: "Sign Language Detection",
+  //   description: "The model is trained to recognize and classify hand signs corresponding to different letters or words.",
+  //   repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
+  //   link: "/projects/sign-detection",
+  //   category: "Computer vision",
+  // },
+  // {
+  //   image: "/projects/tales.jpg",
+  //   title: "Whispering Tales",
+  //   description: "A website dedicated to publishing your short stories",
+  //   repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
+  //   link: "/projects/whispering-tales",
+  //   category: "Web Development",
+  // },
   {
     image: "/projects/snake.jpg",
     title: "Snake Game",
@@ -41,15 +41,15 @@ const projects: Project[] = [
     link: "/projects/snake-game",
     category: "Computer vision",
   },
-  {
-    image: "/projects/chatbot.jpg",
-    title: "Chatbots",
-    description:
-      "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
-    repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
-    link: "/projects/chatbots",
-    category: "NLP",
-  },
+  // {
+  //   image: "/projects/chatbot.jpg",
+  //   title: "Chatbots",
+  //   description:
+  //     "Developed a variety of chatbots for both entertainment and practical uses. These include support features on administrative pages and customer service functionalities on restaurant websites.",
+  //   repoLink: "https://github.com/Jazbarrionuev0/Estadisticas-Airbnb",
+  //   link: "/projects/chatbots",
+  //   category: "NLP",
+  // },
   {
     image: "/projects/hand.jpg",
     title: "Handwritten recognition",
@@ -106,24 +106,24 @@ const projects: Project[] = [
     link: "/projects/QR-menu",
     category: "Web Development",
   },
-  {
-    image: "/projects/MoviesSubgenre.jpg",
-    title: "Movies Subgenre Popularity Overtime",
-    description:
-      "Analyzed IMDb Top 1000 dataset to uncover trends in movie ratings, genres, and directors. Cleaned and processed data for insights into popularity, release patterns, and top actors using visualizations.",
-    repoLink: "https://github.com/Jazbarrionuev0/MoviesSubgenrePopularityOverTime",
-    link: "/projects/Movies-subgenre",
-    category: "Data science",
-  },
-  {
-    image: "/projects/Celebrities.jpg",
-    title: "Celeberity Image Classification",
-    description:
-      "Celebrity image classifier using CNNs. Data preprocessing and cleaning ensured accuracy, followed by model training. A Flask web app provides real-time predictions",
-    repoLink: "https://github.com/Jazbarrionuev0/Celebrities-ImageClassification",
-    link: "/projects/Celebrity-classifier",
-    category: "Data science",
-  },
+  // {
+  //   image: "/projects/MoviesSubgenre.jpg",
+  //   title: "Movies Subgenre Popularity Overtime",
+  //   description:
+  //     "Analyzed IMDb Top 1000 dataset to uncover trends in movie ratings, genres, and directors. Cleaned and processed data for insights into popularity, release patterns, and top actors using visualizations.",
+  //   repoLink: "https://github.com/Jazbarrionuev0/MoviesSubgenrePopularityOverTime",
+  //   link: "/projects/Movies-subgenre",
+  //   category: "Data science",
+  // },
+  // {
+  //   image: "/projects/Celebrities.jpg",
+  //   title: "Celeberity Image Classification",
+  //   description:
+  //     "Celebrity image classifier using CNNs. Data preprocessing and cleaning ensured accuracy, followed by model training. A Flask web app provides real-time predictions",
+  //   repoLink: "https://github.com/Jazbarrionuev0/Celebrities-ImageClassification",
+  //   link: "/projects/Celebrity-classifier",
+  //   category: "Data science",
+  // },
   {
     image: "/projects/data.jpg",
     title: "Rio de Janeiro Data Analysis",

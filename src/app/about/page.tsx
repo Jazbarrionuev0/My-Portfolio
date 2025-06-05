@@ -50,7 +50,7 @@ export default async function WorkPage() {
         projects reflect this enthusiasm.
       </p>
       <div className="flex justify-center items-center w-full ">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-5">
           <div className="grid gap-4">
             <div>
               <Image
