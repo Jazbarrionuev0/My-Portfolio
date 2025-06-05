@@ -1,6 +1,5 @@
 import TagContainer from "@/src/components/TagContainer/TagContainer";
 import { Whispering } from "@/src/utils/projectstags";
-import Image from "next/image";
 
 export default async function Home() {
   return (
@@ -10,7 +9,6 @@ export default async function Home() {
       <div className="">
         <p className="mb-3 text-sm text-right ">3-minute read</p>
         <TagContainer tags={Whispering} />
-
       </div>
     </div>
   );

@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jazmin Barrionuevo - Personal Portfolio
 
-## Getting Started
+![Portfolio Website](public/web.png)
 
-First, run the development server:
+## 🌐 Live Website
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.tech)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This repository contains the source code for my personal portfolio website. The website showcases my skills, projects, and professional experiences as a software developer with a focus on frontend development and artificial intelligence.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🧰 Tech Stack
 
-## Learn More
+This portfolio was built with:
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend Framework**: Next.js (React)
+- **Styling**: Tailwind CSS
+- **Animation**: Framer Motion
+- **TypeScript**: For type safety
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The portfolio consists of several key sections:
 
-## Deploy on Vercel
+- **About Me**: Brief introduction about myself as a software developer
+- **Projects**: Showcase of my work categorized by type
+- **Skills**: Technical skills organized by domain
+- **Work Experience**: Overview of my professional journey
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Responsive design that works on all devices
+- Project filtering by category (Web Development, Data Science, Computer Vision, etc.)
+- Detailed project pages with descriptions, technologies used, and links
+- Clean and modern UI with custom animations
+
+## 🗂️ Project Categories
+
+My portfolio showcases projects in various domains including:
+
+- **Web Development**: Websites, web applications, and QR menu systems
+- **Computer Vision**: Sign language detection, handwritten recognition
+- **Deep Learning**: Generative Adversarial Networks
+- **Data Science**: Data analysis and visualization projects
+- **NLP**: Chatbots for various applications
+
+## 🛠️ Technical Skills
+
+My expertise spans across:
+
+- **Programming Languages**: JavaScript, TypeScript, Python, Bash
+- **Web Development**: React, Next.js, Node.js, HTML, SCSS, Tailwind CSS
+- **AI & Machine Learning**: TensorFlow, OpenCV, Scikit-learn, NumPy, Matplotlib
+- **Databases**: MySQL, PostgreSQL, SQL Server
+- **DevOps**: Docker, Kubernetes, AWS, Digital Ocean
+- **Project Management**: SCRUM, Jira
+- **Testing**: Pytest
+
+## 📱 Contact
+
+Feel free to reach out to me through:
+
+- [GitHub](https://github.com/Jazbarrionuev0)
+- [LinkedIn](https://www.linkedin.com/in/jazmin-barrionuevo)
+- Website: [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.tech)
+
+## 📄 License
+
+This project is open source and available under the MIT License.

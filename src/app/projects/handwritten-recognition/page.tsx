@@ -14,31 +14,31 @@ export default async function Home() {
         <TagContainer tags={Handwritten} />
       </div>
       <p className="my-3">
-        I decided to build a handwritten digit recognition model. I wanted to create something that could not only
-        recognize digits but also visualize the predictions.
+        I decided to build a handwritten digit recognition model. I wanted to create something that could not only recognize digits but also visualize
+        the predictions.
       </p>
       <Image
         className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/result.gif"}
+        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/result.gif"}
         alt="Jazmin Barrionuevo"
         width={564}
         height={420}
       />
       <p className="my-3">
-        I used TensorFlow which has been my go-to library for machine learning projects. Its flexibility and robustness
-        make it perfect for building and deploying machine learning models. But what really stands out is Keras,
-        TensorFlow’s API, which simplifies the process of building neural networks.
+        I used TensorFlow which has been my go-to library for machine learning projects. Its flexibility and robustness make it perfect for building
+        and deploying machine learning models. But what really stands out is Keras, TensorFlow’s API, which simplifies the process of building neural
+        networks.
       </p>
       <p className="my-3">
-        In this project, I used the MNIST dataset—a dataset of 70000 images of handwritten digits, each labeled from 0
-        to 9. I loaded it directly from TensorFlow’s dataset module.
+        In this project, I used the MNIST dataset—a dataset of 70000 images of handwritten digits, each labeled from 0 to 9. I loaded it directly from
+        TensorFlow’s dataset module.
       </p>
       <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
         Neural Network
       </h1>
       <p className="my-3">
-        The first step is normalizing the dataset by dividing the pixel values by 255.0. This effectively normalizes the
-        data to a range between 0 and 1. And then with Keras we build our neural network:
+        The first step is normalizing the dataset by dividing the pixel values by 255.0. This effectively normalizes the data to a range between 0 and
+        1. And then with Keras we build our neural network:
       </p>
       <Rio
         code={`model = tf.keras.Sequential([
@@ -54,28 +54,23 @@ export default async function Home() {
         showLineNumbers={true}
       />
       <p className="my-3">
-        Introduce Dropout layers into the model is a good way to avoid overfitting. Dropout randomly disables a fraction
-        of the neurons during training, forcing the model to learn more robust features and reducing the risk of
-        overfitting.
+        Introduce Dropout layers into the model is a good way to avoid overfitting. Dropout randomly disables a fraction of the neurons during
+        training, forcing the model to learn more robust features and reducing the risk of overfitting.
       </p>
       <p className="my-3">
-        To better monitor the model&apos;s performance during training, we can add validation data. This allows us to
-        observe how well the model performs on a separate set of data that it hasn&apos;t seen during training,
-        providing a more accurate measure of its real world effectiveness.
+        To better monitor the model&apos;s performance during training, we can add validation data. This allows us to observe how well the model
+        performs on a separate set of data that it hasn&apos;t seen during training, providing a more accurate measure of its real world
+        effectiveness.
       </p>
-      <Rio
-        code={`model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))`}
-        language={"python"}
-        showLineNumbers={true}
-      />
+      <Rio code={`model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))`} language={"python"} showLineNumbers={true} />
       <p className="my-3">
-        In my initial implementation, I trained the model for 10 epochs. It’s enough to allow the model to learn the
-        patterns in the data without overfitting. Training for too few epochs can result in an under-fitted model that
-        hasn’t learned enough from the data. Conversely, training for too many epochs might lead to overfitting.
+        In my initial implementation, I trained the model for 10 epochs. It’s enough to allow the model to learn the patterns in the data without
+        overfitting. Training for too few epochs can result in an under-fitted model that hasn’t learned enough from the data. Conversely, training
+        for too many epochs might lead to overfitting.
       </p>
       <Image
         className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/training.gif"}
+        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/training.gif"}
         alt="Jazmin Barrionuevo"
         width={564}
         height={420}
@@ -85,21 +80,20 @@ export default async function Home() {
       </h1>
 
       <p className="my-3">
-        For the prediction part of the project, I needed a way to process new images of handwritten digits. This is
-        where OpenCV came in. Then Matplotlib allowed me to display the processed images alongside their predicted
-        labels. This step was particularly rewarding because I could see the model in action, recognizing digits just
-        like a human would.
+        For the prediction part of the project, I needed a way to process new images of handwritten digits. This is where OpenCV came in. Then
+        Matplotlib allowed me to display the processed images alongside their predicted labels. This step was particularly rewarding because I could
+        see the model in action, recognizing digits just like a human would.
       </p>
       <Image
         className="w-full rounded-sm md:p-10 "
-        src={"/prediction.png"}
+        src={"/projects/handwritten-recognition/prediction.png"}
         alt="Jazmin Barrionuevo"
         width={564}
         height={420}
       />
       <Image
         className="w-full rounded-sm md:p-10 "
-        src={"/finalresult.png"}
+        src={"/projects/handwritten-recognition/finalresult.png"}
         alt="Jazmin Barrionuevo"
         width={564}
         height={420}

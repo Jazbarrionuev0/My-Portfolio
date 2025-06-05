@@ -1,20 +1,63 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react"
-import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import Image from "next/image";
 import { jost } from "../fonts/fonts";
-import Link from "next/link";
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
-export const metadata: Metadata = {
-  title: "Jazmin Barrionuevo",
-  description: "Jazmin Barrionuevo Website",
 
+export const metadata: Metadata = {
+  title: "Jazmin Barrionuevo - Software Developer",
+  description:
+    "I'm a software developer focused on frontend and artificial intelligence development. Explore my portfolio showcasing web development, AI, computer vision and data science projects.",
+  keywords: [
+    "Software Developer",
+    "Frontend Developer",
+    "AI Developer",
+    "Computer Vision",
+    "Data Science",
+    "Portfolio",
+    "Next.js",
+    "React",
+    "Python",
+    "TensorFlow",
+  ],
+  authors: [
+    {
+      name: "Jazmin Barrionuevo",
+      url: "https://github.com/Jazbarrionuev0",
+    },
+  ],
+  themeColor: "#FF00CC",
+  openGraph: {
+    title: "Jazmin Barrionuevo - Software Developer Portfolio",
+    description:
+      "I'm a software developer focused on frontend and artificial intelligence development. Explore my portfolio showcasing web development, AI, computer vision and data science projects.",
+    url: "https://www.jazminbarrionuevo.tech",
+    type: "website",
+    siteName: "Jazmin Barrionuevo Portfolio",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://www.jazminbarrionuevo.tech/favicon.ico",
+        width: 1200,
+        height: 630,
+        alt: "Jazmin Barrionuevo portfolio preview",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jazmin Barrionuevo - Software Developer",
+    description:
+      "I'm a software developer focused on frontend and artificial intelligence development. Explore my portfolio showcasing web development, AI, computer vision and data science projects.",
+    images: ["https://www.jazminbarrionuevo.tech/favicon.ico"],
+  },
+  viewport: "width=device-width, initial-scale=1.0",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

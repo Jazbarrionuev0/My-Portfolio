@@ -2,7 +2,7 @@
 import { Project as ProjectType } from "@/src/types/types";
 import Image from "next/image";
 import * as React from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -18,12 +18,7 @@ export default function Project({ title, description, image, repoLink, link }: P
           onMouseOver={() => setIsHovered(true)}
           onMouseOut={() => setIsHovered(false)}
         >
-          <Image
-            className="inset-0 w-full h-full object-cover rounded-lg opacity-65"
-            src={image}
-            alt="Jazmin Barrionuevo"
-            layout="fill"
-          />
+          <Image className="inset-0 w-full h-full object-cover rounded-lg opacity-65" src={image} alt="Jazmin Barrionuevo" layout="fill" />
           <Card className="w-full h-full absolute top-0 left-0 bg-transparent">
             <CardHeader>
               <CardTitle className="text-white font-normal">{title}</CardTitle>
