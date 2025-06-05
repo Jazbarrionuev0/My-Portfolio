@@ -44,9 +44,21 @@ const Header = () => {
           <p>Jazmin Barrionuevo</p>
         </div>
       </Link>
-      <div className="hidden md:block ">
-        {links.map(({ link, text }) => (
-          <HeaderLink key={link} pathname={pathname} link={link} text={text} />
+      <div className="hidden md:flex md:flex-row md:items-center">
+        {links.map(({ link, text }, index) => (
+          <motion.div
+            key={link}
+            className="inline-flex"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.3,
+              delay: 0.1 + index * 0.1,
+              ease: "easeInOut",
+            }}
+          >
+            <HeaderLink pathname={pathname} link={link} text={text} />
+          </motion.div>
         ))}
       </div>
       <div className="md:hidden w-screen">

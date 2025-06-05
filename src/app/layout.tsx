@@ -27,7 +27,6 @@ export const metadata: Metadata = {
       url: "https://github.com/Jazbarrionuev0",
     },
   ],
-  themeColor: "#FF00CC",
   openGraph: {
     title: "Jazmin Barrionuevo - Software Developer Portfolio",
     description:
@@ -53,7 +52,6 @@ export const metadata: Metadata = {
       "I'm a software developer focused on frontend and artificial intelligence development. Explore my portfolio showcasing web development, AI, computer vision and data science projects.",
     images: ["https://www.jazminbarrionuevo.tech/favicon.ico"],
   },
-  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",

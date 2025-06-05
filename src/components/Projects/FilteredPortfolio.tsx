@@ -49,9 +49,9 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
           {filteredProjects.map((project, i) => (
             <Link key={i} href={project.link}>
               <div className="w-full" onMouseEnter={() => setHoveredId(project.title)} onMouseLeave={() => setHoveredId(null)}>
-                <div className="relative h-[320px] rounded-lg cursor-pointer transition duration-300 hover:scale-105 bg-black">
+                <div className="relative h-[320px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-black">
                   <Image
-                    className="object-cover rounded-lg opacity-65"
+                    className="object-cover rounded-lg opacity-35"
                     src={project.image}
                     alt={project.title}
                     fill

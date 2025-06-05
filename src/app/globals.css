@@ -89,7 +89,6 @@
   overflow: hidden;
   background-color: transparent;
   width: 100%;
-  height: 20px;
 }
 
 .slide:hover::after {
