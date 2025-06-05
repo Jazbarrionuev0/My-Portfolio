@@ -5,25 +5,33 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-    return (
-        <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12 text-justify">
-            <h2 className="font-normal text-center text-7xl min-h-28">Rio de Janeiro Data Analysis
-            </h2>
-            <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2022</h2>
-            <div className="">
-                <p className="mb-3 text-sm text-right ">2-minute read</p>
-                <TagContainer tags={Data} />
-            </div>
-            <p className="my-3">The focus of this analysis is on Rio de Janeiro, utilizing neighborhood information, prices, and rental types to answer the following questions:</p>
+  return (
+    <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12 text-justify">
+      <h2 className="font-normal text-center text-7xl min-h-28">Rio de Janeiro Data Analysis</h2>
+      <h2 className="font-semibold text-gray-500 text-center text-xl min-h-28">2022</h2>
+      <div className="">
+        <p className="mb-3 text-sm text-right ">2-minute read</p>
+        <TagContainer tags={Data} />
+      </div>
+      <p className="my-3">
+        The focus of this analysis is on Rio de Janeiro, utilizing neighborhood information, prices, and rental types to answer the following
+        questions:
+      </p>
 
-            <ol className="flex flex-col gap-3">
-                <li className="text-2xl font-bold my-3">Average price per rental type in Rio de Janeiro:</li>
-                <p>Implemented a function precio_promedio_por_tipo_de_alquiler() that calculates the average price for each rental type. The results are stored in a dictionary where the rental type serves as the key, and the average price as the value.
-                </p>
-                <p>For the analysis of the first problem, we aim to determine the average price per rental type, and this information is stored in a dictionary where each rental type is associated with its average price. The process involves summing the prices for each rental type and then calculating the average.</p>
+      <ol className="flex flex-col gap-3">
+        <li className="text-2xl font-bold my-3">Average price per rental type in Rio de Janeiro:</li>
+        <p>
+          Implemented a function precio_promedio_por_tipo_de_alquiler() that calculates the average price for each rental type. The results are stored
+          in a dictionary where the rental type serves as the key, and the average price as the value.
+        </p>
+        <p>
+          For the analysis of the first problem, we aim to determine the average price per rental type, and this information is stored in a dictionary
+          where each rental type is associated with its average price. The process involves summing the prices for each rental type and then
+          calculating the average.
+        </p>
 
-
-                <Rio code={`import csv
+        <Rio
+          code={`import csv
 from statistics import mean
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -64,14 +72,29 @@ def main():
     plot_average_prices(averages)
 
 if __name__ == "__main__":
-    main()`} language={"python"} showLineNumbers={true} />
-                <Image className="w-full rounded-sm  m-auto" src={"/firstchart.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
-                <li className="text-2xl font-bold my-3">Number of rental types per neighborhood:</li>
-                <p>The function cantidad_de_tipos_por_barrio() returns a dictionary, tipo_de_alquiler_por_barrio, mapping neighborhoods to the count of each rental type available in that neighborhood.
-                </p>
-                <p>The second analysis is addressed by the function cantidad_de_tipos_por_barrio(), which returns a dictionary named tipo_de_alquiler_por_barrio. This dictionary has neighborhoods as keys and another dictionary as values. The inner dictionary has rental types as keys and the count of each type in that neighborhood as values.
-                </p>
-                <Rio code={`import csv
+    main()`}
+          language={"python"}
+          showLineNumbers={true}
+        />
+        <Image
+          className="w-full rounded-sm  m-auto"
+          src={"/projects/data-analysis/firstchart.png"}
+          alt="Jazmin Barrionuevo"
+          width={564}
+          height={420}
+        />
+        <li className="text-2xl font-bold my-3">Number of rental types per neighborhood:</li>
+        <p>
+          The function cantidad_de_tipos_por_barrio() returns a dictionary, tipo_de_alquiler_por_barrio, mapping neighborhoods to the count of each
+          rental type available in that neighborhood.
+        </p>
+        <p>
+          The second analysis is addressed by the function cantidad_de_tipos_por_barrio(), which returns a dictionary named
+          tipo_de_alquiler_por_barrio. This dictionary has neighborhoods as keys and another dictionary as values. The inner dictionary has rental
+          types as keys and the count of each type in that neighborhood as values.
+        </p>
+        <Rio
+          code={`import csv
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -148,15 +171,28 @@ def main():
     plot_room_types(data, neighborhood)
 
 if __name__ == "__main__":
-    main()`} language={"python"} showLineNumbers={true} />
-                <Image className="w-full rounded-sm  m-auto" src={"/secondchart.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
-                <li className="text-2xl font-bold my-3">Number of listings per neighborhood:</li>
-                <p>The function cantidad_anuncios_barrio() calculates the total number of listings for each neighborhood and returns a dictionary with neighborhoods as keys and the corresponding number of listings as values.
-                </p>
-                <p>The third analysis is the function cantidad_anuncios_barrio(), which returns a dictionary named cantidad_anuncios_barrio. It maps each neighborhood to the total number of listings in that neighborhood.
-
-                </p>
-                <Rio code={`import csv
+    main()`}
+          language={"python"}
+          showLineNumbers={true}
+        />
+        <Image
+          className="w-full rounded-sm  m-auto"
+          src={"/projects/data-analysis/secondchart.png"}
+          alt="Jazmin Barrionuevo"
+          width={564}
+          height={420}
+        />
+        <li className="text-2xl font-bold my-3">Number of listings per neighborhood:</li>
+        <p>
+          The function cantidad_anuncios_barrio() calculates the total number of listings for each neighborhood and returns a dictionary with
+          neighborhoods as keys and the corresponding number of listings as values.
+        </p>
+        <p>
+          The third analysis is the function cantidad_anuncios_barrio(), which returns a dictionary named cantidad_anuncios_barrio. It maps each
+          neighborhood to the total number of listings in that neighborhood.
+        </p>
+        <Rio
+          code={`import csv
 from collections import Counter
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -220,12 +256,36 @@ def main():
 if __name__ == "__main__":
     main()
         
-        `
-                } language={"python"} showLineNumbers={true} />
-                <Image className="w-full rounded-sm  m-auto" src={"/thridchart.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
-                <Image className="w-full rounded-sm  m-auto" src={"/thridchart2.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
-            </ol>
-            <p className="my-3">The dataset used for this analysis can be found <Link className="font-semibold" href="http://data.insideairbnb.com/brazil/rj/rio-de-janeiro/2022-06-20/visualisations/listings.csv">here</Link> . I have improved and optimized the code but here you can find the original <Link className="font-semibold" href="https://colab.research.google.com/drive/15htreZACb65vlyc3lc2tIAurbBkqR3nX">file</Link>. </p>
-        </div>
-    );
+        `}
+          language={"python"}
+          showLineNumbers={true}
+        />
+        <Image
+          className="w-full rounded-sm  m-auto"
+          src={"/projects/data-analysis/thridchart.png"}
+          alt="Jazmin Barrionuevo"
+          width={564}
+          height={420}
+        />
+        <Image
+          className="w-full rounded-sm  m-auto"
+          src={"/projects/data-analysis/thridchart2.png"}
+          alt="Jazmin Barrionuevo"
+          width={564}
+          height={420}
+        />
+      </ol>
+      <p className="my-3">
+        The dataset used for this analysis can be found{" "}
+        <Link className="font-semibold" href="http://data.insideairbnb.com/brazil/rj/rio-de-janeiro/2022-06-20/visualisations/listings.csv">
+          here
+        </Link>{" "}
+        . I have improved and optimized the code but here you can find the original{" "}
+        <Link className="font-semibold" href="https://colab.research.google.com/drive/15htreZACb65vlyc3lc2tIAurbBkqR3nX">
+          file
+        </Link>
+        .{" "}
+      </p>
+    </div>
+  );
 }

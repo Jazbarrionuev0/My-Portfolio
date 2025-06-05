@@ -1,4 +1,5 @@
 "use client";
+
 import HeaderLink from "../HeaderLink/HeaderLink";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,10 +9,31 @@ import { useRef } from "react";
 import { useState } from "react";
 import { routes } from "../HeaderLink/MobileLinks";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+
+const links = [
+  {
+    link: "/",
+    text: "Home",
+  },
+  {
+    link: "/skills",
+    text: "Skills",
+  },
+  {
+    link: "/work",
+    text: "Work",
+  },
+  {
+    link: "/about",
+    text: "About",
+  },
+];
 
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
   const ref = useRef(null);
+  const pathname = usePathname();
 
   useClickAway(ref, () => setOpen(false));
   return (
@@ -23,10 +45,9 @@ const Header = () => {
         </div>
       </Link>
       <div className="hidden md:block ">
-        <HeaderLink link="/">Home</HeaderLink>
-        <HeaderLink link="/skills">Skills</HeaderLink>
-        <HeaderLink link="/work">Work</HeaderLink>
-        <HeaderLink link="/about">About</HeaderLink>
+        {links.map(({ link, text }) => (
+          <HeaderLink key={link} pathname={pathname} link={link} text={text} />
+        ))}
       </div>
       <div className="md:hidden w-screen">
         <div className="absolute z-50 right-0">

@@ -12,21 +12,39 @@ export default async function Home() {
       <div className="">
         <p className="mb-3 text-sm text-right ">3-minute read</p>
         <TagContainer tags={FaceRecognition} />
-
       </div>
       <p className="my-3">In this project, I built a simple real-time face recognition system using Python, OpenCV, and DeepFace.</p>
-      <Image className="w-full rounded-sm md:p-10 " src={"https://neopixel.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/face.gif"} alt="Jazmin Barrionuevo" width={564} height={420} />
+      <Image
+        className="w-full rounded-sm md:p-10 "
+        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/face.gif"}
+        alt="Jazmin Barrionuevo"
+        width={564}
+        height={420}
+      />
 
-      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500"> Grabbing Video from Your Webcam</h1>
+      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
+        {" "}
+        Grabbing Video from Your Webcam
+      </h1>
 
-      <p className="my-3">First , I use OpenCV to access the webcam and start capturing video. OpenCV makes it easy to grab frames (basically, single images) from the live feed and process them one by one.</p>
+      <p className="my-3">
+        First , I use OpenCV to access the webcam and start capturing video. OpenCV makes it easy to grab frames (basically, single images) from the
+        live feed and process them one by one.
+      </p>
       <Rio code={`cap = cv2.VideoCapture(0)`} language={"python"} showLineNumbers={false} />
 
+      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
+        {" "}
+        Checking for a Face Match
+      </h1>
 
-      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500"> Checking for a Face Match</h1>
-
-      <p className="my-3">I&apos;ve got a reference image (the face I&apos;m trying to match), and every now and then (around once per second), DeepFace compares the current frame to that reference. DeepFace uses a pre-trained VGG-Face model to determine if the face in the video matches the one in the reference image.</p>
-      <Rio code={`reference_img = cv2.imread("reference.jpg")  
+      <p className="my-3">
+        I&apos;ve got a reference image (the face I&apos;m trying to match), and every now and then (around once per second), DeepFace compares the
+        current frame to that reference. DeepFace uses a pre-trained VGG-Face model to determine if the face in the video matches the one in the
+        reference image.
+      </p>
+      <Rio
+        code={`reference_img = cv2.imread("reference.jpg")  
 
 def check_face(frame):
     global face_match
@@ -36,13 +54,22 @@ def check_face(frame):
         else:
             face_match = False
     except:
-        face_match = False`} language={"python"} showLineNumbers={true} />
+        face_match = False`}
+        language={"python"}
+        showLineNumbers={true}
+      />
 
+      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
+        {" "}
+        Keeping It Fast with Threads
+      </h1>
 
-      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500"> Keeping It Fast with Threads</h1>
-
-      <p className="my-3">Running face recognition on each frame can slow things down, so I use threading to run the face-checking part separately. This way, the video feed keeps running smoothly while the face verification happens in the background.</p>
-      <Rio code={`counter = 0
+      <p className="my-3">
+        Running face recognition on each frame can slow things down, so I use threading to run the face-checking part separately. This way, the video
+        feed keeps running smoothly while the face verification happens in the background.
+      </p>
+      <Rio
+        code={`counter = 0
 face_match = False
 
 while True:
@@ -50,23 +77,37 @@ while True:
     if ret:
         if counter % 30 == 0:
             threading.Thread(target=check_face, args=(frame.copy(),)).start()
-        counter += 1`} language={"python"} showLineNumbers={true} />
+        counter += 1`}
+        language={"python"}
+        showLineNumbers={true}
+      />
 
+      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
+        {" "}
+        Showing the Results
+      </h1>
 
-      <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500"> Showing the Results</h1>
-
-      <p className="my-3">First , I use OpenCV to access the webcam and start capturing video. OpenCV makes it easy to grab frames (basically, single images) from the live feed and process them one by one.</p>
-      <Rio code={`if face_match:
+      <p className="my-3">
+        First , I use OpenCV to access the webcam and start capturing video. OpenCV makes it easy to grab frames (basically, single images) from the
+        live feed and process them one by one.
+      </p>
+      <Rio
+        code={`if face_match:
     cv2.putText(frame, "MATCH", (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 3)
 else:
     cv2.putText(frame, "NO MATCH", (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3)
 
-cv2.imshow("video", frame)`} language={"python"} showLineNumbers={true} />
+cv2.imshow("video", frame)`}
+        language={"python"}
+        showLineNumbers={true}
+      />
 
-
-
-      <p className="my-3">You can find the full project on my github: <Link href={"https://github.com/Jazbarrionuev0/FaceRecognition"} className="font-semibold">Face recognition</Link> </p>
-
+      <p className="my-3">
+        You can find the full project on my github:{" "}
+        <Link href={"https://github.com/Jazbarrionuev0/FaceRecognition"} className="font-semibold">
+          Face recognition
+        </Link>{" "}
+      </p>
     </div>
   );
 }
