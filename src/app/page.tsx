@@ -8,7 +8,6 @@ export default async function Home() {
       <AboutMe />
 
       <FilteredPortfolio projects={projects} />
-      {/* <ProjectContainer projects={projects} /> */}
     </main>
   );
 }

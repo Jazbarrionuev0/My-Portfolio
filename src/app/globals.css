@@ -4,8 +4,9 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base theme colors */
+    --background: 43 77% 93%; /* #F8F3E3 - pastel light yellow/brown */
+    --foreground: 0 0% 10%; /* Dark text for good contrast */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -13,8 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Portfolio specific colors */
+    --portfolio-bg: 43 77% 93%; /* #F8F3E3 - main background */
+    --portfolio-accent: 323 100% 50%; /* #FF00CC - accent color */
+    --portfolio-text: 0 0% 10%; /* Near black for text */
+    --portfolio-text-muted: 0 0% 40%; /* Medium gray for less important text */
+    --portfolio-card-bg: 0 0% 0%; /* Black for card background */
+    --portfolio-card-text: 0 0% 100%; /* White for text on dark cards */
+
+    --primary: 323 100% 50%; /* #FF00CC - Using the pink accent color as primary */
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -22,15 +31,15 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 323 100% 50%; /* #FF00CC - Pink accent */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 323 100% 50%; /* Match accent for focus rings */
 
     --radius: 0.5rem;
   }
@@ -100,7 +109,7 @@
   right: 0;
   width: 70%;
   height: 4px;
-  background-color: #ff00cc;
+  background-color: hsl(var(--portfolio-accent));
   animation-name: slideRight;
   animation-duration: 0.2s;
   animation-timing-function: ease-in-out;

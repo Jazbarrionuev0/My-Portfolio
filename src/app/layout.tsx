@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "../components/Background/particles.css";
 import { Analytics } from "@vercel/analytics/react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { jost } from "../fonts/fonts";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Jazmin Barrionuevo - Software Developer",
@@ -58,6 +60,10 @@ export const metadata: Metadata = {
   },
 };
 
+const ParticlesBackground = dynamic(() => import("../components/Background/ParticlesBackground"), {
+  ssr: false,
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -65,7 +71,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
       </head>
 
-      <body className={`${jost.className} bg-[#F6F6EF] max-w-6xl mx-auto `}>
+      <body className={`${jost.className} bg-background max-w-6xl mx-auto relative`}>
+        <ParticlesBackground />
         <Header />
 
         {children}
