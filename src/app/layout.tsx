@@ -73,12 +73,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className={`${jost.className} bg-background max-w-6xl mx-auto relative`}>
         <ParticlesBackground />
-        <Header />
+        <div className="relative z-1 flex flex-col min-h-screen">
+          <Header />
 
-        {children}
-        <Analytics />
+          <main className="flex-grow">{children}</main>
+          <Analytics />
 
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );

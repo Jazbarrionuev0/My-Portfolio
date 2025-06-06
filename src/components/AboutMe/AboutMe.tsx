@@ -7,7 +7,7 @@ import { Button } from "@/src/components/ui/button";
 
 export default function AboutMe() {
   return (
-    <section className="flex items-center flex-col md:flex-row min-h-[90vh] px-4 md:px-8 py-20 md:py-24">
+    <section className="flex items-center flex-col md:flex-row min-h-[90vh] px-4 md:px-8 py-20 md:py-24 relative z-10">
       <div className="flex flex-col gap-6 max-w-3xl">
         <motion.h4
           initial={{ opacity: 0, y: 10 }}

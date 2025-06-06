@@ -13,8 +13,12 @@
 }
 
 main,
-header,
 footer {
     position: relative;
     z-index: 1;
+}
+
+header {
+    position: relative;
+    z-index: 100; /* Higher z-index for header to ensure menu is on top */
 }

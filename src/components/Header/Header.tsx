@@ -81,7 +81,7 @@ const Header = () => {
         ))}
       </div>
       <div className="md:hidden w-screen">
-        <div className="absolute z-50 right-0">
+        <div className="absolute z-[200] right-0">
           <Hamburger toggled={isOpen} size={28} toggle={setOpen} color="hsl(var(--portfolio-accent))" />
         </div>
 
@@ -93,7 +93,7 @@ const Header = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed h-[100vh] z-40 left-0 shadow-4xl right-0 top-0 p-5 pt-24  bg-neutral-950 "
+                className="fixed h-[100vh] z-[150] left-0 shadow-4xl right-0 top-0 p-5 pt-24 bg-neutral-950 "
               >
                 <ul className="grid gap-2">
                   {routes.map((route, idx) => {
