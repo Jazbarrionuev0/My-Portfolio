@@ -22,7 +22,7 @@ export default async function Home() {
         <Image className="rounded-md " src={"/projects/crossword-puzzle/crosscluesIMG4.png"} alt="crossclues" width={1506} height={936} />
       </div>
       <div className="m-10">
-        <hr className=" w-[40%] bg-[#FF00CC] h-[2px] m-auto " />
+        <hr className=" w-[40%] bg-portfolio-accent h-[2px] m-auto " />
       </div>
 
       <h2 className="font-normal text-3xl ">El Desarrollo</h2>

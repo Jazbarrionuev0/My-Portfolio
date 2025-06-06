@@ -1,0 +1,24 @@
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.particles-container canvas {
+    pointer-events: auto;
+}
+
+main,
+footer {
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    position: relative;
+    z-index: 100; /* Higher z-index for header to ensure menu is on top */
+}

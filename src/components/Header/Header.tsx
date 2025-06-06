@@ -30,6 +30,8 @@ const links = [
   },
 ];
 
+const name = "Jazmin Barrionuevo".split("");
+
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
   const ref = useRef(null);
@@ -37,21 +39,50 @@ const Header = () => {
 
   useClickAway(ref, () => setOpen(false));
   return (
-    <header className=" w-full py-4 my-2 md:py-8 md:my-4 flex justify-between  ">
-      <Link href="/" className="hover:text-[#FF00CC] font-semibold ml-4 md:ml-0">
+    <header className="w-full py-4 my-2 md:py-8 md:my-4 flex justify-between items-center ">
+      <Link href="/" className="hover:text-portfolio-accent font-semibold ml-4 md:ml-0">
         <div className="flex items-center gap-3 md:relative z-20">
-          <Image className="rounded-full w-10" src={"/jazfoto.jpg"} alt="Jazmin Barrionuevo" width={200} height={200} />
-          <p>Jazmin Barrionuevo</p>
+          <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+            <Image className="rounded-full w-10" src={"/jazfoto.jpg"} alt="Jazmin Barrionuevo" width={200} height={200} />
+          </motion.div>
+          <div className="flex">
+            {name.map((letter, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  delay: 0.3 + index * 0.05,
+                  ease: "easeInOut",
+                }}
+              >
+                {letter === " " ? <span>&nbsp;</span> : letter}
+              </motion.span>
+            ))}
+          </div>
         </div>
       </Link>
-      <div className="hidden md:block ">
-        {links.map(({ link, text }) => (
-          <HeaderLink key={link} pathname={pathname} link={link} text={text} />
+      <div className="hidden md:flex md:flex-row md:items-center">
+        {links.map(({ link, text }, index) => (
+          <motion.div
+            key={link}
+            className="inline-flex"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.3,
+              delay: 0.1 + index * 0.1,
+              ease: "easeInOut",
+            }}
+          >
+            <HeaderLink pathname={pathname} link={link} text={text} />
+          </motion.div>
         ))}
       </div>
       <div className="md:hidden w-screen">
-        <div className="absolute z-50 right-0">
-          <Hamburger toggled={isOpen} size={28} toggle={setOpen} color="#FF00CC" />
+        <div className="absolute z-[200] right-0">
+          <Hamburger toggled={isOpen} size={28} toggle={setOpen} color="hsl(var(--portfolio-accent))" />
         </div>
 
         <div className="absolute">
@@ -62,7 +93,7 @@ const Header = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed h-[100vh] z-40 left-0 shadow-4xl right-0 top-0 p-5 pt-24  bg-neutral-950 "
+                className="fixed h-[100vh] z-[150] left-0 shadow-4xl right-0 top-0 p-5 pt-24 bg-neutral-950 "
               >
                 <ul className="grid gap-2">
                   {routes.map((route, idx) => {
@@ -77,7 +108,7 @@ const Header = () => {
                           delay: 0.1 + idx / 10,
                         }}
                         key={route.title}
-                        className="w-full text-3xl p-[0.08rem] hover:underline decoration-[#FF00CC] decoration-4 rounded-xl text-white "
+                        className="w-full text-3xl p-[0.08rem] hover:underline decoration-portfolio-accent decoration-4 rounded-xl text-white "
                       >
                         <a
                           onClick={() => setOpen((prev) => !prev)}

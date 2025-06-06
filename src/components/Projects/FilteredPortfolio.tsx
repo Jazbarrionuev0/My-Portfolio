@@ -23,20 +23,20 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
   const filteredProjects = projects.filter((project) => (selectedCategory === "All" ? true : project.category === selectedCategory));
 
   return (
-    <div className="container mx-auto px-4 ">
-      <div className="flex flex-col items-start gap-6">
-        <div className="flex flex-wrap gap-4 mb-8">
+    <div id="projects" className="container mx-auto px-6 py-12 max-w-7xl">
+      <div className="flex flex-col items-start gap-10">
+        <div className="flex flex-wrap gap-5">
           {categories.map((category) => (
             <Button
               key={category}
               variant="ghost"
               onClick={() => setSelectedCategory(category)}
               className={`
-                rounded-md px-6 py-2 text-base font-light transition-all duration-300 text-white
+                rounded-md px-7 py-2.5 text-base font-light transition-all duration-300 text-portfolio-card-text
                 ${
                   selectedCategory === category
-                    ? "bg-[#FF00CC]  hover:bg-[#FF00CC] hover:text-white"
-                    : "border-2 border-[#FF00CC] text-[#FF00CC] hover:bg-[#FF00CC] hover:text-white"
+                    ? "bg-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
+                    : "border-2 border-portfolio-accent text-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
                 }
               `}
             >
@@ -45,29 +45,29 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
           {filteredProjects.map((project, i) => (
             <Link key={i} href={project.link}>
-              <div className="w-full" onMouseEnter={() => setHoveredId(project.title)} onMouseLeave={() => setHoveredId(null)}>
-                <div className="relative h-[320px] rounded-lg cursor-pointer transition duration-300 hover:scale-105 bg-black">
+              <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.title)} onMouseLeave={() => setHoveredId(null)}>
+                <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-portfolio-card-bg">
                   <Image
-                    className="object-cover rounded-lg opacity-65"
+                    className="object-cover rounded-lg opacity-35"
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <Card className="absolute inset-0 bg-transparent">
-                    <CardHeader>
-                      <CardTitle className="text-white font-normal">{project.title}</CardTitle>
+                    <CardHeader className="pt-6 pb-2">
+                      <CardTitle className="text-portfolio-card-text text-2xl font-normal">{project.title}</CardTitle>
                     </CardHeader>
                     {hoveredId === project.title && (
-                      <CardContent className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 rounded-lg">
-                        <CardDescription className="text-white text-lg">{project.description}</CardDescription>
+                      <CardContent className="absolute inset-0 flex items-center justify-center bg-portfolio-card-bg bg-opacity-75 rounded-lg p-8">
+                        <CardDescription className="text-portfolio-card-text text-lg leading-relaxed">{project.description}</CardDescription>
                       </CardContent>
                     )}
-                    <CardFooter className="absolute bottom-0 right-0">
-                      <ArrowRight className="text-white" />
+                    <CardFooter className="absolute bottom-4 right-4">
+                      <ArrowRight className="text-portfolio-card-text h-6 w-6" />
                     </CardFooter>
                   </Card>
                 </div>

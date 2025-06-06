@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "../components/Background/particles.css";
 import { Analytics } from "@vercel/analytics/react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { jost } from "../fonts/fonts";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Jazmin Barrionuevo - Software Developer",
@@ -27,7 +29,6 @@ export const metadata: Metadata = {
       url: "https://github.com/Jazbarrionuev0",
     },
   ],
-  themeColor: "#FF00CC",
   openGraph: {
     title: "Jazmin Barrionuevo - Software Developer Portfolio",
     description:
@@ -53,12 +54,15 @@ export const metadata: Metadata = {
       "I'm a software developer focused on frontend and artificial intelligence development. Explore my portfolio showcasing web development, AI, computer vision and data science projects.",
     images: ["https://www.jazminbarrionuevo.tech/favicon.ico"],
   },
-  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     icon: "/favicon.ico",
     apple: "/favicon.ico",
   },
 };
+
+const ParticlesBackground = dynamic(() => import("../components/Background/ParticlesBackground"), {
+  ssr: false,
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -67,13 +71,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
       </head>
 
-      <body className={`${jost.className} bg-[#F6F6EF] max-w-6xl mx-auto `}>
-        <Header />
+      <body className={`${jost.className} bg-background max-w-6xl mx-auto relative`}>
+        <ParticlesBackground />
+        <div className="relative z-1 flex flex-col min-h-screen">
+          <Header />
 
-        {children}
-        <Analytics />
+          <main className="flex-grow">{children}</main>
+          <Analytics />
 
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );
