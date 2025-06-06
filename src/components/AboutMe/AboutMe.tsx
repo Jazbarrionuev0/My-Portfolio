@@ -44,7 +44,7 @@ export default function AboutMe() {
           className="mt-4 flex flex-col md:flex-row gap-4"
         >
           <Button size="lg" className="bg-portfolio-accent hover:bg-portfolio-accent/90 text-white px-6">
-            <Link href="/projects" className="flex items-center gap-2">
+            <Link href="/#projects" className="flex items-center gap-2">
               View Projects <ArrowRight size={16} />
             </Link>
           </Button>
@@ -59,7 +59,7 @@ export default function AboutMe() {
           </Button>
         </motion.div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.7 }}
           transition={{ duration: 1, delay: 0.8 }}
@@ -81,10 +81,7 @@ export default function AboutMe() {
           >
             LinkedIn
           </Link>
-          <Link href="mailto:jazbarrionuevo@gmail.com" className="hover:text-portfolio-accent transition-colors">
-            Contact
-          </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

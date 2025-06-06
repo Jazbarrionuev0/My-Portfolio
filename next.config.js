@@ -16,6 +16,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    viewTransition: true,
+  },
 };
 
 module.exports = nextConfig;

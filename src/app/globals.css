@@ -42,6 +42,8 @@
     --ring: 323 100% 50%; /* Match accent for focus rings */
 
     --radius: 0.5rem;
+
+    scroll-behavior: smooth;
   }
 
   .dark {

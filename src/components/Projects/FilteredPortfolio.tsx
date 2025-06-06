@@ -23,7 +23,7 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
   const filteredProjects = projects.filter((project) => (selectedCategory === "All" ? true : project.category === selectedCategory));
 
   return (
-    <div className="container mx-auto px-6 py-12 max-w-7xl">
+    <div id="projects" className="container mx-auto px-6 py-12 max-w-7xl">
       <div className="flex flex-col items-start gap-10">
         <div className="flex flex-wrap gap-5">
           {categories.map((category) => (
