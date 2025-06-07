@@ -29,7 +29,7 @@ export default async function Home() {
       <p className="my-3">
         I built a comprehensive <span className="font-bold">RAG (Retrieval-Augmented Generation) chat system</span> using Google Gemini and LangChain.
         The application combines document retrieval with AI generation, allowing users to chat with their PDFs, analyze images, and have intelligent
-        conversations powered by <span className="italic">Google's latest Gemini 1.5 Flash model</span>.
+        conversations powered by <span className="italic">Google&aposs latest Gemini 1.5 Flash model</span>.
       </p>
       <video className="w-full rounded-md md:p-10 my-6" width={564}
         height={420} autoPlay muted loop playsInline>
@@ -39,7 +39,7 @@ export default async function Home() {
 
       <p className="my-3">
         The core of the system revolves around <span className="text-green-700">vector embeddings</span> that transform documents into searchable
-        representations. When you upload a PDF, the system chunks the text and creates embeddings using Google's embedding model:
+        representations. When you upload a PDF, the system chunks the text and creates embeddings using Google&aposs embedding model:
       </p>
       <Rio
         code={`def create_vector_store(embeddings, documents):
@@ -69,7 +69,7 @@ export default async function Home() {
 
       <p className="my-3">
         The application supports three distinct chat modes, each optimized for different use cases. I implemented a flexible architecture using
-        Streamlit's session state management and LangChain's modular components to handle various input types seamlessly.
+        Streamlit&aposs session state management and LangChain&aposs modular components to handle various input types seamlessly.
       </p>
 
       <p className="my-3">Now, there are three main features to focus on:</p>
@@ -77,7 +77,7 @@ export default async function Home() {
       <p className="my-3">
         <span className="font-bold">1. RAG Chat Mode: </span>This is where the magic happens. The system processes your documents, creates embeddings,
         and uses a retrieval chain to find relevant context before generating responses. Each answer includes source attribution so you know exactly
-        which documents informed the AI's response.
+        which documents informed the AI&aposs response.
       </p>
       <Rio
         code={`qa_chain = ConversationalRetrievalChain.from_llm(
@@ -97,7 +97,7 @@ source_docs = response.get("source_documents", [])`}
 
       <p className="my-3">
         <span className="font-bold">2. Image Analysis with Gemini Vision: </span>The system can process multiple image formats and analyze them using
-        Gemini's vision capabilities. Images are converted to base64 and sent to the model along with your questions, enabling visual understanding
+        Gemini&aposs vision capabilities. Images are converted to base64 and sent to the model along with your questions, enabling visual understanding
         and detailed analysis.
       </p>
       <Rio
