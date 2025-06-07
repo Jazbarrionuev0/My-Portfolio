@@ -133,6 +133,15 @@ const projects: Project[] = [
     link: "/projects/data-analysis",
     category: "Data science",
   },
+  {
+    image: "/projects/multimodal-chat/multimodal.png",
+    title: "Multimodal chat",
+    description:
+      "A Streamlit application that combines Retrieval-Augmented Generation with Google Gemini AI to create an intelligent document chat system with multi-modal capabilities.",
+    repoLink: "https://github.com/Jazbarrionuev0/Multimodal-chat",
+    link: "/projects/multimodal-chat",
+    category: "NLP",
+  },
 ];
 
 export default projects;

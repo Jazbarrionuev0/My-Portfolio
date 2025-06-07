@@ -81,5 +81,11 @@ const FaceRecognition: Tag[] = [
     { title: 'Deepface', className: 'devicon--plain' },
 ]
 
-
-export { GAN, SnakeGame, ObjectDetection, Handwritten, Whispering, Neopixel, QR, Bash, Data, Algorithm, FaceRecognition }
+const MULTIMODAL_CHAT: Tag[] = [
+    { title: 'Python', className: 'devicon-python-plain' },
+    { title: 'Streamlit', className: 'devicon-streamlit-plain' },
+    { title: 'LangChain', className: 'devicon-langchain-plain' },
+    { title: 'Google AI', className: 'devicon-google-plain' },
+    { title: 'Docker', className: 'devicon-docker-plain' },
+]
+export { GAN, SnakeGame, ObjectDetection, Handwritten, Whispering, Neopixel, QR, Bash, Data, Algorithm, FaceRecognition, MULTIMODAL_CHAT }
