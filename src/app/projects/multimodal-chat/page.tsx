@@ -1,8 +1,8 @@
 import Rio from "@/src/components/Code/Rio";
 import TagContainer from "@/src/components/TagContainer/TagContainer";
 import { MULTIMODAL_CHAT } from "@/src/utils/projectstags";
-import Image from "next/image";
 import Link from "next/link";
+
 export default async function Home() {
   return (
     <div className="max-w-3xl mx-auto md:mt-0 p-4 md:p-8 lg:p-12">
@@ -22,7 +22,12 @@ export default async function Home() {
         >
           Rag chat
           <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
           </svg>
         </a>
       </div>
@@ -31,8 +36,7 @@ export default async function Home() {
         The application combines document retrieval with AI generation, allowing users to chat with their PDFs, analyze images, and have intelligent
         conversations powered by <span className="italic">Google&aposs latest Gemini 1.5 Flash model</span>.
       </p>
-      <video className="w-full rounded-md md:p-10 my-6" width={564}
-        height={420} autoPlay muted loop playsInline>
+      <video className="w-full max-w-none rounded-md my-6" autoPlay muted loop playsInline poster="/projects/multimodal-chat/multimodal.png">
         <source src="/projects/multimodal-chat/RAG.mp4" type="video/mp4" className="rounded-lg" />
         Your browser does not support the video tag.
       </video>
@@ -59,8 +63,8 @@ export default async function Home() {
       />
 
       <p className="my-3">
-        <span className="text-green-700">DocArrayInMemorySearch</span> creates a vector database that enables semantic search. When you ask a question,
-        the system finds the most relevant document chunks and passes them to Gemini for context-aware responses.
+        <span className="text-green-700">DocArrayInMemorySearch</span> creates a vector database that enables semantic search. When you ask a
+        question, the system finds the most relevant document chunks and passes them to Gemini for context-aware responses.
       </p>
 
       <h1 id="architecture" className="text-2xl font-semibold my-3 text-gray-500">
@@ -97,8 +101,8 @@ source_docs = response.get("source_documents", [])`}
 
       <p className="my-3">
         <span className="font-bold">2. Image Analysis with Gemini Vision: </span>The system can process multiple image formats and analyze them using
-        Gemini&aposs vision capabilities. Images are converted to base64 and sent to the model along with your questions, enabling visual understanding
-        and detailed analysis.
+        Gemini&aposs vision capabilities. Images are converted to base64 and sent to the model along with your questions, enabling visual
+        understanding and detailed analysis.
       </p>
       <Rio
         code={`def process_image_with_gemini(image_file, prompt, vision_llm):
@@ -120,15 +124,14 @@ source_docs = response.get("source_documents", [])`}
         language={"python"}
         showLineNumbers={true}
       />
-      <video className="w-full rounded-md md:p-10 my-6" width={564}
-        height={420} autoPlay muted loop playsInline>
+      <video className="w-full max-w-none rounded-md my-6" autoPlay muted loop playsInline poster="/projects/multimodal-chat/multimodal.png">
         <source src="/projects/multimodal-chat/image.mp4" type="video/mp4" className="rounded-lg" />
         Your browser does not support the video tag.
       </video>
 
       <p className="my-3">
-        <span className="font-bold">3. Intelligent PDF Processing: </span>Large documents are automatically chunked using recursive text splitting
-        to maintain context while staying within token limits. The system handles multiple file formats and preserves document structure for better
+        <span className="font-bold">3. Intelligent PDF Processing: </span>Large documents are automatically chunked using recursive text splitting to
+        maintain context while staying within token limits. The system handles multiple file formats and preserves document structure for better
         retrieval accuracy.
       </p>
       <Rio
@@ -144,8 +147,8 @@ source_docs = response.get("source_documents", [])`}
       />
 
       <p className="my-3">
-        The conversation memory ensures context is maintained across multiple turns, while the modular design allows easy switching between chat modes.
-        The entire system is built with privacy considerations, using temporary file handling and session-based state management.
+        The conversation memory ensures context is maintained across multiple turns, while the modular design allows easy switching between chat
+        modes. The entire system is built with privacy considerations, using temporary file handling and session-based state management.
       </p>
 
       <p className="my-3">

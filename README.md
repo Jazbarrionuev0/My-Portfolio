@@ -1,10 +1,8 @@
 # Jazmin Barrionuevo - Personal Portfolio
 
-![Portfolio Website](public/web.png)
-
 ## 🌐 Live Website
 
-Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.tech)
+Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.com)
 
 ## 📝 Overview
 
