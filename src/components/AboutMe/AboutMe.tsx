@@ -58,30 +58,6 @@ export default function AboutMe() {
             </Link>
           </Button>
         </motion.div>
-
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 flex flex-row gap-6 text-portfolio-text-muted"
-        >
-          <Link
-            href="https://github.com/Jazbarrionuev0"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-portfolio-accent transition-colors"
-          >
-            GitHub
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/jazmin-barrionuevo/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-portfolio-accent transition-colors"
-          >
-            LinkedIn
-          </Link>
-        </motion.div> */}
       </div>
     </section>
   );
