@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -10,14 +8,14 @@ export default function LatestProject() {
   const latestProject = projects[projects.length - 1];
 
   return (
-    <section className="w-full px-4 md:px-8 py-16 border-b bg-pink-50/30 border border-pink-200 rounded-lg shadow-sm">
+    <section className="w-full px-4 md:px-8 py-16 border-b bg-pink-50/30 border border-pink-200 md:rounded-lg shadow-sm">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          <div className="relative overflow-hidden rounded-lg shadow-md h-full min-h-[300px]">
+          <div className="relative overflow-hidden rounded-lg shadow-md h-full min-h-[300px] order-2 md:order-1">
             <Image src={latestProject.image} alt={latestProject.title} fill style={{ objectFit: "cover" }} priority />
           </div>
 
-          <div className="flex flex-col gap-6 pt-2">
+          <div className="flex flex-col gap-6 pt-2 order-1 md:order-2">
             <div className="space-y-2">
               <span className="text-portfolio-accent text-sm font-semibold tracking-wider uppercase">Featured Work</span>
               <h2 className="text-3xl md:text-4xl font-bold">Latest Project</h2>
