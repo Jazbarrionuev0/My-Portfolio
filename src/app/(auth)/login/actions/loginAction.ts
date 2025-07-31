@@ -14,7 +14,6 @@ export async function loginAction(formData: FormData) {
     };
   }
 
-  // Verify password using bcrypt
   const isValidPassword = await verifyPassword(password);
 
   if (!isValidPassword) {
@@ -39,6 +38,9 @@ export async function loginAction(formData: FormData) {
     path: "/",
   });
 
-  // Redirect to admin page
-  redirect("/admin");
+  // Return success instead of redirecting immediately
+  return {
+    success: true,
+    redirectTo: "/admin",
+  };
 }

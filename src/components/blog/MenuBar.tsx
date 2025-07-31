@@ -2,7 +2,7 @@
 
 import { Editor } from "@tiptap/react";
 import MenuButton from "./MenuButton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/src/components/ui/tooltip";
 import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Image as ImageIcon, Code, FileCode2 } from "lucide-react";
 
 export default function MenuBar({ editor }: { editor: Editor | null }) {

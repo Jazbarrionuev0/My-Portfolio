@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { isAuthenticated, getAuthPayload } from "../../../lib/auth";
 import { getAllBlogPosts } from "../../../actions/blog";
-import { logoutAction } from "../../(auth)/login/actions/logoutAction";
+import LogoutButton from "./components/LogoutButton";
 import Link from "next/link";
 
 async function AdminPage() {
@@ -32,11 +32,7 @@ async function AdminPage() {
               <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
               {authPayload && <p className="text-sm text-gray-600 mt-1">Logged in as {authPayload.role} • Session expires in 7 days</p>}
             </div>
-            <form action={logoutAction}>
-              <button type="submit" className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                Logout
-              </button>
-            </form>
+            <LogoutButton />
           </div>
 
           {/* Blog Stats */}

@@ -1,11 +1,9 @@
-#!/usr/bin/env node
-
 // Script to generate a secure JWT secret
 // Run with: node scripts/generate-jwt-secret.js
 
-const crypto = require("crypto");
+import { randomBytes } from "crypto";
 
-const secret = crypto.randomBytes(64).toString("hex");
+const secret = randomBytes(64).toString("hex");
 
 console.log("Generated JWT Secret:");
 console.log(secret);

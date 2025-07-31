@@ -1,57 +1,73 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Lock } from "lucide-react";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
+import { toast } from "sonner";
 import { loginAction } from "../actions/loginAction";
 
 export default function LoginForm() {
-  const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
-    setError("");
 
     try {
       const result = await loginAction(formData);
 
-      if (!result?.success) {
-        setError(result?.error || "Invalid password");
+      if (result?.success) {
+        toast.success("Login successful!");
+        // Small delay to show the toast before redirecting
+        setTimeout(() => {
+          router.push(result.redirectTo || "/admin");
+        }, 1000);
+      } else {
+        toast.error(result?.error || "Invalid password");
+        setIsLoading(false);
       }
-      // If successful, the server action will handle the redirect
     } catch (err) {
       console.error("Login error:", err);
-      setError("An error occurred. Please try again.");
-    } finally {
+      toast.error("An error occurred. Please try again.");
       setIsLoading(false);
     }
   }
 
   return (
     <form action={handleSubmit} className="mt-8 space-y-6">
-      <div>
+      <div className="relative">
         <label htmlFor="password" className="sr-only">
           Password
         </label>
-        <input
+        <Input
           id="password"
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
-          className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          className="pr-10"
           placeholder="Enter admin password"
           disabled={isLoading}
           autoComplete="current-password"
         />
+        <button
+          type="button"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          onClick={() => setShowPassword(!showPassword)}
+          disabled={isLoading}
+        >
+          {showPassword ? (
+            <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+          ) : (
+            <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+          )}
+        </button>
       </div>
 
-      {error && <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-md border border-red-200">{error}</div>}
-
       <div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
+        <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? (
             <>
               <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -67,11 +83,14 @@ export default function LoginForm() {
           ) : (
             "Sign in"
           )}
-        </button>
+        </Button>
       </div>
 
       <div className="text-xs text-gray-500 text-center">
-        <p>🔒 Secure login with encrypted JWT tokens</p>
+        <p className="flex items-center justify-center gap-1">
+          <Lock className="h-3 w-3" />
+          Secure login with encrypted JWT tokens
+        </p>
       </div>
     </form>
   );

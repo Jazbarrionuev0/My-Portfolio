@@ -1,5 +1,6 @@
 import { jost } from "@/src/fonts/fonts";
 import "../../globals.css";
+import { Toaster } from "@/src/components/ui/sonner";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <body className={`${jost.className} bg-background max-w-6xl mx-auto relative`}>
         <div className="relative z-1 flex flex-col min-h-screen">
           <main className="flex-grow">{children}</main>
+          <Toaster />
         </div>
       </body>
     </html>
