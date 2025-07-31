@@ -66,7 +66,7 @@ const page: React.FC<{ params: { slug: string } }> = async ({ params }) => {
           <div className="flex flex-wrap gap-2 mt-4">
             {post.tags.map((tag, index) => (
               <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                {tag}
+                {tag.title}
               </span>
             ))}
           </div>

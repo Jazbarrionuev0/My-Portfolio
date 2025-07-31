@@ -23,7 +23,7 @@ export default function LoginForm() {
         toast.success("Login successful!");
         // Small delay to show the toast before redirecting
         setTimeout(() => {
-          router.push(result.redirectTo || "/admin");
+          router.push(result.redirectTo || "/admin/blog");
         }, 1000);
       } else {
         toast.error(result?.error || "Invalid password");

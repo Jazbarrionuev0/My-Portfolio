@@ -21,6 +21,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../../components/ui/popover";
+import { toast } from "sonner";
 
 type Post = {
   id: string;
@@ -33,7 +34,10 @@ type Post = {
   readingTime: number | null;
   viewCount: number;
   featuredImage: string | null;
-  tags: string[];
+  tags: {
+    id: string;
+    title: string;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -61,23 +65,36 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
       searchTerm === "" ||
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      post.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      post.tags.some((tag) => tag.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return matchesFilter && matchesSearch;
   });
 
   const handleDelete = async (id: string) => {
     setLoading(id);
+
+    const loadingToast = toast.loading("Deleting blog post...");
+
     try {
       const result = await deleteBlogPost(id);
       if (result.success) {
         setPosts(posts.filter((post) => post.id !== id));
         setShowDeleteModal(null);
+        toast.dismiss(loadingToast);
+        toast.success("Blog post deleted successfully", {
+          description: "The post has been permanently removed from your blog.",
+        });
       } else {
-        alert("Error deleting post: " + result.error);
+        toast.dismiss(loadingToast);
+        toast.error("Failed to delete post", {
+          description: result.error,
+        });
       }
     } catch (error) {
-      alert("Error deleting post");
+      toast.dismiss(loadingToast);
+      toast.error("Failed to delete post", {
+        description: "An unexpected error occurred. Please try again.",
+      });
     } finally {
       setLoading(null);
     }
@@ -89,15 +106,35 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
 
   const handlePublish = async (id: string) => {
     setLoading(id);
+
+    const loadingToast = toast.loading("Publishing blog post...");
+
     try {
       const result = await publishBlogPost(id);
       if (result.success) {
         setPosts(posts.map((post) => (post.id === id ? { ...post, status: "PUBLISHED" as const, published: true, publishedAt: new Date() } : post)));
+        toast.dismiss(loadingToast);
+        toast.success("Blog post published successfully", {
+          description: "Your post is now live and visible to readers.",
+          action: {
+            label: "View Live",
+            onClick: () => {
+              const post = posts.find((p) => p.id === id);
+              if (post) window.open(`/blog/${post.slug}`, "_blank");
+            },
+          },
+        });
       } else {
-        alert("Error publishing post: " + result.error);
+        toast.dismiss(loadingToast);
+        toast.error("Failed to publish post", {
+          description: result.error,
+        });
       }
     } catch (error) {
-      alert("Error publishing post");
+      toast.dismiss(loadingToast);
+      toast.error("Failed to publish post", {
+        description: "An unexpected error occurred. Please try again.",
+      });
     } finally {
       setLoading(null);
     }
@@ -105,15 +142,28 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
 
   const handleUnpublish = async (id: string) => {
     setLoading(id);
+
+    const loadingToast = toast.loading("Unpublishing blog post...");
+
     try {
       const result = await unpublishBlogPost(id);
       if (result.success) {
         setPosts(posts.map((post) => (post.id === id ? { ...post, status: "DRAFT" as const, published: false, publishedAt: null } : post)));
+        toast.dismiss(loadingToast);
+        toast.success("Blog post unpublished successfully", {
+          description: "Your post is now saved as a draft and no longer visible to readers.",
+        });
       } else {
-        alert("Error unpublishing post: " + result.error);
+        toast.dismiss(loadingToast);
+        toast.error("Failed to unpublish post", {
+          description: result.error,
+        });
       }
     } catch (error) {
-      alert("Error unpublishing post");
+      toast.dismiss(loadingToast);
+      toast.error("Failed to unpublish post", {
+        description: "An unexpected error occurred. Please try again.",
+      });
     } finally {
       setLoading(null);
     }
@@ -417,7 +467,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                               className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border"
                             >
                               <Tag className="w-3 h-3" />
-                              {tag}
+                              {tag.title}
                             </span>
                           ))}
                           {post.tags.length > 3 && (

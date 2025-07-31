@@ -19,8 +19,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         {/* <Nav /> */}
         <div className="max-w-6xl mx-auto">
           <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">{children}</main>
-          <Toaster />
         </div>
+        <Toaster richColors position="top-right" expand={true} duration={4000} />
       </body>
     </html>
   );

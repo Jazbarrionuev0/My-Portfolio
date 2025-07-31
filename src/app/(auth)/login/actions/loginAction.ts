@@ -41,6 +41,6 @@ export async function loginAction(formData: FormData) {
   // Return success instead of redirecting immediately
   return {
     success: true,
-    redirectTo: "/admin",
+    redirectTo: "/admin/blog",
   };
 }

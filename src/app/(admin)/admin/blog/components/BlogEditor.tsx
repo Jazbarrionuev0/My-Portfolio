@@ -5,9 +5,10 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { saveBlogPost, updateBlogPost } from "../../../../../actions/blog";
+import { saveBlogPost, updateBlogPost, getAllTags } from "../../../../../actions/blog";
 import MenuBar from "../../../../../components/blog/MenuBar";
 import Link from "next/link";
+import { toast } from "sonner";
 
 type Post = {
   id: string;
@@ -23,7 +24,10 @@ type Post = {
   readingTime: number | null;
   viewCount: number;
   featuredImage: string | null;
-  tags: string[];
+  tags: {
+    id: string;
+    title: string;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -36,8 +40,11 @@ interface BlogEditorProps {
 export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const [title, setTitle] = useState(post?.title || "");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
-  const [tags, setTags] = useState<string[]>(post?.tags || []);
+  const [tags, setTags] = useState<string[]>(post?.tags?.map((tag) => tag.title) || []);
   const [tagInput, setTagInput] = useState("");
+  const [availableTags, setAvailableTags] = useState<{ id: string; title: string; postCount: number }[]>([]);
+  const [filteredTags, setFilteredTags] = useState<{ id: string; title: string; postCount: number }[]>([]);
+  const [showTagSuggestions, setShowTagSuggestions] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const router = useRouter();
@@ -50,6 +57,46 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setHasChanges(true);
     },
   });
+
+  // Fetch available tags on component mount
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const result = await getAllTags();
+        if (result.success && result.tags) {
+          const tagsWithCount = result.tags.map((tag) => ({
+            id: tag.id,
+            title: tag.title,
+            postCount: tag._count.posts,
+          }));
+          setAvailableTags(tagsWithCount);
+        }
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+
+    fetchTags();
+  }, []);
+
+  // Filter tags based on input
+  useEffect(() => {
+    if (showTagSuggestions) {
+      if (tagInput.trim()) {
+        const filtered = availableTags.filter((tag) => tag.title.toLowerCase().includes(tagInput.toLowerCase()) && !tags.includes(tag.title));
+        setFilteredTags(filtered);
+      } else {
+        // Show most popular tags when no input
+        const filtered = availableTags
+          .filter((tag) => !tags.includes(tag.title))
+          .sort((a, b) => b.postCount - a.postCount)
+          .slice(0, 5);
+        setFilteredTags(filtered);
+      }
+    } else {
+      setFilteredTags([]);
+    }
+  }, [tagInput, availableTags, tags, showTagSuggestions]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -65,11 +112,14 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
   const handleSave = async () => {
     if (!editor || !title.trim()) {
-      alert("Please enter a title");
+      toast.error("Please enter a title");
       return;
     }
 
     setIsSaving(true);
+
+    // Show loading toast
+    const loadingToast = toast.loading(`${mode === "create" ? "Creating" : "Updating"} blog post...`);
 
     try {
       const contentData = {
@@ -90,24 +140,43 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
       if (result.success) {
         setHasChanges(false);
-        alert(`Blog post ${mode === "create" ? "created" : "updated"} successfully!`);
-        router.push("/admin/blog");
+        toast.dismiss(loadingToast);
+
+        // Show success toast and wait before navigation
+        toast.success(`Blog post ${mode === "create" ? "created" : "updated"} successfully!`, {
+          description: mode === "create" ? "Your new blog post has been created as a draft." : "Your changes have been saved.",
+          duration: 4000, // Show for 4 seconds
+        });
+
+        // Navigate after showing the toast
+        setTimeout(() => {
+          router.push("/admin/blog");
+        }, 2000);
       } else {
-        alert(`Error ${mode === "create" ? "creating" : "updating"} post: ${result.error}`);
+        toast.dismiss(loadingToast);
+        toast.error(`Failed to ${mode === "create" ? "create" : "update"} post`, {
+          description: result.error,
+          duration: 5000,
+        });
       }
     } catch (error) {
       console.error("Save error:", error);
-      alert(`Failed to ${mode === "create" ? "create" : "update"} the blog post. Please try again.`);
+      toast.dismiss(loadingToast);
+      toast.error(`Failed to ${mode === "create" ? "create" : "update"} the blog post`, {
+        description: "Please try again or contact support if the problem persists.",
+        duration: 5000,
+      });
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleAddTag = () => {
-    const tag = tagInput.trim();
+  const handleAddTag = (tagTitle?: string) => {
+    const tag = (tagTitle || tagInput).trim();
     if (tag && !tags.includes(tag)) {
       setTags([...tags, tag]);
       setTagInput("");
+      setShowTagSuggestions(false);
       setHasChanges(true);
     }
   };
@@ -120,8 +189,27 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleAddTag();
+      if (filteredTags.length > 0) {
+        handleAddTag(filteredTags[0].title);
+      } else {
+        handleAddTag();
+      }
+    } else if (e.key === "Escape") {
+      setShowTagSuggestions(false);
     }
+  };
+
+  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTagInput(e.target.value);
+  };
+
+  const handleTagInputFocus = () => {
+    setShowTagSuggestions(true);
+  };
+
+  const handleTagInputBlur = () => {
+    // Delay hiding suggestions to allow clicks on suggestions
+    setTimeout(() => setShowTagSuggestions(false), 200);
   };
 
   return (
@@ -212,19 +300,55 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             <input
               type="text"
               value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
+              onChange={handleTagInputChange}
+              onFocus={handleTagInputFocus}
+              onBlur={handleTagInputBlur}
               onKeyPress={handleKeyPress}
               placeholder="Add a tag..."
               className="flex-1 p-2 border border-gray-300 rounded-l-md placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
             />
             <button
-              onClick={handleAddTag}
+              onClick={() => handleAddTag()}
               type="button"
               className="px-4 py-2 bg-gray-600 text-white rounded-r-md hover:bg-gray-700 transition-colors"
             >
               Add
             </button>
           </div>
+
+          {/* Tag Suggestions Dropdown */}
+          {showTagSuggestions && (
+            <div className="relative">
+              <div className="absolute top-1 left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+                {filteredTags.length > 0 ? (
+                  <>
+                    {!tagInput.trim() && <div className="px-3 py-2 text-xs text-gray-500 bg-gray-50 border-b">Popular tags:</div>}
+                    {filteredTags.map((tag) => (
+                      <div
+                        key={tag.id}
+                        onClick={() => handleAddTag(tag.title)}
+                        className="px-3 py-2 hover:bg-gray-50 cursor-pointer flex justify-between items-center"
+                      >
+                        <span className="text-gray-900">{tag.title}</span>
+                        <span className="text-xs text-gray-500">
+                          {tag.postCount} post{tag.postCount !== 1 ? "s" : ""}
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                ) : null}
+                {tagInput.trim() && (
+                  <div
+                    onClick={() => handleAddTag()}
+                    className="px-3 py-2 hover:bg-gray-50 cursor-pointer flex justify-between items-center border-t"
+                  >
+                    <span className="text-gray-900">Create &ldquo;{tagInput.trim()}&rdquo;</span>
+                    <span className="text-xs text-green-600 font-medium">New tag</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Editor */}

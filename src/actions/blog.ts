@@ -3,23 +3,33 @@
 import prisma from "@/src/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+export async function getAllTags() {
+  try {
+    const tags = await prisma.tag.findMany({
+      orderBy: {
+        title: "asc",
+      },
+      include: {
+        _count: {
+          select: {
+            posts: true,
+          },
+        },
+      },
+    });
+
+    return { success: true, tags };
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    return { success: false, error: "Failed to fetch tags" };
+  }
+}
+
 export async function getAllBlogPosts() {
   try {
     const posts = await prisma.post.findMany({
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        excerpt: true,
-        status: true,
-        published: true,
-        publishedAt: true,
-        readingTime: true,
-        viewCount: true,
-        featuredImage: true,
+      include: {
         tags: true,
-        createdAt: true,
-        updatedAt: true,
       },
       orderBy: {
         updatedAt: "desc",
@@ -78,9 +88,16 @@ export async function saveBlogPost(postData: {
         readingTime: readingTime,
         status: "DRAFT",
         published: false,
-        tags: postData.tags || [],
+        tags: {
+          connectOrCreate: (postData.tags || []).map((tagTitle) => ({
+            where: { title: tagTitle },
+            create: { title: tagTitle },
+          })),
+        },
       },
     });
+
+    console.log(post);
 
     revalidatePath("/admin/blog");
     return { success: true, post };
@@ -130,7 +147,13 @@ export async function updateBlogPost(
         contentJson: contentJsonParsed,
         contentText: postData.contentText,
         readingTime: readingTime,
-        tags: postData.tags || [],
+        tags: {
+          set: [], // First disconnect all existing tags
+          connectOrCreate: (postData.tags || []).map((tagTitle) => ({
+            where: { title: tagTitle },
+            create: { title: tagTitle },
+          })),
+        },
         updatedAt: new Date(),
       },
     });
@@ -204,23 +227,8 @@ export async function getBlogPostBySlug(slug: string) {
       where: {
         slug: slug,
       },
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        excerpt: true,
-        contentHtml: true,
-        contentJson: true,
-        contentText: true,
-        status: true,
-        published: true,
-        publishedAt: true,
-        readingTime: true,
-        viewCount: true,
-        featuredImage: true,
+      include: {
         tags: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
 
@@ -247,23 +255,8 @@ export async function getBlogPostById(id: string) {
   try {
     const post = await prisma.post.findUnique({
       where: { id },
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        excerpt: true,
-        contentHtml: true,
-        contentJson: true,
-        contentText: true,
-        status: true,
-        published: true,
-        publishedAt: true,
-        readingTime: true,
-        viewCount: true,
-        featuredImage: true,
+      include: {
         tags: true,
-        createdAt: true,
-        updatedAt: true,
       },
     });
 

@@ -6,7 +6,7 @@ async function checkAuth() {
   const authenticated = await isAuthenticated();
 
   if (authenticated) {
-    redirect("/admin");
+    redirect("/admin/blog");
   }
 }
 
