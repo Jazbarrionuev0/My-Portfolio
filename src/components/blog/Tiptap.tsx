@@ -5,9 +5,11 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import MenuBar from "./MenuBar";
 import { useState } from "react";
+import { saveBlogPost } from "@/src/actions/blog";
 
 const Tiptap = () => {
   const [title, setTitle] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -16,20 +18,34 @@ const Tiptap = () => {
     immediatelyRender: false,
   });
 
-  const handleSave = () => {
-    if (!editor) return;
+  const handleSave = async () => {
+    if (!editor || !title.trim()) return;
 
-    const contentData = {
-      title: title,
-      html: editor.getHTML(),
-      json: editor.getJSON(),
-      text: editor.getText(),
-    };
+    setIsSaving(true);
 
-    console.log("Saving content:", contentData);
+    try {
+      const contentData = {
+        title: title.trim(),
+        contentHtml: editor.getHTML(),
+        contentJson: JSON.stringify(editor.getJSON()),
+        contentText: editor.getText(),
+      };
 
-    // You can also show an alert or update state to show saved content
-    alert(`Saved!\nTitle: ${title}\nContent Length: ${editor.getText().length} characters`);
+      console.log("Saving content:", contentData);
+
+      const result = await saveBlogPost(contentData);
+
+      if (result.success) {
+        alert(`Blog post saved successfully!\nTitle: ${title}\nReading time: ${result.post?.readingTime} minutes`);
+      } else {
+        alert(`Error saving post: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Save error:", error);
+      alert("Failed to save the blog post. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -74,10 +90,10 @@ const Tiptap = () => {
       <div className="mb-4 flex justify-end">
         <button
           onClick={handleSave}
-          disabled={!editor || (!title.trim() && !editor.getText().trim())}
+          disabled={!editor || (!title.trim() && !editor.getText().trim()) || isSaving}
           className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
-          Save Draft
+          {isSaving ? "Saving..." : "Save Draft"}
         </button>
       </div>
     </div>

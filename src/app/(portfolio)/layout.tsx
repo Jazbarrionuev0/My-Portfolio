@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import "../components/Background/particles.css";
+import "../globals.css";
+import "../../components/Background/particles.css";
 import { Analytics } from "@vercel/analytics/react";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-import { jost } from "../fonts/fonts";
 import dynamic from "next/dynamic";
+import { jost } from "@/src/fonts/fonts";
+import Header from "@/src/components/Header/Header";
+import Footer from "@/src/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Jazmin Barrionuevo - Software Developer",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   },
 };
 
-const ParticlesBackground = dynamic(() => import("../components/Background/ParticlesBackground"), {
+const ParticlesBackground = dynamic(() => import("../../components/Background/ParticlesBackground"), {
   ssr: false,
 });
 

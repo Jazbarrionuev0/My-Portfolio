@@ -1,11 +1,5 @@
-import React from "react";
-
-const MenuButton = React.forwardRef<
-  HTMLButtonElement,
-  { onClick: () => void; isActive?: boolean; children: React.ReactNode }
->(({ onClick, isActive, children }, ref) => (
+const MenuButton = ({ onClick, isActive, children }: { onClick: () => void; isActive?: boolean; children: React.ReactNode }) => (
   <button
-    ref={ref}
     type="button"
     onClick={onClick}
     className={`px-3 py-2 border-0 rounded-md text-sm font-medium transition-all duration-200 ${
@@ -14,8 +8,6 @@ const MenuButton = React.forwardRef<
   >
     {children}
   </button>
-));
-
-MenuButton.displayName = "MenuButton";
+);
 
 export default MenuButton;
