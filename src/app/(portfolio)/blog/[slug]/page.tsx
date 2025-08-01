@@ -22,7 +22,7 @@ const page: React.FC<{ params: { slug: string } }> = async ({ params }) => {
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
       {/* Blog Post Header */}
-      <header className="mb-8">
+      <header className="max-w-2xl mx-auto mb-8">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">{post.title}</h1>
 
         {/* Post Meta Information */}
@@ -51,18 +51,14 @@ const page: React.FC<{ params: { slug: string } }> = async ({ params }) => {
         )}
       </header>
 
-      {/* Featured Image */}
-      {post.featuredImage && (
-        <div className="mb-8 relative h-64 md:h-96 w-full">
-          <Image src={post.featuredImage} alt={post.title} fill className="object-cover rounded-lg shadow-lg" />
-        </div>
-      )}
-
       {/* Blog Post Content */}
-      <article className="blog-content prose prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: post.contentHtml || "" }} />
+      <article
+        className="max-w-2xl mx-auto blog-content prose prose-lg prose-img:mx-auto prose-img:rounded-lg prose-img:shadow-md prose-img:block"
+        dangerouslySetInnerHTML={{ __html: post.contentHtml || "" }}
+      />
 
       {/* Post Footer */}
-      <footer className="mt-12 pt-8 border-t border-gray-200">
+      <footer className="max-w-2xl mx-auto mt-12 pt-8 border-t border-gray-200">
         <div className="text-sm text-gray-500">
           <p>
             Last updated:{" "}
