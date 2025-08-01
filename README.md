@@ -4,6 +4,12 @@
 
 Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.com)
 
+## To Do
+
+- [] add option to create a link in the editor
+- [] links to github per project?
+- []
+
 ## 📝 Overview
 
 This repository contains the source code for my personal portfolio website. The website showcases my skills, projects, and professional experiences as a software developer with a focus on frontend development and artificial intelligence.

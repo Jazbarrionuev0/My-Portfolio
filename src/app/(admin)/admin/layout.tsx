@@ -16,10 +16,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
       </head>
 
-      <body className={`${jost.className} min-h-screen`}>
+      <body className={`${jost.className} min-h-screen bg-admin-bg text-admin-text`}>
         {/* <Nav /> */}
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto bg-admin-bg">
             <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">{children}</main>
           </div>
           <Toaster richColors position="top-right" expand={true} duration={4000} />
