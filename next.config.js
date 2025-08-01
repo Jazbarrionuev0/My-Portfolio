@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.jazminbarrionuevo.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {
