@@ -1,6 +1,6 @@
 "use client";
 
-import { Project as ProjectType } from "@/src/types/types";
+import { DatabaseProject } from "@/src/types/types";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 type Category = "All" | "Data science" | "Computer vision" | "NLP" | "Deep Learning" | "Web Development" | "Other";
 
 type Props = {
-  projects: ProjectType[];
+  projects: DatabaseProject[];
 };
 
 export default function FilteredPortfolio({ projects }: Props = { projects: [] }) {
@@ -20,7 +20,22 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
 
   const categories: Category[] = ["All", "Data science", "Computer vision", "NLP", "Deep Learning", "Web Development", "Other"];
 
-  const filteredProjects = projects.filter((project) => (selectedCategory === "All" ? true : project.category === selectedCategory));
+  // Map tag titles to categories for filtering
+  const mapTagToCategory = (tagTitle: string): Category => {
+    const lowercaseTag = tagTitle.toLowerCase();
+    if (lowercaseTag.includes("data") || lowercaseTag.includes("science")) return "Data science";
+    if (lowercaseTag.includes("computer") || lowercaseTag.includes("vision")) return "Computer vision";
+    if (lowercaseTag.includes("nlp") || lowercaseTag.includes("natural language")) return "NLP";
+    if (lowercaseTag.includes("deep") || lowercaseTag.includes("learning") || lowercaseTag.includes("neural")) return "Deep Learning";
+    if (lowercaseTag.includes("web") || lowercaseTag.includes("frontend") || lowercaseTag.includes("backend") || lowercaseTag.includes("fullstack"))
+      return "Web Development";
+    return "Other";
+  };
+
+  const filteredProjects = projects.filter((project) => {
+    if (selectedCategory === "All") return true;
+    return project.tags.some((tag) => mapTagToCategory(tag.title) === selectedCategory);
+  });
 
   return (
     <div id="projects" className="container mx-auto px-6 py-12 max-w-7xl">
@@ -47,12 +62,12 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
           {filteredProjects.map((project, i) => (
-            <Link key={i} href={project.link}>
-              <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.title)} onMouseLeave={() => setHoveredId(null)}>
+            <Link key={project.id} href={`/blog/${project.slug}`}>
+              <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.id)} onMouseLeave={() => setHoveredId(null)}>
                 <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-portfolio-card-bg">
                   <Image
                     className="object-cover rounded-lg opacity-35"
-                    src={project.image}
+                    src={project.featuredImage || "/projects/project2.jpg"} // fallback image
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -61,9 +76,11 @@ export default function FilteredPortfolio({ projects }: Props = { projects: [] }
                     <CardHeader className="pt-6 pb-2">
                       <CardTitle className="text-portfolio-card-text text-2xl font-normal">{project.title}</CardTitle>
                     </CardHeader>
-                    {hoveredId === project.title && (
+                    {hoveredId === project.id && (
                       <CardContent className="absolute inset-0 flex items-center justify-center bg-portfolio-card-bg bg-opacity-75 rounded-lg p-8">
-                        <CardDescription className="text-portfolio-card-text text-lg leading-relaxed">{project.description}</CardDescription>
+                        <CardDescription className="text-portfolio-card-text text-lg leading-relaxed">
+                          {project.excerpt || "Click to read more about this project..."}
+                        </CardDescription>
                       </CardContent>
                     )}
                     <CardFooter className="absolute bottom-4 right-4">

@@ -181,14 +181,14 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
   const getStatusBadge = (status: string, published: boolean) => {
     if (status === "PUBLISHED" && published) {
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800">
           <CheckCircle className="w-3 h-3" />
           Published
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700 border border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800">
         <Clock className="w-3 h-3" />
         Draft
       </span>
@@ -221,7 +221,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <button
-            className="inline-flex items-center justify-center w-8 h-8 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
             aria-label="More actions"
           >
             <MoreHorizontal className="w-4 h-4" />
@@ -231,7 +231,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
           <div className="space-y-1">
             <Link
               href={`/admin/blog/edit/${post.id}`}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-accent rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >
               <Edit3 className="w-4 h-4" />
@@ -242,10 +242,10 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               <button
                 onClick={() => handleAction(() => handleUnpublish(post.id))}
                 disabled={loading === post.id}
-                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-amber-700 hover:bg-amber-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-yellow-700 hover:bg-yellow-50 dark:text-yellow-400 dark:hover:bg-yellow-900/20 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading === post.id ? (
-                  <div className="w-4 h-4 border-2 border-amber-600 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-yellow-600 dark:border-yellow-400 border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <XCircle className="w-4 h-4" />
                 )}
@@ -255,10 +255,10 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               <button
                 onClick={() => handleAction(() => handlePublish(post.id))}
                 disabled={loading === post.id}
-                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900/20 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading === post.id ? (
-                  <div className="w-4 h-4 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-green-600 dark:border-green-400 border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <CheckCircle className="w-4 h-4" />
                 )}
@@ -270,7 +270,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               <Link
                 href={`/blog/${post.slug}`}
                 target="_blank"
-                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-popover-foreground hover:bg-accent rounded-md transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 <ExternalLink className="w-4 h-4" />
@@ -278,15 +278,15 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               </Link>
             )}
 
-            <div className="border-t border-gray-200 my-1" />
+            <div className="border-t border-border my-1" />
 
             <button
               onClick={() => handleAction(() => confirmDelete(post.id))}
               disabled={loading === post.id}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-700 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading === post.id ? (
-                <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-red-600 dark:border-red-400 border-t-transparent rounded-full animate-spin" />
               ) : (
                 <Trash2 className="w-4 h-4" />
               )}
@@ -323,17 +323,17 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
       </div> */}
 
       {/* Main Content */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div className="bg-background rounded-xl shadow-sm border border-border">
         {/* Header */}
-        <div className="px-6 py-6 border-b border-gray-200">
+        <div className="px-6 py-6 border-b border-border">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Blog Management</h1>
-              <p className="text-sm text-gray-600 mt-1">Create, edit, and manage your blog posts</p>
+              <h1 className="text-2xl font-bold text-foreground">Blog Management</h1>
+              <p className="text-sm text-muted-foreground mt-1">Create, edit, and manage your blog posts</p>
             </div>
             <Link
               href="/admin/blog/create"
-              className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md"
             >
               <Plus className="w-4 h-4" />
               Create New Post
@@ -344,40 +344,44 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search posts by title, content, or tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-background text-foreground placeholder-muted-foreground"
               />
             </div>
 
             {/* Filter buttons */}
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-500" />
-              <div className="flex rounded-lg border border-gray-300 overflow-hidden">
+              <Filter className="w-4 h-4 text-muted-foreground" />
+              <div className="flex rounded-lg border border-border overflow-hidden">
                 <button
                   onClick={() => setFilter("all")}
                   className={`px-4 py-2.5 text-sm font-medium transition-colors ${
-                    filter === "all" ? "bg-indigo-600 text-white" : "bg-white text-gray-700 hover:bg-gray-50"
+                    filter === "all" ? "bg-primary text-primary-foreground" : "bg-background text-foreground hover:bg-accent"
                   }`}
                 >
                   All ({posts.length})
                 </button>
                 <button
                   onClick={() => setFilter("draft")}
-                  className={`px-4 py-2.5 text-sm font-medium border-l border-gray-300 transition-colors ${
-                    filter === "draft" ? "bg-amber-100 text-amber-700" : "bg-white text-gray-700 hover:bg-gray-50"
+                  className={`px-4 py-2.5 text-sm font-medium border-l border-border transition-colors ${
+                    filter === "draft"
+                      ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400"
+                      : "bg-background text-foreground hover:bg-accent"
                   }`}
                 >
                   Drafts ({posts.filter((p) => p.status === "DRAFT").length})
                 </button>
                 <button
                   onClick={() => setFilter("published")}
-                  className={`px-4 py-2.5 text-sm font-medium border-l border-gray-300 transition-colors ${
-                    filter === "published" ? "bg-emerald-100 text-emerald-700" : "bg-white text-gray-700 hover:bg-gray-50"
+                  className={`px-4 py-2.5 text-sm font-medium border-l border-border transition-colors ${
+                    filter === "published"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                      : "bg-background text-foreground hover:bg-accent"
                   }`}
                 >
                   Published ({posts.filter((p) => p.status === "PUBLISHED").length})
@@ -388,14 +392,14 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
         </div>
 
         {/* Posts list */}
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-border">
           {filteredPosts.length === 0 ? (
             <div className="px-6 py-16 text-center">
-              <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <FileText className="w-8 h-8 text-gray-400" />
+              <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
+                <FileText className="w-8 h-8 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{searchTerm ? "No posts found" : "No blog posts found"}</h3>
-              <p className="text-gray-500 mb-6 max-w-sm mx-auto">
+              <h3 className="text-lg font-semibold text-foreground mb-2">{searchTerm ? "No posts found" : "No blog posts found"}</h3>
+              <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
                 {searchTerm
                   ? `No posts match your search "${searchTerm}". Try adjusting your search terms.`
                   : filter === "all"
@@ -405,7 +409,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               {!searchTerm && (
                 <Link
                   href="/admin/blog/create"
-                  className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   Create Your First Post
@@ -413,19 +417,19 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               )}
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-border">
               {filteredPosts.map((post) => (
-                <div key={post.id} className="px-6 py-6 hover:bg-gray-50 transition-colors group">
+                <div key={post.id} className="px-6 py-6 hover:bg-accent/50 transition-colors group">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-lg font-semibold text-gray-900 truncate group-hover:text-indigo-600 transition-colors">{post.title}</h3>
+                        <h3 className="text-lg font-semibold text-foreground truncate group-hover:text-primary transition-colors">{post.title}</h3>
                         {getStatusBadge(post.status, post.published)}
                       </div>
 
                       {post.excerpt && (
                         <p
-                          className="text-gray-600 mb-4 leading-relaxed overflow-hidden"
+                          className="text-muted-foreground mb-4 leading-relaxed overflow-hidden"
                           style={{
                             display: "-webkit-box",
                             WebkitLineClamp: 2,
@@ -436,14 +440,14 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                         </p>
                       )}
 
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
+                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           <span>Updated {formatDate(post.updatedAt)}</span>
                         </div>
                         {post.publishedAt && (
                           <div className="flex items-center gap-1">
-                            <CheckCircle className="w-4 h-4 text-emerald-500" />
+                            <CheckCircle className="w-4 h-4 text-green-500" />
                             <span>Published {formatDate(post.publishedAt)}</span>
                           </div>
                         )}
@@ -464,14 +468,14 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                           {post.tags.slice(0, 3).map((tag, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-secondary text-secondary-foreground border border-border"
                             >
                               <Tag className="w-3 h-3" />
                               {tag.title}
                             </span>
                           ))}
                           {post.tags.length > 3 && (
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
                               +{post.tags.length - 3} more
                             </span>
                           )}
@@ -479,7 +483,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 ml-6 border-l border-gray-200 pl-4">
+                    <div className="flex items-center gap-2 ml-6 border-l border-border pl-4">
                       <ActionMenu post={post} />
                     </div>
                   </div>
@@ -492,27 +496,27 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-background rounded-xl shadow-xl max-w-md w-full border border-border">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                  <Trash2 className="w-5 h-5 text-red-600" />
+                <div className="w-10 h-10 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+                  <Trash2 className="w-5 h-5 text-red-600 dark:text-red-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Delete Blog Post</h3>
-                  <p className="text-sm text-gray-500">This action cannot be undone</p>
+                  <h3 className="text-lg font-semibold text-foreground">Delete Blog Post</h3>
+                  <p className="text-sm text-muted-foreground">This action cannot be undone</p>
                 </div>
               </div>
 
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Are you sure you want to delete this blog post? All data associated with this post will be permanently removed.
               </p>
 
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setShowDeleteModal(null)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-foreground hover:bg-accent rounded-lg transition-colors"
                 >
                   Cancel
                 </button>

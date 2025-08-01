@@ -1,18 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import projects from "@/src/utils/projects";
+import { getLatestProject } from "@/src/actions/blog";
 import { Button } from "@/src/components/ui/button";
 
-export default function LatestProject() {
-  const latestProject = projects[projects.length - 1];
+export default async function LatestProject() {
+  const { success, project } = await getLatestProject();
+
+  if (!success || !project) {
+    return null; // Don't show the section if there's no latest project
+  }
+
+  // Map tags to a category for display
+  const getProjectCategory = () => {
+    if (project.tags.length === 0) return "Project";
+    const firstTag = project.tags[0].title.toLowerCase();
+    if (firstTag.includes("data") || firstTag.includes("science")) return "Data Science";
+    if (firstTag.includes("web") || firstTag.includes("frontend") || firstTag.includes("backend")) return "Web Development";
+    if (firstTag.includes("machine") || firstTag.includes("learning") || firstTag.includes("ai")) return "Machine Learning";
+    return project.tags[0].title;
+  };
 
   return (
     <section className="w-full px-4 md:px-8 py-16 border-b bg-pink-50/30 border border-pink-200 md:rounded-lg shadow-sm">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <div className="relative overflow-hidden rounded-lg shadow-md h-full min-h-[300px] order-2 md:order-1">
-            <Image src={latestProject.image} alt={latestProject.title} fill style={{ objectFit: "cover" }} priority />
+            <Image src={project.featuredImage || "/projects/project2.jpg"} alt={project.title} fill style={{ objectFit: "cover" }} priority />
           </div>
 
           <div className="flex flex-col gap-6 pt-2 order-1 md:order-2">
@@ -23,26 +37,29 @@ export default function LatestProject() {
             </div>
 
             <div className="border-l-4 border-portfolio-accent pl-4 py-2">
-              <h3 className="text-2xl md:text-3xl font-bold">{latestProject.title}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold">{project.title}</h3>
               <div className="inline-flex items-center gap-2 my-2">
                 <span className="px-3 py-1 bg-pink-50 border border-pink-200 text-gray-800 dark:bg-pink-900 dark:text-pink-100 rounded-full text-sm font-medium">
-                  {latestProject.category}
+                  {getProjectCategory()}
                 </span>
               </div>
-              <p className="text-slate-700 dark:text-slate-300 text-lg mt-3 leading-relaxed">{latestProject.description}</p>
+              <p className="text-slate-700 dark:text-slate-300 text-lg mt-3 leading-relaxed">
+                {project.excerpt || "Click to read more about this project..."}
+              </p>
             </div>
 
             <div className="flex flex-wrap gap-4 mt-4">
-              <Link href={latestProject.link} passHref>
+              <Link href={`/blog/${project.slug}`} passHref>
                 <Button variant="default" className="flex items-center gap-2 rounded-md px-6 py-2.5 transition-all hover:translate-y-[-2px]">
                   View Details
                   <ArrowRight size={16} />
                 </Button>
               </Link>
 
-              <Link href={latestProject.repoLink} target="_blank" rel="noopener noreferrer" passHref>
+              {/* You might want to add a repository link field to your Post model if you want to show source code */}
+              <Link href="/projects" passHref>
                 <Button variant="outline" className="flex items-center gap-2 rounded-md px-6 py-2.5 transition-all hover:translate-y-[-2px]">
-                  Source Code
+                  View All Projects
                   <ArrowRight size={16} />
                 </Button>
               </Link>

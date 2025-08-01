@@ -25,11 +25,34 @@ export async function getAllTags() {
   }
 }
 
+export async function getAllCategories() {
+  try {
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        title: "asc",
+      },
+      include: {
+        _count: {
+          select: {
+            posts: true,
+          },
+        },
+      },
+    });
+
+    return { success: true, categories };
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return { success: false, error: "Failed to fetch categories" };
+  }
+}
+
 export async function getAllBlogPosts() {
   try {
     const posts = await prisma.post.findMany({
       include: {
         tags: true,
+        category: true,
       },
       orderBy: {
         updatedAt: "desc",
@@ -43,6 +66,52 @@ export async function getAllBlogPosts() {
   }
 }
 
+export async function getPublishedProjects() {
+  try {
+    const projects = await prisma.post.findMany({
+      where: {
+        published: true,
+        status: "PUBLISHED",
+      },
+      include: {
+        tags: true,
+        category: true,
+      },
+      orderBy: {
+        publishedAt: "desc",
+      },
+    });
+
+    return { success: true, projects };
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return { success: false, error: "Failed to fetch projects" };
+  }
+}
+
+export async function getLatestProject() {
+  try {
+    const latestProject = await prisma.post.findFirst({
+      where: {
+        published: true,
+        status: "PUBLISHED",
+      },
+      include: {
+        tags: true,
+        category: true,
+      },
+      orderBy: {
+        publishedAt: "desc",
+      },
+    });
+
+    return { success: true, project: latestProject };
+  } catch (error) {
+    console.error("Error fetching latest project:", error);
+    return { success: false, error: "Failed to fetch latest project" };
+  }
+}
+
 export async function saveBlogPost(postData: {
   title: string;
   contentHtml: string;
@@ -50,6 +119,7 @@ export async function saveBlogPost(postData: {
   contentText: string;
   excerpt?: string;
   tags?: string[];
+  categoryId: string;
 }) {
   try {
     const slug = postData.title
@@ -88,6 +158,9 @@ export async function saveBlogPost(postData: {
         readingTime: readingTime,
         status: "DRAFT",
         published: false,
+        category: {
+          connect: { id: postData.categoryId },
+        },
         tags: {
           connectOrCreate: (postData.tags || []).map((tagTitle) => ({
             where: { title: tagTitle },
@@ -109,7 +182,7 @@ export async function saveBlogPost(postData: {
 
 export async function updateBlogPost(
   id: string,
-  postData: { title: string; contentHtml: string; contentJson: string; contentText: string; excerpt?: string; tags?: string[] }
+  postData: { title: string; contentHtml: string; contentJson: string; contentText: string; excerpt?: string; tags?: string[]; categoryId?: string }
 ) {
   try {
     const slug = postData.title
@@ -147,6 +220,11 @@ export async function updateBlogPost(
         contentJson: contentJsonParsed,
         contentText: postData.contentText,
         readingTime: readingTime,
+        ...(postData.categoryId && {
+          category: {
+            connect: { id: postData.categoryId },
+          },
+        }),
         tags: {
           set: [], // First disconnect all existing tags
           connectOrCreate: (postData.tags || []).map((tagTitle) => ({
@@ -229,6 +307,7 @@ export async function getBlogPostBySlug(slug: string) {
       },
       include: {
         tags: true,
+        category: true,
       },
     });
 
@@ -257,6 +336,7 @@ export async function getBlogPostById(id: string) {
       where: { id },
       include: {
         tags: true,
+        category: true,
       },
     });
 
@@ -268,5 +348,21 @@ export async function getBlogPostById(id: string) {
   } catch (error) {
     console.error("Error fetching post:", error);
     return { success: false, error: "Failed to fetch post" };
+  }
+}
+
+export async function createCategory(title: string) {
+  try {
+    const category = await prisma.category.create({
+      data: {
+        title: title.trim(),
+      },
+    });
+
+    revalidatePath("/admin/blog");
+    return { success: true, category };
+  } catch (error) {
+    console.error("Error creating category:", error);
+    return { success: false, error: "Failed to create category" };
   }
 }

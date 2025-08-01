@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getAuthPayload } from "@/src/lib/auth";
 import LogoutButton from "./components/LogoutButton";
 import Nav from "./blog/components/Nav";
+import { ThemeProvider } from "@/src/components/providers/theme-provider";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const authPayload = await getAuthPayload();
@@ -15,12 +16,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
       </head>
 
-      <body className={`${jost.className} bg-gray-50 min-h-screen`}>
+      <body className={`${jost.className} min-h-screen`}>
         {/* <Nav /> */}
-        <div className="max-w-6xl mx-auto">
-          <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">{children}</main>
-        </div>
-        <Toaster richColors position="top-right" expand={true} duration={4000} />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="max-w-6xl mx-auto">
+            <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">{children}</main>
+          </div>
+          <Toaster richColors position="top-right" expand={true} duration={4000} />
+        </ThemeProvider>
       </body>
     </html>
   );
