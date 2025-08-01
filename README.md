@@ -4,6 +4,15 @@
 
 Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo.com)
 
+## TO-DO
+
+- [] enhance ux to add images to blog (simple paste)
+- [] define main blog image
+- [] enhance view count (browser session based)
+- [] add option to define highlighted project
+- [] optimize for mobile
+- [] settings page
+
 ## 📝 Overview
 
 This repository contains the source code for my personal portfolio website. The website showcases my skills, projects, and professional experiences as a software developer with a focus on frontend development and artificial intelligence.
