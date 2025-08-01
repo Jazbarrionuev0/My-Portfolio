@@ -59,27 +59,28 @@ export default function FilteredPortfolio({ projects, categories }: Props) {
           {filteredProjects.map((project, i) => (
             <Link key={project.id} href={`/blog/${project.slug}`}>
               <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.id)} onMouseLeave={() => setHoveredId(null)}>
-                <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-portfolio-card-bg">
+                <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-gray-900">
                   <Image
-                    className="object-cover rounded-lg opacity-35"
+                    className="object-cover rounded-lg opacity-40"
                     src={project.featuredImage || "/projects/project2.jpg"} // fallback image
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
                   <Card className="absolute inset-0 bg-transparent">
                     <CardHeader className="pt-6 pb-2">
-                      <CardTitle className="text-portfolio-card-text text-2xl font-normal">{project.title}</CardTitle>
+                      <CardTitle className="text-white text-2xl font-normal">{project.title}</CardTitle>
                     </CardHeader>
                     {hoveredId === project.id && (
-                      <CardContent className="absolute inset-0 flex items-center justify-center bg-portfolio-card-bg bg-opacity-75 rounded-lg p-8">
-                        <CardDescription className="text-portfolio-card-text text-lg leading-relaxed">
+                      <CardContent className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 rounded-lg p-8">
+                        <CardDescription className="text-white text-lg leading-relaxed">
                           {project.excerpt || "Click to read more about this project..."}
                         </CardDescription>
                       </CardContent>
                     )}
                     <CardFooter className="absolute bottom-4 right-4">
-                      <ArrowRight className="text-portfolio-card-text h-6 w-6" />
+                      <ArrowRight className="text-white h-6 w-6" />
                     </CardFooter>
                   </Card>
                 </div>

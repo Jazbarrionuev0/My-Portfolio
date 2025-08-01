@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Base theme colors */
-    --background: 0 0% 100%; /* Pure white for better readability */
+    --background: 43 77% 93%; /* Pure white for better readability */
     --foreground: 222.2 84% 4.9%; /* Dark text for good contrast */
 
     --card: 0 0% 100%;
@@ -15,14 +15,14 @@
     --popover-foreground: 222.2 84% 4.9%;
 
     /* Portfolio specific colors */
-    --portfolio-bg: 0 0% 100%; /* Clean white background */
-    --portfolio-accent: 262 90% 50%; /* More subdued purple instead of bright pink */
-    --portfolio-text: 222.2 84% 4.9%; /* Dark text for readability */
-    --portfolio-text-muted: 215.4 16.3% 46.9%; /* Better muted text */
-    --portfolio-card-bg: 0 0% 98%; /* Very light gray for cards */
-    --portfolio-card-text: 222.2 84% 4.9%; /* Dark text on light cards */
+    --portfolio-bg: 43 77% 93%; /* #F8F3E3 - main background */
+    --portfolio-accent: 323 100% 50%; /* #FF00CC - accent color */
+    --portfolio-text: 0 0% 10%; /* Near black for text */
+    --portfolio-text-muted: 0 0% 40%; /* Medium gray for less important text */
+    --portfolio-card-bg: 0 0% 0%; /* Black for card background */
+    --portfolio-card-text: 0 0% 100%; /* White for text on dark cards */
 
-    --primary: 262 90% 50%; /* Accessible purple instead of bright pink */
+    --primary: 323 100% 50%; /* Accessible purple instead of bright pink */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
