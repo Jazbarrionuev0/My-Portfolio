@@ -9,6 +9,7 @@ import { saveBlogPost, updateBlogPost, getAllTags, getAllCategories, createCateg
 import MenuBar from "../../../../../components/blog/MenuBar";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../../components/ui/select";
 
 type Post = {
   id: string;
@@ -376,20 +377,20 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           </label>
 
           <div className="flex gap-2">
-            <select
-              value={selectedCategoryId}
-              onChange={(e) => handleSelectCategory(e.target.value)}
-              className="flex-1 p-2 border border-border rounded-md bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none"
-            >
-              <option value="">Select a category...</option>
-              {availableCategories
-                .sort((a, b) => a.title.localeCompare(b.title))
-                .map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.title} ({category.postCount} post{category.postCount !== 1 ? "s" : ""})
-                  </option>
-                ))}
-            </select>
+            <Select value={selectedCategoryId} onValueChange={handleSelectCategory}>
+              <SelectTrigger className="flex-1">
+                <SelectValue placeholder="Select a category..." />
+              </SelectTrigger>
+              <SelectContent>
+                {availableCategories
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.title} ({category.postCount} post{category.postCount !== 1 ? "s" : ""})
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
 
             <button
               onClick={() => setShowCategoryModal(true)}

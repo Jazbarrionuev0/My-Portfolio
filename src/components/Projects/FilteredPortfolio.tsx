@@ -1,6 +1,6 @@
 "use client";
 
-import { DatabaseProject } from "@/src/types/types";
+import { DatabaseProject, Category } from "@/src/types/types";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,54 +8,49 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 
-type Category = "All" | "Data science" | "Computer vision" | "NLP" | "Deep Learning" | "Web Development" | "Other";
-
 type Props = {
   projects: DatabaseProject[];
+  categories: (Category & { _count: { posts: number } })[];
 };
 
-export default function FilteredPortfolio({ projects }: Props = { projects: [] }) {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("All");
+export default function FilteredPortfolio({ projects, categories }: Props) {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  const categories: Category[] = ["All", "Data science", "Computer vision", "NLP", "Deep Learning", "Web Development", "Other"];
-
-  // Map tag titles to categories for filtering
-  const mapTagToCategory = (tagTitle: string): Category => {
-    const lowercaseTag = tagTitle.toLowerCase();
-    if (lowercaseTag.includes("data") || lowercaseTag.includes("science")) return "Data science";
-    if (lowercaseTag.includes("computer") || lowercaseTag.includes("vision")) return "Computer vision";
-    if (lowercaseTag.includes("nlp") || lowercaseTag.includes("natural language")) return "NLP";
-    if (lowercaseTag.includes("deep") || lowercaseTag.includes("learning") || lowercaseTag.includes("neural")) return "Deep Learning";
-    if (lowercaseTag.includes("web") || lowercaseTag.includes("frontend") || lowercaseTag.includes("backend") || lowercaseTag.includes("fullstack"))
-      return "Web Development";
-    return "Other";
-  };
+  // Create filter options with "All" plus database categories
+  const filterOptions = [
+    { id: "All", title: "All", count: projects.length },
+    ...categories.map((cat) => ({
+      id: cat.id,
+      title: cat.title,
+      count: cat._count.posts,
+    })),
+  ];
 
   const filteredProjects = projects.filter((project) => {
     if (selectedCategory === "All") return true;
-    return project.tags.some((tag) => mapTagToCategory(tag.title) === selectedCategory);
+    return project.category.id === selectedCategory;
   });
 
   return (
     <div id="projects" className="container mx-auto px-6 py-12 max-w-7xl">
       <div className="flex flex-col items-start gap-10">
         <div className="flex flex-wrap gap-5">
-          {categories.map((category) => (
+          {filterOptions.map((option) => (
             <Button
-              key={category}
+              key={option.id}
               variant="ghost"
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedCategory(option.id)}
               className={`
-                rounded-md px-7 py-2.5 text-base font-light transition-all duration-300 text-portfolio-card-text
-                ${
-                  selectedCategory === category
-                    ? "bg-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
-                    : "border-2 border-portfolio-accent text-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
-                }
-              `}
+                  rounded-md px-7 py-2.5 text-base font-light transition-all duration-300 text-portfolio-card-text
+                  ${
+                    selectedCategory === option.id
+                      ? "bg-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
+                      : "border-2 border-portfolio-accent text-portfolio-accent hover:bg-portfolio-accent hover:text-portfolio-card-text"
+                  }
+                `}
             >
-              {category}
+              {option.title} ({option.count})
             </Button>
           ))}
         </div>

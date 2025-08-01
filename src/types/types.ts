@@ -29,10 +29,10 @@ export type DatabaseProject = {
     id: string;
     title: string;
   }[];
-  categories: {
+  category: {
     id: string;
     title: string;
-  }[];
+  };
 };
 
 export type Category = {

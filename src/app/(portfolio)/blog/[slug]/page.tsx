@@ -46,18 +46,6 @@ const page: React.FC<{ params: { slug: string } }> = async ({ params }) => {
             {post.viewCount} views
           </span>
 
-          <span className="text-sm">
-            {new Date(post.createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-
-          {post.published && post.publishedAt && (
-            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Published</span>
-          )}
-
           {post.status === "DRAFT" && <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Draft</span>}
         </div>
 
