@@ -329,16 +329,24 @@ export async function getBlogPostBySlug(slug: string) {
       return { success: false, error: "Post not found" };
     }
 
-    // Increment view count
-    await prisma.post.update({
+    return { success: true, post };
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    return { success: false, error: "Failed to fetch post" };
+  }
+}
+
+export async function incrementBlogPostView(slug: string) {
+  try {
+    const post = await prisma.post.update({
       where: { slug: slug },
       data: { viewCount: { increment: 1 } },
     });
 
-    return { success: true, post: { ...post, viewCount: post.viewCount + 1 } };
+    return { success: true, viewCount: post.viewCount };
   } catch (error) {
-    console.error("Error fetching post:", error);
-    return { success: false, error: "Failed to fetch post" };
+    console.error("Error incrementing view count:", error);
+    return { success: false, error: "Failed to increment view count" };
   }
 }
 
