@@ -48,13 +48,13 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(post?.category?.title || "");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>(post?.category?.id || "");
   const [tagInput, setTagInput] = useState("");
-  const [categoryInput, setCategoryInput] = useState("");
   const [availableTags, setAvailableTags] = useState<{ id: string; title: string; postCount: number }[]>([]);
   const [availableCategories, setAvailableCategories] = useState<{ id: string; title: string; postCount: number }[]>([]);
   const [filteredTags, setFilteredTags] = useState<{ id: string; title: string; postCount: number }[]>([]);
-  const [filteredCategories, setFilteredCategories] = useState<{ id: string; title: string; postCount: number }[]>([]);
   const [showTagSuggestions, setShowTagSuggestions] = useState(false);
-  const [showCategorySuggestions, setShowCategorySuggestions] = useState(false);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const router = useRouter();
@@ -117,22 +117,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setFilteredTags([]);
     }
   }, [tagInput, availableTags, tags, showTagSuggestions]);
-
-  // Filter categories based on input
-  useEffect(() => {
-    if (showCategorySuggestions) {
-      if (categoryInput.trim()) {
-        const filtered = availableCategories.filter((category) => category.title.toLowerCase().includes(categoryInput.toLowerCase()));
-        setFilteredCategories(filtered);
-      } else {
-        // Show most popular categories when no input
-        const filtered = availableCategories.sort((a, b) => b.postCount - a.postCount).slice(0, 5);
-        setFilteredCategories(filtered);
-      }
-    } else {
-      setFilteredCategories([]);
-    }
-  }, [categoryInput, availableCategories, showCategorySuggestions]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -228,12 +212,13 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     setHasChanges(true);
   };
 
-  const handleSelectCategory = (categoryTitle: string, categoryId: string) => {
-    setSelectedCategory(categoryTitle);
-    setSelectedCategoryId(categoryId);
-    setCategoryInput("");
-    setShowCategorySuggestions(false);
-    setHasChanges(true);
+  const handleSelectCategory = (categoryId: string) => {
+    const category = availableCategories.find((cat) => cat.id === categoryId);
+    if (category) {
+      setSelectedCategory(category.title);
+      setSelectedCategoryId(categoryId);
+      setHasChanges(true);
+    }
   };
 
   const handleClearCategory = () => {
@@ -242,9 +227,15 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     setHasChanges(true);
   };
 
-  const handleCreateCategory = async (categoryTitle: string) => {
+  const handleCreateCategory = async () => {
+    if (!newCategoryName.trim()) {
+      toast.error("Please enter a category name");
+      return;
+    }
+
+    setIsCreatingCategory(true);
     try {
-      const result = await createCategory(categoryTitle);
+      const result = await createCategory(newCategoryName.trim());
       if (result.success && result.category) {
         // Add the new category to available categories
         const newCategory = {
@@ -257,8 +248,8 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         // Select the newly created category
         setSelectedCategory(result.category.title);
         setSelectedCategoryId(result.category.id);
-        setCategoryInput("");
-        setShowCategorySuggestions(false);
+        setNewCategoryName("");
+        setShowCategoryModal(false);
         setHasChanges(true);
 
         toast.success("Category created successfully!");
@@ -268,6 +259,8 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     } catch (error) {
       console.error("Error creating category:", error);
       toast.error("Failed to create category");
+    } finally {
+      setIsCreatingCategory(false);
     }
   };
 
@@ -300,28 +293,11 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const handleCategoryKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (filteredCategories.length > 0) {
-        handleSelectCategory(filteredCategories[0].title, filteredCategories[0].id);
-      } else if (categoryInput.trim()) {
-        // Create new category if no matches found
-        handleCreateCategory(categoryInput.trim());
-      }
+      handleCreateCategory();
     } else if (e.key === "Escape") {
-      setShowCategorySuggestions(false);
+      setShowCategoryModal(false);
+      setNewCategoryName("");
     }
-  };
-
-  const handleCategoryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategoryInput(e.target.value);
-  };
-
-  const handleCategoryInputFocus = () => {
-    setShowCategorySuggestions(true);
-  };
-
-  const handleCategoryInputBlur = () => {
-    // Delay hiding suggestions to allow clicks on suggestions
-    setTimeout(() => setShowCategorySuggestions(false), 200);
   };
 
   return (
@@ -399,84 +375,30 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             Category *
           </label>
 
-          {/* Selected Category Display */}
-          {selectedCategory && (
-            <div className="mb-2">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400">
-                {selectedCategory}
-                <button
-                  onClick={handleClearCategory}
-                  className="ml-2 text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-                >
-                  ×
-                </button>
-              </span>
-            </div>
-          )}
-
-          {/* Category Input */}
-          <div className="flex">
-            <input
-              type="text"
-              value={categoryInput}
-              onChange={handleCategoryInputChange}
-              onFocus={handleCategoryInputFocus}
-              onBlur={handleCategoryInputBlur}
-              onKeyPress={handleCategoryKeyPress}
-              placeholder={selectedCategory ? "Change category..." : "Select a category..."}
-              className="flex-1 p-2 border border-border rounded-l-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
-            />
-            <button
-              onClick={() => {
-                if (filteredCategories.length > 0) {
-                  handleSelectCategory(filteredCategories[0].title, filteredCategories[0].id);
-                } else if (categoryInput.trim()) {
-                  handleCreateCategory(categoryInput.trim());
-                }
-              }}
-              type="button"
-              disabled={!categoryInput.trim() && filteredCategories.length === 0}
-              className="px-4 py-2 bg-secondary text-secondary-foreground rounded-r-md hover:bg-secondary/80 disabled:bg-muted disabled:cursor-not-allowed transition-colors"
+          <div className="flex gap-2">
+            <select
+              value={selectedCategoryId}
+              onChange={(e) => handleSelectCategory(e.target.value)}
+              className="flex-1 p-2 border border-border rounded-md bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none"
             >
-              {filteredCategories.length > 0 ? "Select" : categoryInput.trim() ? "Create" : "Select"}
+              <option value="">Select a category...</option>
+              {availableCategories
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.title} ({category.postCount} post{category.postCount !== 1 ? "s" : ""})
+                  </option>
+                ))}
+            </select>
+
+            <button
+              onClick={() => setShowCategoryModal(true)}
+              type="button"
+              className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors whitespace-nowrap"
+            >
+              Add New
             </button>
           </div>
-
-          {/* Category Suggestions Dropdown */}
-          {showCategorySuggestions && (
-            <div className="relative">
-              <div className="absolute top-1 left-0 right-0 bg-popover border border-border rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
-                {filteredCategories.length > 0 ? (
-                  <>
-                    {!categoryInput.trim() && (
-                      <div className="px-3 py-2 text-xs text-muted-foreground bg-muted border-b border-border">Popular categories:</div>
-                    )}
-                    {filteredCategories.map((category) => (
-                      <div
-                        key={category.id}
-                        onClick={() => handleSelectCategory(category.title, category.id)}
-                        className="px-3 py-2 hover:bg-accent cursor-pointer flex justify-between items-center"
-                      >
-                        <span className="text-popover-foreground">{category.title}</span>
-                        <span className="text-xs text-muted-foreground">
-                          {category.postCount} post{category.postCount !== 1 ? "s" : ""}
-                        </span>
-                      </div>
-                    ))}
-                  </>
-                ) : null}
-                {categoryInput.trim() && (
-                  <div
-                    onClick={() => handleCreateCategory(categoryInput.trim())}
-                    className="px-3 py-2 hover:bg-accent cursor-pointer flex justify-between items-center border-t border-border"
-                  >
-                    <span className="text-popover-foreground">Create &ldquo;{categoryInput.trim()}&rdquo;</span>
-                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">New category</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Tags Input */}
@@ -582,6 +504,61 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           </div>
         )}
       </div>
+
+      {/* Category Creation Modal */}
+      {showCategoryModal && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowCategoryModal(false);
+              setNewCategoryName("");
+            }
+          }}
+        >
+          <div className="bg-background border border-border rounded-lg shadow-lg max-w-md w-full mx-4">
+            <div className="px-6 py-4 border-b border-border">
+              <h3 className="text-lg font-medium text-foreground">Create New Category</h3>
+            </div>
+
+            <div className="p-6">
+              <label htmlFor="new-category" className="block text-sm font-medium text-foreground mb-2">
+                Category Name
+              </label>
+              <input
+                id="new-category"
+                type="text"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                onKeyPress={handleCategoryKeyPress}
+                placeholder="Enter category name..."
+                className="w-full p-3 border border-border rounded-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
+                autoFocus
+              />
+            </div>
+
+            <div className="px-6 py-4 border-t border-border flex justify-end space-x-3">
+              <button
+                onClick={() => {
+                  setShowCategoryModal(false);
+                  setNewCategoryName("");
+                }}
+                disabled={isCreatingCategory}
+                className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCreateCategory}
+                disabled={!newCategoryName.trim() || isCreatingCategory}
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed transition-colors"
+              >
+                {isCreatingCategory ? "Creating..." : "Create Category"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

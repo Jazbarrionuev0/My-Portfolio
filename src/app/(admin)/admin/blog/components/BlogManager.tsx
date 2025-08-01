@@ -19,6 +19,7 @@ import {
   Filter,
   MoreHorizontal,
   ExternalLink,
+  Folder,
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../../components/ui/popover";
 import { toast } from "sonner";
@@ -34,6 +35,10 @@ type Post = {
   readingTime: number | null;
   viewCount: number;
   featuredImage: string | null;
+  category: {
+    id: string;
+    title: string;
+  } | null;
   tags: {
     id: string;
     title: string;
@@ -65,6 +70,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
       searchTerm === "" ||
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (post.category && post.category.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
       post.tags.some((tag) => tag.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return matchesFilter && matchesSearch;
@@ -347,7 +353,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search posts by title, content, or tags..."
+                placeholder="Search posts by title, content, category, or tags..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring bg-background text-foreground placeholder-muted-foreground"
@@ -426,6 +432,16 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                         <h3 className="text-lg font-semibold text-foreground truncate group-hover:text-primary transition-colors">{post.title}</h3>
                         {getStatusBadge(post.status, post.published)}
                       </div>
+
+                      {/* Category */}
+                      {post.category && (
+                        <div className="mb-3">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
+                            <Folder className="w-3 h-3 mr-1" />
+                            {post.category.title}
+                          </span>
+                        </div>
+                      )}
 
                       {post.excerpt && (
                         <p
