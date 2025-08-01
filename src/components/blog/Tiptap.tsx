@@ -29,6 +29,9 @@ const Tiptap = () => {
         contentHtml: editor.getHTML(),
         contentJson: JSON.stringify(editor.getJSON()),
         contentText: editor.getText(),
+        categoryId: "default", // Add a default category ID to fix compilation
+        tags: [],
+        excerpt: "",
       };
 
       console.log("Saving content:", contentData);

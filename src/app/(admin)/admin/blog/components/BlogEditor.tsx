@@ -2,14 +2,17 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
-import { useState, useEffect } from "react";
+import { ImageExtension } from "../../../../../components/blog/ImageExtension";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { saveBlogPost, updateBlogPost, getAllTags, getAllCategories, createCategory } from "../../../../../actions/blog";
+import { uploadImageAction } from "../../../../../actions/upload";
 import MenuBar from "../../../../../components/blog/MenuBar";
 import Link from "next/link";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../../components/ui/select";
+import NextImage from "next/image";
+import { ImageIcon } from "lucide-react";
 
 type Post = {
   id: string;
@@ -58,16 +61,51 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const [featuredImage, setFeaturedImage] = useState<string | null>(post?.featuredImage || null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAutoSaving, setIsAutoSaving] = useState(false);
+  const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
   const router = useRouter();
 
+  // Ref for auto-save timeout
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastChangeTimeRef = useRef<number>(0);
+
   const editor = useEditor({
-    extensions: [StarterKit, Image],
+    extensions: [
+      StarterKit,
+      ImageExtension.configure({
+        inline: false,
+        allowBase64: false,
+        HTMLAttributes: {
+          class: "max-w-full h-auto rounded-lg border border-border shadow-sm my-4",
+        },
+      }),
+    ],
     content: post?.contentJson || "",
     immediatelyRender: false,
     onUpdate: () => {
       setHasChanges(true);
+      lastChangeTimeRef.current = Date.now();
     },
   });
+
+  // Track editor content changes separately
+  useEffect(() => {
+    if (editor) {
+      const handleUpdate = () => {
+        setHasChanges(true);
+        lastChangeTimeRef.current = Date.now();
+      };
+
+      editor.on("update", handleUpdate);
+
+      return () => {
+        editor.off("update", handleUpdate);
+      };
+    }
+  }, [editor]);
 
   // Fetch available tags and categories on component mount
   useEffect(() => {
@@ -119,6 +157,85 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     }
   }, [tagInput, availableTags, tags, showTagSuggestions]);
 
+  // Auto-save functionality
+  const performAutoSave = useCallback(async () => {
+    if (!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving) {
+      return;
+    }
+
+    setIsAutoSaving(true);
+
+    try {
+      const contentData = {
+        title: title.trim(),
+        excerpt: excerpt.trim() || undefined,
+        contentHtml: editor.getHTML(),
+        contentJson: JSON.stringify(editor.getJSON()),
+        contentText: editor.getText(),
+        tags: tags,
+        categoryId: selectedCategoryId,
+        featuredImage: featuredImage,
+      };
+
+      let result;
+      if (mode === "create") {
+        result = await saveBlogPost(contentData);
+      } else {
+        result = await updateBlogPost(post!.id, contentData);
+      }
+
+      if (result.success) {
+        setHasChanges(false);
+        setLastAutoSave(new Date());
+        // Don't show toast for auto-save to avoid interrupting user
+      }
+    } catch (error) {
+      console.error("Auto-save error:", error);
+      // Silently fail for auto-save
+    } finally {
+      setIsAutoSaving(false);
+    }
+  }, [editor, title, selectedCategoryId, isSaving, isAutoSaving, excerpt, tags, featuredImage, mode, post]);
+
+  // Auto-save functionality with proper debouncing
+  const scheduleAutoSave = useCallback(() => {
+    // Clear existing timeout
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+
+    // Only schedule if we have the required fields and are not already saving
+    if (title.trim() && selectedCategoryId && !isSaving && !isAutoSaving) {
+      autoSaveTimeoutRef.current = setTimeout(() => {
+        // Double-check that enough time has passed since last change
+        const timeSinceLastChange = Date.now() - lastChangeTimeRef.current;
+        if (timeSinceLastChange >= 5000) {
+          performAutoSave();
+        } else {
+          // If not enough time has passed, schedule again
+          setTimeout(() => scheduleAutoSave(), 5000 - timeSinceLastChange);
+        }
+      }, 5000);
+    }
+  }, [title, selectedCategoryId, isSaving, isAutoSaving, performAutoSave]);
+
+  // Effect to handle auto-save scheduling
+  useEffect(() => {
+    if (hasChanges) {
+      lastChangeTimeRef.current = Date.now();
+      scheduleAutoSave();
+    }
+  }, [hasChanges, scheduleAutoSave]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasChanges) {
@@ -156,6 +273,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         contentText: editor.getText(),
         tags: tags,
         categoryId: selectedCategoryId,
+        featuredImage: featuredImage,
       };
 
       let result;
@@ -205,12 +323,14 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setTagInput("");
       setShowTagSuggestions(false);
       setHasChanges(true);
+      lastChangeTimeRef.current = Date.now();
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
     setHasChanges(true);
+    lastChangeTimeRef.current = Date.now();
   };
 
   const handleSelectCategory = (categoryId: string) => {
@@ -219,6 +339,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setSelectedCategory(category.title);
       setSelectedCategoryId(categoryId);
       setHasChanges(true);
+      lastChangeTimeRef.current = Date.now();
     }
   };
 
@@ -226,6 +347,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     setSelectedCategory("");
     setSelectedCategoryId("");
     setHasChanges(true);
+    lastChangeTimeRef.current = Date.now();
   };
 
   const handleCreateCategory = async () => {
@@ -252,6 +374,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         setNewCategoryName("");
         setShowCategoryModal(false);
         setHasChanges(true);
+        lastChangeTimeRef.current = Date.now();
 
         toast.success("Category created successfully!");
       } else {
@@ -301,21 +424,160 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     }
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file");
+      return;
+    }
+
+    // Validate file size (max 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("Image size must be less than 20MB");
+      return;
+    }
+
+    setIsUploadingImage(true);
+    const uploadToast = toast.loading("Uploading image...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const imageUrl = await uploadImageAction(formData);
+      setFeaturedImage(imageUrl);
+      setHasChanges(true);
+      lastChangeTimeRef.current = Date.now();
+      toast.dismiss(uploadToast);
+      toast.success("Image uploaded successfully!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.dismiss(uploadToast);
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFeaturedImage(null);
+    setHasChanges(true);
+    lastChangeTimeRef.current = Date.now();
+  };
+
+  const handleEditorImageUpload = async (file: File) => {
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file");
+      return;
+    }
+
+    // Validate file size (max 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("Image size must be less than 20MB");
+      return;
+    }
+
+    const uploadToast = toast.loading("Uploading image...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const imageUrl = await uploadImageAction(formData);
+
+      // Insert the image into the editor
+      if (editor) {
+        editor.chain().focus().setImage({ src: imageUrl }).run();
+      }
+
+      toast.dismiss(uploadToast);
+      toast.success("Image uploaded and inserted!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.dismiss(uploadToast);
+      toast.error("Failed to upload image. Please try again.");
+    }
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+
+    if (imageFiles.length === 0) {
+      toast.error("No image files found in drop");
+      return;
+    }
+
+    // Upload all image files
+    for (const file of imageFiles) {
+      await handleEditorImageUpload(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    // Only set dragging to false if we're leaving the editor container
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDragging(false);
+    }
+  };
+
   return (
     <div className="bg-background shadow rounded-lg border border-border">
       <div className="px-6 py-4 border-b border-border">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-medium text-foreground">{mode === "create" ? "Create New Post" : "Edit Post"}</h2>
           <div className="flex items-center space-x-3">
+            {/* Auto-save status */}
+            <div className="text-sm text-muted-foreground">
+              {isAutoSaving ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-3 w-3 text-muted-foreground"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Auto-saving...
+                </span>
+              ) : lastAutoSave ? (
+                <span>Auto-saved at {lastAutoSave.toLocaleTimeString()}</span>
+              ) : null}
+            </div>
+
             <Link href="/admin/blog" className="text-muted-foreground hover:text-foreground text-sm font-medium">
               Cancel
             </Link>
             <button
               onClick={handleSave}
-              disabled={!editor || !title.trim() || !selectedCategoryId || isSaving}
+              disabled={!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving || !hasChanges}
               className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed transition-colors text-sm font-medium"
             >
-              {isSaving ? "Saving..." : mode === "create" ? "Create Post" : "Update Post"}
+              {isSaving ? "Saving..." : isAutoSaving ? "Auto-saving..." : mode === "create" ? "Create Post" : "Update Post"}
             </button>
           </div>
         </div>
@@ -333,6 +595,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             onChange={(e) => {
               setTitle(e.target.value);
               setHasChanges(true);
+              lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Enter your blog post title..."
             className="w-full text-2xl font-bold text-foreground placeholder-muted-foreground bg-background border border-border rounded-md p-3 outline-none resize-none overflow-hidden leading-tight focus:ring-2 focus:ring-ring focus:border-ring"
@@ -350,6 +613,79 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           />
         </div>
 
+        {/* Featured Image */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-foreground mb-2">Featured Image</label>
+
+          {featuredImage ? (
+            <div className="space-y-3">
+              <div className="relative group">
+                <NextImage
+                  src={featuredImage}
+                  alt="Featured image preview"
+                  width={800}
+                  height={400}
+                  className="w-full h-48 object-cover rounded-lg border border-border"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 rounded-lg flex items-center justify-center">
+                  <button
+                    onClick={handleRemoveImage}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-600 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-red-700"
+                  >
+                    Remove Image
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <label
+                  htmlFor="featured-image-replace"
+                  className="cursor-pointer inline-flex items-center px-3 py-2 border border-border rounded-md text-sm font-medium text-foreground bg-background hover:bg-accent transition-colors"
+                >
+                  Replace Image
+                </label>
+                <input
+                  id="featured-image-replace"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={isUploadingImage}
+                  className="hidden"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+              <div className="space-y-2">
+                <svg className="mx-auto h-12 w-12 text-muted-foreground" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <div className="text-sm text-muted-foreground">
+                  <label htmlFor="featured-image-upload" className="cursor-pointer font-medium text-primary hover:text-primary/90">
+                    Click to upload
+                  </label>
+                  <span> or drag and drop</span>
+                </div>
+                <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 20MB</p>
+              </div>
+              <input
+                id="featured-image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={isUploadingImage}
+                className="hidden"
+              />
+            </div>
+          )}
+
+          {isUploadingImage && <div className="mt-2 text-sm text-muted-foreground">Uploading image...</div>}
+        </div>
+
         {/* Excerpt Input */}
         <div className="mb-6">
           <label htmlFor="excerpt" className="block text-sm font-medium text-foreground mb-2">
@@ -361,6 +697,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             onChange={(e) => {
               setExcerpt(e.target.value);
               setHasChanges(true);
+              lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Write a brief description of your post..."
             className="w-full p-3 border border-border rounded-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
@@ -482,11 +819,25 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         <div className="border border-border rounded-lg overflow-hidden">
           {/* Editor Toolbar */}
           <div className="bg-muted border-b border-border">
-            <MenuBar editor={editor} />
+            <MenuBar editor={editor} onImageUpload={handleEditorImageUpload} />
           </div>
 
           {/* Editor Content */}
-          <div className="p-4 bg-background">
+          <div
+            className={`p-4 bg-background cursor-text relative transition-all duration-200 ${
+              isDragging ? "bg-blue-50 dark:bg-blue-950/20 border-2 border-dashed border-blue-300 dark:border-blue-600" : ""
+            }`}
+            onClick={(e) => {
+              // Only focus if clicking on the container itself, not on editor content
+              if (e.target === e.currentTarget && editor) {
+                editor.commands.focus("end");
+              }
+            }}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+          >
             <EditorContent
               editor={editor}
               className="min-h-[400px] prose prose-lg max-w-none focus:outline-none dark:prose-invert"
@@ -496,12 +847,28 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
                 lineHeight: "1.6",
               }}
             />
+
+            {/* Drag overlay */}
+            {isDragging && (
+              <div className="absolute inset-0 flex items-center justify-center bg-blue-50/90 dark:bg-blue-950/90 border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg pointer-events-none">
+                <div className="text-center">
+                  <ImageIcon className="h-12 w-12 text-blue-500 mx-auto mb-2" />
+                  <p className="text-blue-700 dark:text-blue-300 font-medium">Drop images here to upload</p>
+                  <p className="text-blue-600 dark:text-blue-400 text-sm">PNG, JPG, GIF up to 20MB</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {hasChanges && (
+        {hasChanges && !isAutoSaving && (
           <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md dark:bg-yellow-900/20 dark:border-yellow-800">
-            <p className="text-sm text-yellow-700 dark:text-yellow-400">You have unsaved changes. Make sure to save before leaving this page.</p>
+            <p className="text-sm text-yellow-700 dark:text-yellow-400">
+              You have unsaved changes.{" "}
+              {title.trim() && selectedCategoryId
+                ? "Auto-save will occur in 5 seconds of inactivity."
+                : "Make sure to add a title and select a category to enable auto-save."}
+            </p>
           </div>
         )}
       </div>

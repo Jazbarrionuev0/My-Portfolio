@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
       <body className={`${jost.className} min-h-screen`}>
         {/* <Nav /> */}
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="max-w-6xl mx-auto">
             <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">{children}</main>
           </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { deleteBlogPost, publishBlogPost, unpublishBlogPost } from "../../../../../actions/blog";
+import { deleteBlogPost, publishBlogPost, unpublishBlogPost, setFeaturedBlogPost, unfeatureBlogPost } from "../../../../../actions/blog";
 import Link from "next/link";
+import NextImage from "next/image";
 import {
   Plus,
   Edit3,
@@ -20,6 +21,8 @@ import {
   MoreHorizontal,
   ExternalLink,
   Folder,
+  Star,
+  ImageIcon,
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../../components/ui/popover";
 import { toast } from "sonner";
@@ -31,6 +34,7 @@ type Post = {
   excerpt: string | null;
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   published: boolean;
+  featured: boolean;
   publishedAt: Date | null;
   readingTime: number | null;
   viewCount: number;
@@ -175,6 +179,64 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
     }
   };
 
+  const handleSetFeatured = async (id: string) => {
+    setLoading(id);
+
+    const loadingToast = toast.loading("Setting featured post...");
+
+    try {
+      const result = await setFeaturedBlogPost(id);
+      if (result.success) {
+        setPosts(posts.map((post) => ({ ...post, featured: post.id === id })));
+        toast.dismiss(loadingToast);
+        toast.success("Blog post featured successfully", {
+          description: "This post is now featured on your homepage.",
+        });
+      } else {
+        toast.dismiss(loadingToast);
+        toast.error("Failed to feature post", {
+          description: result.error,
+        });
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error("Failed to feature post", {
+        description: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleUnfeature = async (id: string) => {
+    setLoading(id);
+
+    const loadingToast = toast.loading("Unfeaturing blog post...");
+
+    try {
+      const result = await unfeatureBlogPost(id);
+      if (result.success) {
+        setPosts(posts.map((post) => (post.id === id ? { ...post, featured: false } : post)));
+        toast.dismiss(loadingToast);
+        toast.success("Blog post unfeatured successfully", {
+          description: "This post is no longer featured on your homepage.",
+        });
+      } else {
+        toast.dismiss(loadingToast);
+        toast.error("Failed to unfeature post", {
+          description: result.error,
+        });
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error("Failed to unfeature post", {
+        description: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
+      setLoading(null);
+    }
+  };
+
   const formatDate = (date: Date | null) => {
     if (!date) return "Not published";
     return new Date(date).toLocaleDateString("en-US", {
@@ -271,6 +333,36 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                 {loading === post.id ? "Publishing..." : "Publish"}
               </button>
             )}
+
+            {/* Featured Options - only for published posts */}
+            {post.published &&
+              (post.featured ? (
+                <button
+                  onClick={() => handleAction(() => handleUnfeature(post.id))}
+                  disabled={loading === post.id}
+                  className="flex items-center gap-2 w-full px-3 py-2 text-sm text-amber-700 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-900/20 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading === post.id ? (
+                    <div className="w-4 h-4 border-2 border-amber-600 dark:border-amber-400 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Star className="w-4 h-4 fill-current" />
+                  )}
+                  {loading === post.id ? "Unfeaturing..." : "Remove Featured"}
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleAction(() => handleSetFeatured(post.id))}
+                  disabled={loading === post.id}
+                  className="flex items-center gap-2 w-full px-3 py-2 text-sm text-amber-700 hover:bg-amber-50 dark:text-amber-400 dark:hover:bg-amber-900/20 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading === post.id ? (
+                    <div className="w-4 h-4 border-2 border-amber-600 dark:border-amber-400 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Star className="w-4 h-4" />
+                  )}
+                  {loading === post.id ? "Featuring..." : posts.some((p) => p.featured) ? "Make Featured" : "Make Featured"}
+                </button>
+              ))}
 
             {post.published && (
               <Link
@@ -426,81 +518,109 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
             <div className="divide-y divide-border">
               {filteredPosts.map((post) => (
                 <div key={post.id} className="px-6 py-6 hover:bg-accent/50 transition-colors group">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-lg font-semibold text-foreground truncate group-hover:text-primary transition-colors">{post.title}</h3>
-                        {getStatusBadge(post.status, post.published)}
-                      </div>
-
-                      {/* Category */}
-                      {post.category && (
-                        <div className="mb-3">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
-                            <Folder className="w-3 h-3 mr-1" />
-                            {post.category.title}
-                          </span>
+                  <div className="flex items-start gap-4">
+                    {/* Featured Image */}
+                    <div className="flex-shrink-0">
+                      {post.featuredImage ? (
+                        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden border border-border bg-muted">
+                          <NextImage src={post.featuredImage} alt={post.title} fill className="object-cover" sizes="(max-width: 768px) 96px, 128px" />
                         </div>
-                      )}
-
-                      {post.excerpt && (
-                        <p
-                          className="text-muted-foreground mb-4 leading-relaxed overflow-hidden"
-                          style={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical" as const,
-                          }}
-                        >
-                          {post.excerpt}
-                        </p>
-                      )}
-
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          <span>Updated {formatDate(post.updatedAt)}</span>
-                        </div>
-                        {post.publishedAt && (
-                          <div className="flex items-center gap-1">
-                            <CheckCircle className="w-4 h-4 text-green-500" />
-                            <span>Published {formatDate(post.publishedAt)}</span>
-                          </div>
-                        )}
-                        <div className="flex items-center gap-1">
-                          <Eye className="w-4 h-4" />
-                          <span>{post.viewCount} views</span>
-                        </div>
-                        {post.readingTime && (
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{post.readingTime} min read</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {post.tags.slice(0, 3).map((tag, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-secondary text-secondary-foreground border border-border"
-                            >
-                              <Tag className="w-3 h-3" />
-                              {tag.title}
-                            </span>
-                          ))}
-                          {post.tags.length > 3 && (
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
-                              +{post.tags.length - 3} more
-                            </span>
-                          )}
+                      ) : (
+                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-lg border-2 border-dashed border-border bg-muted flex items-center justify-center">
+                          <ImageIcon className="w-8 h-8 text-muted-foreground" />
                         </div>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 ml-6 border-l border-border pl-4">
-                      <ActionMenu post={post} />
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-3 mb-3">
+                            <h3 className="text-lg font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+                              {post.title}
+                            </h3>
+                            <div className="flex items-center gap-2">
+                              {getStatusBadge(post.status, post.published)}
+                              {post.featured && (
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700 border border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800">
+                                  <Star className="w-3 h-3 fill-current" />
+                                  Featured
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Category */}
+                          {post.category && (
+                            <div className="mb-3">
+                              <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
+                                <Folder className="w-3 h-3 mr-1" />
+                                {post.category.title}
+                              </span>
+                            </div>
+                          )}
+
+                          {post.excerpt && (
+                            <p
+                              className="text-muted-foreground mb-4 leading-relaxed overflow-hidden"
+                              style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: "vertical" as const,
+                              }}
+                            >
+                              {post.excerpt}
+                            </p>
+                          )}
+
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-4 h-4" />
+                              <span>Updated {formatDate(post.updatedAt)}</span>
+                            </div>
+                            {post.publishedAt && (
+                              <div className="flex items-center gap-1">
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                                <span>Published {formatDate(post.publishedAt)}</span>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-1">
+                              <Eye className="w-4 h-4" />
+                              <span>{post.viewCount} views</span>
+                            </div>
+                            {post.readingTime && (
+                              <div className="flex items-center gap-1">
+                                <Clock className="w-4 h-4" />
+                                <span>{post.readingTime} min read</span>
+                              </div>
+                            )}
+                          </div>
+
+                          {post.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {post.tags.slice(0, 3).map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-secondary text-secondary-foreground border border-border"
+                                >
+                                  <Tag className="w-3 h-3" />
+                                  {tag.title}
+                                </span>
+                              ))}
+                              {post.tags.length > 3 && (
+                                <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
+                                  +{post.tags.length - 3} more
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2 ml-6 border-l border-border pl-4">
+                          <ActionMenu post={post} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -525,9 +645,22 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
                 </div>
               </div>
 
-              <p className="text-muted-foreground mb-6">
-                Are you sure you want to delete this blog post? All data associated with this post will be permanently removed.
-              </p>
+              <div className="text-muted-foreground mb-6">
+                <p className="mb-3">
+                  Are you sure you want to delete this blog post? All data associated with this post will be permanently removed.
+                </p>
+                {posts.find((p) => p.id === showDeleteModal)?.featured && (
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                    <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span className="text-sm font-medium">Featured Post Warning</span>
+                    </div>
+                    <p className="text-sm text-amber-600 dark:text-amber-500 mt-1">
+                      This is your featured post. After deletion, you&apos;ll need to select a new featured post for your homepage.
+                    </p>
+                  </div>
+                )}
+              </div>
 
               <div className="flex gap-3 justify-end">
                 <button

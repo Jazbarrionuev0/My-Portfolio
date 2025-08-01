@@ -10,7 +10,7 @@ datasource db {
 model Tag {
   id    String @id @default(cuid())
   title String @unique
-  posts Post[]
+  posts Post[] @relation("PostToTag")
 
   @@map("tags")
 }
@@ -35,13 +35,15 @@ model Post {
   published     Boolean    @default(false)
   publishedAt   DateTime?
   readingTime   Int?
+  image         String?
   viewCount     Int        @default(0)
   featuredImage String?
-  tags          Tag[]
-  category      Category   @relation(fields: [categoryId], references: [id])
   categoryId    String
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  featured      Boolean    @default(false)
+  category      Category   @relation(fields: [categoryId], references: [id])
+  tags          Tag[]      @relation("PostToTag")
 
   @@map("posts")
 }

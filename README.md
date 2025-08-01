@@ -6,12 +6,13 @@ Visit my portfolio at [www.jazminbarrionuevo.tech](https://www.jazminbarrionuevo
 
 ## TO-DO
 
-- [] enhance ux to add images to blog (simple paste)
-- [] define main blog image
+- [X] enhance ux to add images to blog (simple paste)
+- [X] define main blog image
 - [] enhance view count (browser session based)
-- [] add option to define highlighted project
-- [] optimize for mobile
+- [X] add option to define highlighted project
+- [X] optimize for mobile
 - [] settings page
+- [] automatic save
 
 ## 📝 Overview
 

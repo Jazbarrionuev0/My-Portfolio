@@ -120,6 +120,7 @@ export async function saveBlogPost(postData: {
   excerpt?: string;
   tags?: string[];
   categoryId: string;
+  featuredImage?: string | null;
 }) {
   try {
     const slug = postData.title
@@ -158,6 +159,7 @@ export async function saveBlogPost(postData: {
         readingTime: readingTime,
         status: "DRAFT",
         published: false,
+        featuredImage: postData.featuredImage || null,
         category: {
           connect: { id: postData.categoryId },
         },
@@ -182,7 +184,16 @@ export async function saveBlogPost(postData: {
 
 export async function updateBlogPost(
   id: string,
-  postData: { title: string; contentHtml: string; contentJson: string; contentText: string; excerpt?: string; tags?: string[]; categoryId?: string }
+  postData: {
+    title: string;
+    contentHtml: string;
+    contentJson: string;
+    contentText: string;
+    excerpt?: string;
+    tags?: string[];
+    categoryId?: string;
+    featuredImage?: string | null;
+  }
 ) {
   try {
     const slug = postData.title
@@ -220,6 +231,7 @@ export async function updateBlogPost(
         contentJson: contentJsonParsed,
         contentText: postData.contentText,
         readingTime: readingTime,
+        featuredImage: postData.featuredImage !== undefined ? postData.featuredImage : undefined,
         ...(postData.categoryId && {
           category: {
             connect: { id: postData.categoryId },
@@ -364,5 +376,72 @@ export async function createCategory(title: string) {
   } catch (error) {
     console.error("Error creating category:", error);
     return { success: false, error: "Failed to create category" };
+  }
+}
+
+export async function setFeaturedBlogPost(id: string) {
+  try {
+    // First, unfeature all posts
+    await prisma.post.updateMany({
+      where: {
+        featured: true,
+      },
+      data: {
+        featured: false,
+      },
+    });
+
+    // Then feature the selected post
+    const post = await prisma.post.update({
+      where: { id },
+      data: {
+        featured: true,
+      },
+    });
+
+    revalidatePath("/admin/blog");
+    revalidatePath("/");
+    return { success: true, post };
+  } catch (error) {
+    console.error("Error featuring blog post:", error);
+    return { success: false, error: "Failed to feature blog post" };
+  }
+}
+
+export async function unfeatureBlogPost(id: string) {
+  try {
+    const post = await prisma.post.update({
+      where: { id },
+      data: {
+        featured: false,
+      },
+    });
+
+    revalidatePath("/admin/blog");
+    revalidatePath("/");
+    return { success: true, post };
+  } catch (error) {
+    console.error("Error unfeaturing blog post:", error);
+    return { success: false, error: "Failed to unfeature blog post" };
+  }
+}
+
+export async function getFeaturedBlogPost() {
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        featured: true,
+        published: true,
+      },
+      include: {
+        category: true,
+        tags: true,
+      },
+    });
+
+    return { success: true, post };
+  } catch (error) {
+    console.error("Error fetching featured blog post:", error);
+    return { success: false, error: "Failed to fetch featured blog post" };
   }
 }

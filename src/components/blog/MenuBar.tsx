@@ -3,12 +3,77 @@
 import { Editor } from "@tiptap/react";
 import MenuButton from "./MenuButton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/src/components/ui/tooltip";
-import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Image as ImageIcon, Code, FileCode2 } from "lucide-react";
+import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Image as ImageIcon, Code, FileCode2, Upload } from "lucide-react";
+import { uploadImageAction } from "@/src/actions/upload";
+import { toast } from "sonner";
+import { useRef, useState } from "react";
 
-export default function MenuBar({ editor }: { editor: Editor | null }) {
+export default function MenuBar({ editor, onImageUpload }: { editor: Editor | null; onImageUpload?: (file: File) => Promise<void> }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+
   if (!editor) {
     return null;
   }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // If onImageUpload prop is provided, use it (from BlogEditor)
+    if (onImageUpload) {
+      await onImageUpload(file);
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    // Fallback to original upload logic
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file");
+      return;
+    }
+
+    // Validate file size (max 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("Image size must be less than 20MB");
+      return;
+    }
+
+    setIsUploadingImage(true);
+    const uploadToast = toast.loading("Uploading image...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const imageUrl = await uploadImageAction(formData);
+
+      // Insert the image into the editor
+      editor.chain().focus().setImage({ src: imageUrl }).run();
+
+      toast.dismiss(uploadToast);
+      toast.success("Image uploaded and inserted!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.dismiss(uploadToast);
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setIsUploadingImage(false);
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleImageButtonClick = () => {
+    if (isUploadingImage) return;
+    fileInputRef.current?.click();
+  };
 
   return (
     <TooltipProvider>
@@ -81,22 +146,17 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <MenuButton
-              onClick={() =>
-                editor
-                  .chain()
-                  .focus()
-                  .setImage({ src: prompt("Image URL") || "" })
-                  .run()
-              }
-            >
-              <ImageIcon className="h-4 w-4" />
+            <MenuButton onClick={handleImageButtonClick} isActive={isUploadingImage}>
+              {isUploadingImage ? <Upload className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
             </MenuButton>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Insert Image</p>
+            <p>{isUploadingImage ? "Uploading..." : "Insert Image"}</p>
           </TooltipContent>
         </Tooltip>
+
+        {/* Hidden file input */}
+        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
 
         <Tooltip>
           <TooltipTrigger asChild>
