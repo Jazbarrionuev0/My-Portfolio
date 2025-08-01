@@ -2,6 +2,9 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Link as LinkExtension } from "@tiptap/extension-link";
+import { Underline } from "@tiptap/extension-underline";
+import { EnhancedCodeBlock } from "../../../../../components/blog/EnhancedCodeBlock";
 import { ImageExtension } from "../../../../../components/blog/ImageExtension";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -74,7 +77,24 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: false, // Disable default code block
+      }),
+      Underline,
+      EnhancedCodeBlock.configure({
+        HTMLAttributes: {
+          class:
+            "bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 my-4 font-mono text-sm leading-relaxed overflow-x-auto",
+          style: "white-space: pre-wrap; tab-size: 2; word-wrap: break-word;",
+        },
+      }),
+      LinkExtension.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: "text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer",
+          style: "color: #2563eb !important; text-decoration: underline !important; cursor: pointer !important;",
+        },
+      }),
       ImageExtension.configure({
         inline: false,
         allowBase64: false,
@@ -783,7 +803,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           {/* Tag Suggestions Dropdown */}
           {showTagSuggestions && (
             <div className="relative">
-              <div className="absolute top-1 left-0 right-0 bg-admin-card-bg border border-admin-border rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+              <div className="absolute top-1 left-0 right-0 bg-admin-card-bg border border-admin-border rounded-md shadow-lg z-40 max-h-48 overflow-y-auto">
                 {filteredTags.length > 0 ? (
                   <>
                     {!tagInput.trim() && (
@@ -818,15 +838,15 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         </div>
 
         {/* Editor */}
-        <div className="border border-admin-border rounded-lg overflow-hidden">
-          {/* Editor Toolbar */}
-          <div className="bg-admin-secondary border-b border-admin-border">
+        <div className="rounded-lg">
+          {/* Editor Toolbar - Sticky when at top */}
+          <div className="bg-admin-secondary border border-admin-border sticky top-4 z-50 shadow-lg rounded-lg mx-2 mt-2">
             <MenuBar editor={editor} onImageUpload={handleEditorImageUpload} />
           </div>
 
           {/* Editor Content */}
           <div
-            className={`p-4 bg-admin-card-bg cursor-text relative transition-all duration-200 ${
+            className={`p-4 bg-admin-card-bg cursor-text relative transition-all duration-200 rounded-b-lg ${
               isDragging ? "bg-blue-50 dark:bg-blue-950/20 border-2 border-dashed border-blue-300 dark:border-blue-600" : ""
             }`}
             onClick={(e) => {
@@ -842,11 +862,11 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           >
             <EditorContent
               editor={editor}
-              className="min-h-[400px] prose prose-lg max-w-none focus:outline-none dark:prose-invert"
+              className="min-h-[400px] prose prose-lg max-w-none focus:outline-none dark:prose-invert [&>div]:space-y-4 [&_p]:mb-4 [&_h1]:mb-6 [&_h1]:mt-8 [&_h2]:mb-4 [&_h2]:mt-6 [&_h3]:mb-3 [&_h3]:mt-5 [&_ul]:mb-4 [&_ol]:mb-4 [&_blockquote]:mb-4 [&_pre]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a]:cursor-pointer [&_a:hover]:text-blue-800 dark:[&_a]:text-blue-400 dark:[&_a:hover]:text-blue-300 [&_pre]:bg-gray-100 [&_pre]:border [&_pre]:border-gray-200 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-relaxed [&_pre]:overflow-x-auto dark:[&_pre]:bg-gray-800 dark:[&_pre]:border-gray-700"
               style={{
                 fontFamily: "'Georgia', 'Times New Roman', serif",
                 fontSize: "18px",
-                lineHeight: "1.6",
+                lineHeight: "1.8",
               }}
             />
 
@@ -878,7 +898,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       {/* Category Creation Modal */}
       {showCategoryModal && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setShowCategoryModal(false);

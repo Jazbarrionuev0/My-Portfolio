@@ -2,8 +2,9 @@
 
 import { Editor } from "@tiptap/react";
 import MenuButton from "./MenuButton";
+import LinkDialog from "./LinkDialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/src/components/ui/tooltip";
-import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Image as ImageIcon, Code, FileCode2, Upload } from "lucide-react";
+import { Bold, Italic, Underline, Heading2, List, ListOrdered, Image as ImageIcon, Upload, FileCode2, Link } from "lucide-react";
 import { uploadImageAction } from "@/src/actions/upload";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
@@ -11,6 +12,9 @@ import { useRef, useState } from "react";
 export default function MenuBar({ editor, onImageUpload }: { editor: Editor | null; onImageUpload?: (file: File) => Promise<void> }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [showLinkDialog, setShowLinkDialog] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
+  const [currentUrl, setCurrentUrl] = useState("");
 
   if (!editor) {
     return null;
@@ -70,6 +74,39 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
     }
   };
 
+  const handleLinkClick = () => {
+    const { from, to } = editor.state.selection;
+    const selectedTextContent = editor.state.doc.textBetween(from, to);
+
+    if (editor.isActive("link")) {
+      // If already a link, unlink it
+      editor.chain().focus().unsetLink().run();
+      toast.success("Link removed successfully!");
+    } else {
+      // If no text is selected, show a toast message
+      if (!selectedTextContent.trim()) {
+        toast.error("Please select some text first to create a link");
+        return;
+      }
+
+      // Get current link URL if editing existing link
+      const linkAttributes = editor.getAttributes("link");
+      const existingUrl = linkAttributes.href || "https://";
+
+      // Set state and show dialog
+      setSelectedText(selectedTextContent);
+      setCurrentUrl(existingUrl);
+      setShowLinkDialog(true);
+    }
+  };
+
+  const handleLinkConfirm = (url: string) => {
+    if (url && url.trim()) {
+      editor.chain().focus().setLink({ href: url.trim() }).run();
+      toast.success("Link added successfully!");
+    }
+  };
+
   const handleImageButtonClick = () => {
     if (isUploadingImage) return;
     fileInputRef.current?.click();
@@ -77,7 +114,7 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
 
   return (
     <TooltipProvider>
-      <div className="flex flex-wrap gap-1 mb-6 p-3 border border-gray-200 rounded-lg bg-gray-50/50 shadow-sm">
+      <div className="flex flex-wrap gap-1 p-3 border-gray-200 bg-gray-50/50 shadow-sm">
         <Tooltip>
           <TooltipTrigger asChild>
             <MenuButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")}>
@@ -102,12 +139,12 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <MenuButton onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} isActive={editor.isActive("heading", { level: 1 })}>
-              <Heading1 className="h-4 w-4" />
+            <MenuButton onClick={() => editor.chain().focus().toggleUnderline().run()} isActive={editor.isActive("underline")}>
+              <Underline className="h-4 w-4" />
             </MenuButton>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Heading 1 (Large title)</p>
+            <p>Underline (Ctrl+U)</p>
           </TooltipContent>
         </Tooltip>
 
@@ -119,6 +156,17 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
           </TooltipTrigger>
           <TooltipContent>
             <p>Heading 2 (Medium title)</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <MenuButton onClick={handleLinkClick} isActive={editor.isActive("link")}>
+              <Link className="h-4 w-4" />
+            </MenuButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{editor.isActive("link") ? "Remove Link" : "Add Link"}</p>
           </TooltipContent>
         </Tooltip>
 
@@ -160,17 +208,6 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <MenuButton onClick={() => editor.chain().focus().toggleCode().run()} isActive={editor.isActive("code")}>
-              <Code className="h-4 w-4" />
-            </MenuButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Inline Code</p>
-          </TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
             <MenuButton onClick={() => editor.chain().focus().toggleCodeBlock().run()} isActive={editor.isActive("codeBlock")}>
               <FileCode2 className="h-4 w-4" />
             </MenuButton>
@@ -180,6 +217,15 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
           </TooltipContent>
         </Tooltip>
       </div>
+
+      {/* Link Dialog */}
+      <LinkDialog
+        isOpen={showLinkDialog}
+        onClose={() => setShowLinkDialog(false)}
+        onConfirm={handleLinkConfirm}
+        initialUrl={currentUrl}
+        selectedText={selectedText}
+      />
     </TooltipProvider>
   );
 }

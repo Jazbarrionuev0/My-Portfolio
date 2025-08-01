@@ -400,3 +400,66 @@
   height: 0 !important;
   pointer-events: none !important;
 }
+
+/* Enhanced code block styling */
+.ProseMirror pre {
+  background-color: #f8f9fa !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  margin: 1rem 0 !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  overflow-x: auto !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  color: #495057 !important;
+}
+
+.dark .ProseMirror pre {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #e9ecef !important;
+}
+
+.ProseMirror pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+/* Public blog post code blocks - VS Code Dark Theme */
+.prose pre {
+  background-color: #1e1e1e !important; /* VS Code dark background */
+  border: 1px solid #333333 !important; /* Dark border */
+  border-radius: 8px !important;
+  padding: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  overflow-x: auto !important;
+  color: #d4d4d4 !important; /* VS Code light text */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; /* Subtle shadow */
+}
+
+.prose pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  text-shadow: none !important;
+}
+
+/* Dark mode adjustments for public blog (in case it's ever used) */
+.dark .prose pre {
+  background-color: #0d1117 !important; /* Even darker for dark mode */
+  border-color: #21262d !important;
+  color: #e6edf3 !important;
+}
