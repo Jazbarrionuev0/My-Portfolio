@@ -540,17 +540,17 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   };
 
   return (
-    <div className="bg-background shadow rounded-lg border border-border">
-      <div className="px-6 py-4 border-b border-border">
+    <div className="bg-admin-card-bg shadow rounded-lg border border-admin-border">
+      <div className="px-6 py-4 border-b border-admin-border">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-medium text-foreground">{mode === "create" ? "Create New Post" : "Edit Post"}</h2>
+          <h2 className="text-lg font-medium text-admin-text">{mode === "create" ? "Create New Post" : "Edit Post"}</h2>
           <div className="flex items-center space-x-3">
             {/* Auto-save status */}
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-admin-muted">
               {isAutoSaving ? (
                 <span className="flex items-center">
                   <svg
-                    className="animate-spin -ml-1 mr-2 h-3 w-3 text-muted-foreground"
+                    className="animate-spin -ml-1 mr-2 h-3 w-3 text-admin-muted"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -569,13 +569,13 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               ) : null}
             </div>
 
-            <Link href="/admin/blog" className="text-muted-foreground hover:text-foreground text-sm font-medium">
+            <Link href="/admin/blog" className="text-admin-muted hover:text-admin-text text-sm font-medium">
               Cancel
             </Link>
             <button
               onClick={handleSave}
               disabled={!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving || !hasChanges}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed transition-colors text-sm font-medium"
+              className="px-4 py-2 bg-admin-primary text-white rounded-md hover:bg-admin-primary/90 disabled:bg-admin-secondary disabled:cursor-not-allowed transition-colors text-sm font-medium"
             >
               {isSaving ? "Saving..." : isAutoSaving ? "Auto-saving..." : mode === "create" ? "Create Post" : "Update Post"}
             </button>
@@ -586,7 +586,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       <div className="p-6">
         {/* Title Input */}
         <div className="mb-6">
-          <label htmlFor="title" className="block text-sm font-medium text-foreground mb-2">
+          <label htmlFor="title" className="block text-sm font-medium text-admin-text mb-2">
             Title *
           </label>
           <textarea
@@ -598,7 +598,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Enter your blog post title..."
-            className="w-full text-2xl font-bold text-foreground placeholder-muted-foreground bg-background border border-border rounded-md p-3 outline-none resize-none overflow-hidden leading-tight focus:ring-2 focus:ring-ring focus:border-ring"
+            className="w-full text-2xl font-bold text-admin-text placeholder-admin-muted bg-admin-card-bg border border-admin-border rounded-md p-3 outline-none resize-none overflow-hidden leading-tight focus:ring-2 focus:ring-admin-accent focus:border-admin-accent"
             style={{
               fontFamily: "'Georgia', 'Times New Roman', serif",
               minHeight: "60px",
@@ -615,7 +615,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
         {/* Featured Image */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-foreground mb-2">Featured Image</label>
+          <label className="block text-sm font-medium text-admin-text mb-2">Featured Image</label>
 
           {featuredImage ? (
             <div className="space-y-3">
@@ -625,7 +625,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
                   alt="Featured image preview"
                   width={800}
                   height={400}
-                  className="w-full h-48 object-cover rounded-lg border border-border"
+                  className="w-full h-48 object-cover rounded-lg border border-admin-border"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 rounded-lg flex items-center justify-center">
                   <button
@@ -639,7 +639,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="featured-image-replace"
-                  className="cursor-pointer inline-flex items-center px-3 py-2 border border-border rounded-md text-sm font-medium text-foreground bg-background hover:bg-accent transition-colors"
+                  className="cursor-pointer inline-flex items-center px-3 py-2 border border-admin-border rounded-md text-sm font-medium text-admin-text bg-admin-card-bg hover:bg-admin-secondary transition-colors"
                 >
                   Replace Image
                 </label>
@@ -654,9 +654,9 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               </div>
             </div>
           ) : (
-            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+            <div className="border-2 border-dashed border-admin-border rounded-lg p-6 text-center">
               <div className="space-y-2">
-                <svg className="mx-auto h-12 w-12 text-muted-foreground" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <svg className="mx-auto h-12 w-12 text-admin-muted" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                   <path
                     d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
                     strokeWidth={2}
@@ -664,13 +664,13 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
                     strokeLinejoin="round"
                   />
                 </svg>
-                <div className="text-sm text-muted-foreground">
-                  <label htmlFor="featured-image-upload" className="cursor-pointer font-medium text-primary hover:text-primary/90">
+                <div className="text-sm text-admin-muted">
+                  <label htmlFor="featured-image-upload" className="cursor-pointer font-medium text-admin-primary hover:text-admin-primary/90">
                     Click to upload
                   </label>
                   <span> or drag and drop</span>
                 </div>
-                <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 20MB</p>
+                <p className="text-xs text-admin-muted">PNG, JPG, GIF up to 20MB</p>
               </div>
               <input
                 id="featured-image-upload"
@@ -683,12 +683,12 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             </div>
           )}
 
-          {isUploadingImage && <div className="mt-2 text-sm text-muted-foreground">Uploading image...</div>}
+          {isUploadingImage && <div className="mt-2 text-sm text-admin-muted">Uploading image...</div>}
         </div>
 
         {/* Excerpt Input */}
         <div className="mb-6">
-          <label htmlFor="excerpt" className="block text-sm font-medium text-foreground mb-2">
+          <label htmlFor="excerpt" className="block text-sm font-medium text-admin-text mb-2">
             Excerpt (Optional)
           </label>
           <textarea
@@ -700,29 +700,29 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Write a brief description of your post..."
-            className="w-full p-3 border border-border rounded-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
+            className="w-full p-3 border border-admin-border rounded-md placeholder-admin-muted focus:ring-2 focus:ring-admin-accent focus:border-admin-accent outline-none bg-admin-card-bg text-admin-text"
             rows={3}
             maxLength={200}
           />
-          <p className="mt-1 text-sm text-muted-foreground">{excerpt.length}/200 characters</p>
+          <p className="mt-1 text-sm text-admin-muted">{excerpt.length}/200 characters</p>
         </div>
 
         {/* Category Selection */}
         <div className="mb-6">
-          <label htmlFor="category" className="block text-sm font-medium text-foreground mb-2">
+          <label htmlFor="category" className="block text-sm font-medium text-admin-text mb-2">
             Category *
           </label>
 
           <div className="flex gap-2">
             <Select value={selectedCategoryId} onValueChange={handleSelectCategory}>
-              <SelectTrigger className="flex-1">
+              <SelectTrigger className="flex-1 border-admin-border bg-admin-card-bg text-admin-text data-[placeholder]:text-admin-muted focus:ring-admin-accent focus:border-admin-accent">
                 <SelectValue placeholder="Select a category..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-admin-card-bg border-admin-border">
                 {availableCategories
                   .sort((a, b) => a.title.localeCompare(b.title))
                   .map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
+                    <SelectItem key={category.id} value={category.id} className="text-admin-text hover:bg-admin-secondary focus:bg-admin-secondary">
                       {category.title} ({category.postCount} post{category.postCount !== 1 ? "s" : ""})
                     </SelectItem>
                   ))}
@@ -732,7 +732,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             <button
               onClick={() => setShowCategoryModal(true)}
               type="button"
-              className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors whitespace-nowrap"
+              className="px-4 py-2 bg-admin-secondary text-admin-text rounded-md hover:bg-admin-secondary/80 transition-colors whitespace-nowrap"
             >
               Add New
             </button>
@@ -741,7 +741,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
         {/* Tags Input */}
         <div className="mb-6">
-          <label htmlFor="tags" className="block text-sm font-medium text-foreground mb-2">
+          <label htmlFor="tags" className="block text-sm font-medium text-admin-text mb-2">
             Tags
           </label>
           <div className="flex flex-wrap gap-2 mb-2">
@@ -769,12 +769,12 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               onBlur={handleTagInputBlur}
               onKeyPress={handleKeyPress}
               placeholder="Add a tag..."
-              className="flex-1 p-2 border border-border rounded-l-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
+              className="flex-1 p-2 border border-admin-border rounded-l-md placeholder-admin-muted focus:ring-2 focus:ring-admin-accent focus:border-admin-accent outline-none bg-admin-card-bg text-admin-text"
             />
             <button
               onClick={() => handleAddTag()}
               type="button"
-              className="px-4 py-2 bg-secondary text-secondary-foreground rounded-r-md hover:bg-secondary/80 transition-colors"
+              className="px-4 py-2 bg-admin-secondary text-admin-text rounded-r-md hover:bg-admin-secondary/80 transition-colors"
             >
               Add
             </button>
@@ -783,18 +783,20 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           {/* Tag Suggestions Dropdown */}
           {showTagSuggestions && (
             <div className="relative">
-              <div className="absolute top-1 left-0 right-0 bg-popover border border-border rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+              <div className="absolute top-1 left-0 right-0 bg-admin-card-bg border border-admin-border rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
                 {filteredTags.length > 0 ? (
                   <>
-                    {!tagInput.trim() && <div className="px-3 py-2 text-xs text-muted-foreground bg-muted border-b border-border">Popular tags:</div>}
+                    {!tagInput.trim() && (
+                      <div className="px-3 py-2 text-xs text-admin-muted bg-admin-secondary border-b border-admin-border">Popular tags:</div>
+                    )}
                     {filteredTags.map((tag) => (
                       <div
                         key={tag.id}
                         onClick={() => handleAddTag(tag.title)}
-                        className="px-3 py-2 hover:bg-accent cursor-pointer flex justify-between items-center"
+                        className="px-3 py-2 hover:bg-admin-secondary cursor-pointer flex justify-between items-center"
                       >
-                        <span className="text-popover-foreground">{tag.title}</span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-admin-text">{tag.title}</span>
+                        <span className="text-xs text-admin-muted">
                           {tag.postCount} post{tag.postCount !== 1 ? "s" : ""}
                         </span>
                       </div>
@@ -804,9 +806,9 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
                 {tagInput.trim() && (
                   <div
                     onClick={() => handleAddTag()}
-                    className="px-3 py-2 hover:bg-accent cursor-pointer flex justify-between items-center border-t border-border"
+                    className="px-3 py-2 hover:bg-admin-secondary cursor-pointer flex justify-between items-center border-t border-admin-border"
                   >
-                    <span className="text-popover-foreground">Create &ldquo;{tagInput.trim()}&rdquo;</span>
+                    <span className="text-admin-text">Create &ldquo;{tagInput.trim()}&rdquo;</span>
                     <span className="text-xs text-green-600 dark:text-green-400 font-medium">New tag</span>
                   </div>
                 )}
@@ -816,15 +818,15 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         </div>
 
         {/* Editor */}
-        <div className="border border-border rounded-lg overflow-hidden">
+        <div className="border border-admin-border rounded-lg overflow-hidden">
           {/* Editor Toolbar */}
-          <div className="bg-muted border-b border-border">
+          <div className="bg-admin-secondary border-b border-admin-border">
             <MenuBar editor={editor} onImageUpload={handleEditorImageUpload} />
           </div>
 
           {/* Editor Content */}
           <div
-            className={`p-4 bg-background cursor-text relative transition-all duration-200 ${
+            className={`p-4 bg-admin-card-bg cursor-text relative transition-all duration-200 ${
               isDragging ? "bg-blue-50 dark:bg-blue-950/20 border-2 border-dashed border-blue-300 dark:border-blue-600" : ""
             }`}
             onClick={(e) => {
@@ -884,13 +886,13 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             }
           }}
         >
-          <div className="bg-background border border-border rounded-lg shadow-lg max-w-md w-full mx-4">
-            <div className="px-6 py-4 border-b border-border">
-              <h3 className="text-lg font-medium text-foreground">Create New Category</h3>
+          <div className="bg-admin-card-bg border border-admin-border rounded-lg shadow-lg max-w-md w-full mx-4">
+            <div className="px-6 py-4 border-b border-admin-border">
+              <h3 className="text-lg font-medium text-admin-text">Create New Category</h3>
             </div>
 
             <div className="p-6">
-              <label htmlFor="new-category" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="new-category" className="block text-sm font-medium text-admin-text mb-2">
                 Category Name
               </label>
               <input
@@ -900,26 +902,26 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 onKeyPress={handleCategoryKeyPress}
                 placeholder="Enter category name..."
-                className="w-full p-3 border border-border rounded-md placeholder-muted-foreground focus:ring-2 focus:ring-ring focus:border-ring outline-none bg-background text-foreground"
+                className="w-full p-3 border border-admin-border rounded-md placeholder-admin-muted focus:ring-2 focus:ring-admin-accent focus:border-admin-accent outline-none bg-admin-card-bg text-admin-text"
                 autoFocus
               />
             </div>
 
-            <div className="px-6 py-4 border-t border-border flex justify-end space-x-3">
+            <div className="px-6 py-4 border-t border-admin-border flex justify-end space-x-3">
               <button
                 onClick={() => {
                   setShowCategoryModal(false);
                   setNewCategoryName("");
                 }}
                 disabled={isCreatingCategory}
-                className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                className="px-4 py-2 text-admin-muted hover:text-admin-text transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreateCategory}
                 disabled={!newCategoryName.trim() || isCreatingCategory}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 bg-admin-primary text-white rounded-md hover:bg-admin-primary/90 disabled:bg-admin-secondary disabled:cursor-not-allowed transition-colors"
               >
                 {isCreatingCategory ? "Creating..." : "Create Category"}
               </button>
