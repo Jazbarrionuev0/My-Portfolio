@@ -10,6 +10,31 @@ export async function uploadImageAction(formData: FormData): Promise<string> {
     throw error;
   }
 
+  // Validate file type - images only
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Only image files are allowed");
+  }
+
+  return uploadFileToS3(file);
+}
+
+export async function uploadVideoAction(formData: FormData): Promise<string> {
+  const file = formData.get("file") as File;
+
+  if (!file) {
+    const error = new Error("No file provided");
+    throw error;
+  }
+
+  // Validate file type - videos only
+  if (!file.type.startsWith("video/")) {
+    throw new Error("Only video files are allowed");
+  }
+
+  return uploadFileToS3(file);
+}
+
+async function uploadFileToS3(file: File): Promise<string> {
   const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
   const extension = file.name.split(".").pop()?.toLowerCase() || "";
   const bytes = await file.arrayBuffer();
@@ -39,10 +64,10 @@ export async function uploadImageAction(formData: FormData): Promise<string> {
 
     await s3Client.send(command);
 
-    const imageUrl = `https://${process.env.DO_SPACES_BUCKET}.${process.env.DO_SPACES_ENDPOINT?.replace("https://", "")}/${filename}`;
+    const fileUrl = `https://${process.env.DO_SPACES_BUCKET}.${process.env.DO_SPACES_ENDPOINT?.replace("https://", "")}/${filename}`;
 
-    return imageUrl;
+    return fileUrl;
   } catch (error) {
-    throw new Error("Failed to upload image");
+    throw new Error("Failed to upload file");
   }
 }

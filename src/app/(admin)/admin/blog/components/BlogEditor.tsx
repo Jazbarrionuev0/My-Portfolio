@@ -6,10 +6,11 @@ import { Link as LinkExtension } from "@tiptap/extension-link";
 import { Underline } from "@tiptap/extension-underline";
 import { EnhancedCodeBlock } from "../../../../../components/blog/EnhancedCodeBlock";
 import { ImageExtension } from "../../../../../components/blog/ImageExtension";
+import { VideoExtension } from "../../../../../components/blog/VideoExtension";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { saveBlogPost, updateBlogPost, getAllTags, getAllCategories, createCategory } from "../../../../../actions/blog";
-import { uploadImageAction } from "../../../../../actions/upload";
+import { uploadImageAction, uploadVideoAction } from "../../../../../actions/upload";
 import MenuBar from "../../../../../components/blog/MenuBar";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -85,19 +86,25 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       Underline,
       EnhancedCodeBlock.configure({
         HTMLAttributes: {
-          class:
-            "bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 my-4 font-mono text-sm leading-relaxed overflow-x-auto",
+          class: "bg-admin-secondary border border-admin-border rounded-lg p-4 my-4 font-mono text-sm leading-relaxed overflow-x-auto",
           style: "white-space: pre-wrap; tab-size: 2; word-wrap: break-word;",
         },
       }),
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: "text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer",
+          class: "text-admin-primary underline hover:text-admin-accent cursor-pointer",
           style: "color: #2563eb !important; text-decoration: underline !important; cursor: pointer !important;",
         },
       }),
       ImageExtension.configure({
+        inline: false,
+        allowBase64: false,
+        HTMLAttributes: {
+          class: "max-w-full h-auto rounded-lg border border-border shadow-sm my-4",
+        },
+      }),
+      VideoExtension.configure({
         inline: false,
         allowBase64: false,
         HTMLAttributes: {
@@ -532,21 +539,67 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     }
   };
 
+  const handleEditorVideoUpload = async (file: File) => {
+    // Validate file type
+    if (!file.type.startsWith("video/")) {
+      toast.error("Please select a valid video file");
+      return;
+    }
+
+    // Validate file size (max 100MB for videos)
+    if (file.size > 100 * 1024 * 1024) {
+      toast.error("Video size must be less than 100MB");
+      return;
+    }
+
+    const uploadToast = toast.loading("Uploading video...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const videoUrl = await uploadVideoAction(formData);
+
+      // Insert the video into the editor
+      if (editor) {
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: "video",
+            attrs: { src: videoUrl, controls: true },
+          })
+          .run();
+      }
+
+      toast.dismiss(uploadToast);
+      toast.success("Video uploaded and inserted!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.dismiss(uploadToast);
+      toast.error("Failed to upload video. Please try again.");
+    }
+  };
+
   const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
 
     const files = Array.from(e.dataTransfer.files);
-    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+    const mediaFiles = files.filter((file) => file.type.startsWith("image/") || file.type.startsWith("video/"));
 
-    if (imageFiles.length === 0) {
-      toast.error("No image files found in drop");
+    if (mediaFiles.length === 0) {
+      toast.error("No image or video files found in drop");
       return;
     }
 
-    // Upload all image files
-    for (const file of imageFiles) {
-      await handleEditorImageUpload(file);
+    // Upload all media files
+    for (const file of mediaFiles) {
+      if (file.type.startsWith("image/")) {
+        await handleEditorImageUpload(file);
+      } else if (file.type.startsWith("video/")) {
+        await handleEditorVideoUpload(file);
+      }
     }
   };
 
@@ -849,7 +902,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         <div className="rounded-lg">
           {/* Editor Toolbar - Sticky when at top */}
           <div className="bg-admin-secondary border border-admin-border sticky top-4 z-50 shadow-lg rounded-lg mx-2 mt-2">
-            <MenuBar editor={editor} onImageUpload={handleEditorImageUpload} />
+            <MenuBar editor={editor} onImageUpload={handleEditorImageUpload} onVideoUpload={handleEditorVideoUpload} />
           </div>
 
           {/* Editor Content */}
@@ -883,8 +936,8 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               <div className="absolute inset-0 flex items-center justify-center bg-blue-50/90 dark:bg-blue-950/90 border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg pointer-events-none">
                 <div className="text-center">
                   <ImageIcon className="h-12 w-12 text-blue-500 mx-auto mb-2" />
-                  <p className="text-blue-700 dark:text-blue-300 font-medium">Drop images here to upload</p>
-                  <p className="text-blue-600 dark:text-blue-400 text-sm">PNG, JPG, GIF up to 20MB</p>
+                  <p className="text-blue-700 dark:text-blue-300 font-medium">Drop images or videos here to upload</p>
+                  <p className="text-blue-600 dark:text-blue-400 text-sm">Images: PNG, JPG, GIF up to 20MB | Videos: MP4, MOV, AVI up to 100MB</p>
                 </div>
               </div>
             )}

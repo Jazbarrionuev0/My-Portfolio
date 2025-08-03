@@ -32,10 +32,10 @@ export default function LinkDialog({ isOpen, onClose, onConfirm, initialUrl = "h
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
+      <DialogContent className="sm:max-w-md bg-admin-card-bg border-admin-border">
         <DialogHeader>
-          <DialogTitle className="text-gray-900 dark:text-gray-100">Add Link</DialogTitle>
-          <DialogDescription className="text-gray-600 dark:text-gray-400">
+          <DialogTitle className="text-admin-text">Add Link</DialogTitle>
+          <DialogDescription className="text-admin-muted">
             Add a link to the selected text: &ldquo;<span className="font-medium text-blue-600 underline">{selectedText}</span>&rdquo;
           </DialogDescription>
         </DialogHeader>
@@ -43,7 +43,7 @@ export default function LinkDialog({ isOpen, onClose, onConfirm, initialUrl = "h
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="url" className="text-gray-700 dark:text-gray-300">
+              <Label htmlFor="url" className="text-admin-text">
                 URL
               </Label>
               <Input
@@ -54,18 +54,13 @@ export default function LinkDialog({ isOpen, onClose, onConfirm, initialUrl = "h
                 onChange={(e) => setUrl(e.target.value)}
                 autoFocus
                 required
-                className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                className="bg-admin-card-bg border-admin-border text-admin-text"
               />
             </div>
           </div>
 
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-            >
+            <Button type="button" variant="outline" onClick={handleClose} className="border-admin-border text-admin-text hover:bg-admin-secondary">
               Cancel
             </Button>
             <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">

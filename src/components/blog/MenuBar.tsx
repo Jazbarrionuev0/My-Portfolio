@@ -3,16 +3,28 @@
 import { Editor } from "@tiptap/react";
 import MenuButton from "./MenuButton";
 import LinkDialog from "./LinkDialog";
+import VideoDialog from "./VideoDialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/src/components/ui/tooltip";
-import { Bold, Italic, Underline, Heading2, List, ListOrdered, Image as ImageIcon, Upload, FileCode2, Link } from "lucide-react";
-import { uploadImageAction } from "@/src/actions/upload";
+import { Bold, Italic, Underline, Heading2, List, ListOrdered, Image as ImageIcon, Upload, FileCode2, Link, Video, VideoIcon } from "lucide-react";
+import { uploadImageAction, uploadVideoAction } from "@/src/actions/upload";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
 
-export default function MenuBar({ editor, onImageUpload }: { editor: Editor | null; onImageUpload?: (file: File) => Promise<void> }) {
+export default function MenuBar({
+  editor,
+  onImageUpload,
+  onVideoUpload,
+}: {
+  editor: Editor | null;
+  onImageUpload?: (file: File) => Promise<void>;
+  onVideoUpload?: (file: File) => Promise<void>;
+}) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
   const [showLinkDialog, setShowLinkDialog] = useState(false);
+  const [showVideoDialog, setShowVideoDialog] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   const [currentUrl, setCurrentUrl] = useState("");
 
@@ -74,6 +86,67 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
     }
   };
 
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // If onVideoUpload prop is provided, use it (from BlogEditor)
+    if (onVideoUpload) {
+      await onVideoUpload(file);
+      // Reset the file input
+      if (videoInputRef.current) {
+        videoInputRef.current.value = "";
+      }
+      return;
+    }
+
+    // Fallback to original upload logic
+    // Validate file type
+    if (!file.type.startsWith("video/")) {
+      toast.error("Please select a valid video file");
+      return;
+    }
+
+    // Validate file size (max 100MB for videos)
+    if (file.size > 100 * 1024 * 1024) {
+      toast.error("Video size must be less than 100MB");
+      return;
+    }
+
+    setIsUploadingVideo(true);
+    const uploadToast = toast.loading("Uploading video...");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const videoUrl = await uploadVideoAction(formData);
+
+      // Insert the video into the editor
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "video",
+          attrs: { src: videoUrl, controls: true },
+        })
+        .run();
+
+      toast.dismiss(uploadToast);
+      toast.success("Video uploaded and inserted!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.dismiss(uploadToast);
+      toast.error("Failed to upload video. Please try again.");
+    } finally {
+      setIsUploadingVideo(false);
+      // Reset the file input
+      if (videoInputRef.current) {
+        videoInputRef.current.value = "";
+      }
+    }
+  };
+
   const handleLinkClick = () => {
     const { from, to } = editor.state.selection;
     const selectedTextContent = editor.state.doc.textBetween(from, to);
@@ -112,9 +185,37 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
     fileInputRef.current?.click();
   };
 
+  const handleVideoButtonClick = () => {
+    if (isUploadingVideo) return;
+    videoInputRef.current?.click();
+  };
+
+  const handleVideoUrlInsert = () => {
+    setShowVideoDialog(true);
+  };
+
+  const handleVideoDialogConfirm = (url: string, options?: { controls?: boolean; autoplay?: boolean; muted?: boolean; loop?: boolean }) => {
+    editor
+      .chain()
+      .focus()
+      .insertContent({
+        type: "video",
+        attrs: {
+          src: url,
+          controls: options?.controls ?? true,
+          autoplay: options?.autoplay ?? false,
+          muted: options?.muted ?? false,
+          loop: options?.loop ?? false,
+        },
+      })
+      .run();
+
+    toast.success("Video inserted successfully!");
+  };
+
   return (
     <TooltipProvider>
-      <div className="flex flex-wrap gap-1 p-3 border-gray-200 bg-gray-50/50 shadow-sm">
+      <div className="flex flex-wrap gap-1 p-3 border-admin-border bg-admin-secondary shadow-sm">
         <Tooltip>
           <TooltipTrigger asChild>
             <MenuButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")}>
@@ -208,6 +309,31 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
 
         <Tooltip>
           <TooltipTrigger asChild>
+            <MenuButton onClick={handleVideoButtonClick} isActive={isUploadingVideo}>
+              {isUploadingVideo ? <Upload className="h-4 w-4 animate-spin" /> : <Video className="h-4 w-4" />}
+            </MenuButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isUploadingVideo ? "Uploading..." : "Upload Video"}</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Hidden video file input */}
+        <input ref={videoInputRef} type="file" accept="video/*" onChange={handleVideoUpload} className="hidden" />
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <MenuButton onClick={handleVideoUrlInsert} isActive={showVideoDialog}>
+              <VideoIcon className="h-4 w-4" />
+            </MenuButton>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Insert Video URL</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
             <MenuButton onClick={() => editor.chain().focus().toggleCodeBlock().run()} isActive={editor.isActive("codeBlock")}>
               <FileCode2 className="h-4 w-4" />
             </MenuButton>
@@ -226,6 +352,9 @@ export default function MenuBar({ editor, onImageUpload }: { editor: Editor | nu
         initialUrl={currentUrl}
         selectedText={selectedText}
       />
+
+      {/* Video Dialog */}
+      <VideoDialog isOpen={showVideoDialog} onClose={() => setShowVideoDialog(false)} onConfirm={handleVideoDialogConfirm} />
     </TooltipProvider>
   );
 }

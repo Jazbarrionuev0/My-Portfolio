@@ -1,4 +1,4 @@
-import { Node, mergeAttributes, nodeInputRule } from "@tiptap/core";
+import { Node, mergeAttributes } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import VideoComponent from "./VideoComponent";
 
@@ -7,8 +7,6 @@ export interface VideoOptions {
   allowBase64: boolean;
   HTMLAttributes: Record<string, any>;
 }
-
-export const inputRegex = /(?:^|\s)(!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\))$/;
 
 export const VideoExtension = Node.create<VideoOptions>({
   name: "video",
@@ -76,32 +74,6 @@ export const VideoExtension = Node.create<VideoOptions>({
 
   renderHTML({ HTMLAttributes }) {
     return ["video", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
-  },
-
-  addCommands() {
-    return {
-      setVideo:
-        (options) =>
-        ({ commands }) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: options,
-          });
-        },
-    };
-  },
-
-  addInputRules() {
-    return [
-      nodeInputRule({
-        find: inputRegex,
-        type: this.type,
-        getAttributes: (match) => {
-          const [, , alt, src, title] = match;
-          return { src, alt, title };
-        },
-      }),
-    ];
   },
 
   addNodeView() {

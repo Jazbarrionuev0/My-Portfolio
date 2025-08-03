@@ -22,16 +22,16 @@
     --portfolio-card-bg: 0 0% 0%; /* Black for card background */
     --portfolio-card-text: 0 0% 100%; /* White for text on dark cards */
 
-    /* Admin specific colors - Professional blue/slate theme */
-    --admin-bg: 210 40% 98%; /* Light blue-gray background */
-    --admin-accent: 220 100% 58%; /* Professional blue accent */
-    --admin-primary: 220 100% 58%; /* Blue primary */
-    --admin-secondary: 214 32% 91%; /* Light blue-gray */
-    --admin-text: 222.2 84% 4.9%; /* Dark text */
-    --admin-text-muted: 215.4 16.3% 46.9%; /* Muted gray text */
+    /* Admin specific colors - Light neutral theme */
+    --admin-bg: 0 0% 98%; /* Very light gray background */
+    --admin-accent: 0 0% 20%; /* Dark gray accent */
+    --admin-primary: 0 0% 15%; /* Dark gray primary */
+    --admin-secondary: 0 0% 96%; /* Light gray secondary */
+    --admin-text: 0 0% 10%; /* Dark text */
+    --admin-text-muted: 0 0% 45%; /* Muted gray text */
     --admin-card-bg: 0 0% 100%; /* White card background */
-    --admin-card-text: 222.2 84% 4.9%; /* Dark text on cards */
-    --admin-border: 214.3 31.8% 91.4%; /* Light border */
+    --admin-card-text: 0 0% 10%; /* Dark text on cards */
+    --admin-border: 0 0% 90%; /* Light gray border */
 
     --primary: 323 100% 50%; /* Accessible purple instead of bright pink */
     --primary-foreground: 0 0% 100%;
@@ -70,16 +70,16 @@
     /* Keep the pink accent you like in dark mode */
     --portfolio-accent: 323 100% 50%; /* #FF00CC - bright pink works well in dark mode */
 
-    /* Admin dark mode colors */
-    --admin-bg: 222.2 84% 4.9%; /* Dark background */
-    --admin-accent: 220 100% 68%; /* Lighter blue for dark mode */
-    --admin-primary: 220 100% 68%; /* Lighter blue primary */
-    --admin-secondary: 217.2 32.6% 17.5%; /* Dark blue-gray */
-    --admin-text: 210 40% 98%; /* Light text */
-    --admin-text-muted: 215 20.2% 65.1%; /* Muted light text */
-    --admin-card-bg: 217.2 32.6% 17.5%; /* Dark card background */
-    --admin-card-text: 210 40% 98%; /* Light text on dark cards */
-    --admin-border: 217.2 32.6% 17.5%; /* Dark border */
+    /* Admin dark mode colors - Light neutral theme */
+    --admin-bg: 0 0% 8%; /* Dark background */
+    --admin-accent: 0 0% 80%; /* Light gray accent for dark mode */
+    --admin-primary: 0 0% 85%; /* Light gray primary for dark mode */
+    --admin-secondary: 0 0% 15%; /* Dark gray secondary */
+    --admin-text: 0 0% 95%; /* Light text */
+    --admin-text-muted: 0 0% 65%; /* Muted light text */
+    --admin-card-bg: 0 0% 12%; /* Dark card background */
+    --admin-card-text: 0 0% 95%; /* Light text on dark cards */
+    --admin-border: 0 0% 20%; /* Dark border */
 
     --primary: 323 100% 50%; /* Keep the pink as primary in dark mode */
     --primary-foreground: 0 0% 100%;
