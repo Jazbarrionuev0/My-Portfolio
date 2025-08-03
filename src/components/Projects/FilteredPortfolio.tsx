@@ -60,14 +60,20 @@ export default function FilteredPortfolio({ projects, categories }: Props) {
             <Link key={project.id} href={`/blog/${project.slug}`}>
               <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.id)} onMouseLeave={() => setHoveredId(null)}>
                 <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-gray-900">
-                  <Image
-                    className="object-cover rounded-lg opacity-40"
-                    src={project.featuredImage || "/projects/project2.jpg"} // fallback image
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
+                  {project.featuredImage ? (
+                    <>
+                      <Image
+                        className="object-cover rounded-lg opacity-40"
+                        src={project.featuredImage}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg"></div>
+                  )}
                   <Card className="absolute inset-0 bg-transparent">
                     <CardHeader className="pt-6 pb-2">
                       <CardTitle className="text-white text-2xl font-normal">{project.title}</CardTitle>

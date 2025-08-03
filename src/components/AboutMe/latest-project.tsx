@@ -26,7 +26,19 @@ export default async function LatestProject() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <div className="relative overflow-hidden rounded-lg shadow-md h-full min-h-[300px] order-2 md:order-1">
-            <Image src={post.featuredImage || "/projects/project2.jpg"} alt={post.title} fill style={{ objectFit: "cover" }} priority />
+            {post.featuredImage ? (
+              <Image src={post.featuredImage} alt={post.title} fill style={{ objectFit: "cover" }} priority />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center">
+                    <span className="text-2xl">📝</span>
+                  </div>
+                  <h4 className="text-lg font-semibold text-slate-600 dark:text-slate-300 mb-2">Featured Project</h4>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">No preview image available</p>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-6 pt-2 order-1 md:order-2">

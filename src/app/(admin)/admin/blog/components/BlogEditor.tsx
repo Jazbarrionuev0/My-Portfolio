@@ -67,13 +67,15 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const [featuredImage, setFeaturedImage] = useState<string | null>(post?.featuredImage || null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isAutoSaving, setIsAutoSaving] = useState(false);
-  const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
+  const [showFloatingButton, setShowFloatingButton] = useState(false);
+  // Auto-save disabled
+  // const [isAutoSaving, setIsAutoSaving] = useState(false);
+  // const [lastAutoSave, setLastAutoSave] = useState<Date | null>(null);
   const router = useRouter();
 
-  // Ref for auto-save timeout
-  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastChangeTimeRef = useRef<number>(0);
+  // Auto-save disabled
+  // const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // const lastChangeTimeRef = useRef<number>(0);
 
   const editor = useEditor({
     extensions: [
@@ -107,7 +109,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     immediatelyRender: false,
     onUpdate: () => {
       setHasChanges(true);
-      lastChangeTimeRef.current = Date.now();
     },
   });
 
@@ -116,7 +117,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     if (editor) {
       const handleUpdate = () => {
         setHasChanges(true);
-        lastChangeTimeRef.current = Date.now();
       };
 
       editor.on("update", handleUpdate);
@@ -177,84 +177,98 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     }
   }, [tagInput, availableTags, tags, showTagSuggestions]);
 
-  // Auto-save functionality
-  const performAutoSave = useCallback(async () => {
-    if (!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving) {
-      return;
-    }
-
-    setIsAutoSaving(true);
-
-    try {
-      const contentData = {
-        title: title.trim(),
-        excerpt: excerpt.trim() || undefined,
-        contentHtml: editor.getHTML(),
-        contentJson: JSON.stringify(editor.getJSON()),
-        contentText: editor.getText(),
-        tags: tags,
-        categoryId: selectedCategoryId,
-        featuredImage: featuredImage,
-      };
-
-      let result;
-      if (mode === "create") {
-        result = await saveBlogPost(contentData);
-      } else {
-        result = await updateBlogPost(post!.id, contentData);
-      }
-
-      if (result.success) {
-        setHasChanges(false);
-        setLastAutoSave(new Date());
-        // Don't show toast for auto-save to avoid interrupting user
-      }
-    } catch (error) {
-      console.error("Auto-save error:", error);
-      // Silently fail for auto-save
-    } finally {
-      setIsAutoSaving(false);
-    }
-  }, [editor, title, selectedCategoryId, isSaving, isAutoSaving, excerpt, tags, featuredImage, mode, post]);
-
-  // Auto-save functionality with proper debouncing
-  const scheduleAutoSave = useCallback(() => {
-    // Clear existing timeout
-    if (autoSaveTimeoutRef.current) {
-      clearTimeout(autoSaveTimeoutRef.current);
-    }
-
-    // Only schedule if we have the required fields and are not already saving
-    if (title.trim() && selectedCategoryId && !isSaving && !isAutoSaving) {
-      autoSaveTimeoutRef.current = setTimeout(() => {
-        // Double-check that enough time has passed since last change
-        const timeSinceLastChange = Date.now() - lastChangeTimeRef.current;
-        if (timeSinceLastChange >= 5000) {
-          performAutoSave();
-        } else {
-          // If not enough time has passed, schedule again
-          setTimeout(() => scheduleAutoSave(), 5000 - timeSinceLastChange);
-        }
-      }, 5000);
-    }
-  }, [title, selectedCategoryId, isSaving, isAutoSaving, performAutoSave]);
-
-  // Effect to handle auto-save scheduling
+  // Scroll event listener for floating button
   useEffect(() => {
-    if (hasChanges) {
-      lastChangeTimeRef.current = Date.now();
-      scheduleAutoSave();
-    }
-  }, [hasChanges, scheduleAutoSave]);
+    const handleScroll = () => {
+      // Show floating button when scrolled down more than 100px
+      setShowFloatingButton(window.scrollY > 100);
+    };
 
-  // Cleanup timeout on unmount
-  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
-      if (autoSaveTimeoutRef.current) {
-        clearTimeout(autoSaveTimeoutRef.current);
-      }
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Auto-save functionality disabled
+  // const performAutoSave = useCallback(async () => {
+  //   if (!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving) {
+  //     return;
+  //   }
+
+  //   setIsAutoSaving(true);
+
+  //   try {
+  //     const contentData = {
+  //       title: title.trim(),
+  //       excerpt: excerpt.trim() || undefined,
+  //       contentHtml: editor.getHTML(),
+  //       contentJson: JSON.stringify(editor.getJSON()),
+  //       contentText: editor.getText(),
+  //       tags: tags,
+  //       categoryId: selectedCategoryId,
+  //       featuredImage: featuredImage,
+  //     };
+
+  //     let result;
+  //     if (mode === "create") {
+  //       result = await saveBlogPost(contentData);
+  //     } else {
+  //       result = await updateBlogPost(post!.id, contentData);
+  //     }
+
+  //     if (result.success) {
+  //       setHasChanges(false);
+  //       setLastAutoSave(new Date());
+  //       // Don't show toast for auto-save to avoid interrupting user
+  //     }
+  //   } catch (error) {
+  //     console.error("Auto-save error:", error);
+  //     // Silently fail for auto-save
+  //   } finally {
+  //     setIsAutoSaving(false);
+  //   }
+  // }, [editor, title, selectedCategoryId, isSaving, isAutoSaving, excerpt, tags, featuredImage, mode, post]);
+
+  // Auto-save functionality disabled
+  // const scheduleAutoSave = useCallback(() => {
+  //   // Clear existing timeout
+  //   if (autoSaveTimeoutRef.current) {
+  //     clearTimeout(autoSaveTimeoutRef.current);
+  //   }
+
+  //   // Only schedule if we have the required fields and are not already saving
+  //   if (title.trim() && selectedCategoryId && !isSaving && !isAutoSaving) {
+  //     autoSaveTimeoutRef.current = setTimeout(() => {
+  //       // Double-check that enough time has passed since last change
+  //       const timeSinceLastChange = Date.now() - lastChangeTimeRef.current;
+  //       if (timeSinceLastChange >= 5000) {
+  //         performAutoSave();
+  //       } else {
+  //         // If not enough time has passed, schedule again
+  //         setTimeout(() => scheduleAutoSave(), 5000 - timeSinceLastChange);
+  //       }
+  //     }, 5000);
+  //   }
+  // }, [title, selectedCategoryId, isSaving, isAutoSaving, performAutoSave]);
+
+  // Auto-save scheduling disabled
+  // useEffect(() => {
+  //   if (hasChanges) {
+  //     lastChangeTimeRef.current = Date.now();
+  //     scheduleAutoSave();
+  //   }
+  // }, [hasChanges, scheduleAutoSave]);
+
+  // Auto-save cleanup disabled
+  // useEffect(() => {
+  //   return () => {
+  //     if (autoSaveTimeoutRef.current) {
+  //       clearTimeout(autoSaveTimeoutRef.current);
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -343,14 +357,12 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setTagInput("");
       setShowTagSuggestions(false);
       setHasChanges(true);
-      lastChangeTimeRef.current = Date.now();
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
     setHasChanges(true);
-    lastChangeTimeRef.current = Date.now();
   };
 
   const handleSelectCategory = (categoryId: string) => {
@@ -359,7 +371,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       setSelectedCategory(category.title);
       setSelectedCategoryId(categoryId);
       setHasChanges(true);
-      lastChangeTimeRef.current = Date.now();
     }
   };
 
@@ -367,7 +378,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
     setSelectedCategory("");
     setSelectedCategoryId("");
     setHasChanges(true);
-    lastChangeTimeRef.current = Date.now();
   };
 
   const handleCreateCategory = async () => {
@@ -394,7 +404,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         setNewCategoryName("");
         setShowCategoryModal(false);
         setHasChanges(true);
-        lastChangeTimeRef.current = Date.now();
 
         toast.success("Category created successfully!");
       } else {
@@ -416,6 +425,8 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       } else {
         handleAddTag();
       }
+      // Re-show suggestions after adding tag since input is still focused
+      setTimeout(() => setShowTagSuggestions(true), 0);
     } else if (e.key === "Escape") {
       setShowTagSuggestions(false);
     }
@@ -470,7 +481,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       const imageUrl = await uploadImageAction(formData);
       setFeaturedImage(imageUrl);
       setHasChanges(true);
-      lastChangeTimeRef.current = Date.now();
       toast.dismiss(uploadToast);
       toast.success("Image uploaded successfully!");
     } catch (error) {
@@ -485,7 +495,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
   const handleRemoveImage = () => {
     setFeaturedImage(null);
     setHasChanges(true);
-    lastChangeTimeRef.current = Date.now();
   };
 
   const handleEditorImageUpload = async (file: File) => {
@@ -566,7 +575,8 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           <h2 className="text-lg font-medium text-admin-text">{mode === "create" ? "Create New Post" : "Edit Post"}</h2>
           <div className="flex items-center space-x-3">
             {/* Auto-save status */}
-            <div className="text-sm text-admin-muted">
+            {/* Auto-save indicator disabled */}
+            {/* <div className="text-sm text-admin-muted">
               {isAutoSaving ? (
                 <span className="flex items-center">
                   <svg
@@ -587,17 +597,17 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               ) : lastAutoSave ? (
                 <span>Auto-saved at {lastAutoSave.toLocaleTimeString()}</span>
               ) : null}
-            </div>
+            </div> */}
 
             <Link href="/admin/blog" className="text-admin-muted hover:text-admin-text text-sm font-medium">
               Cancel
             </Link>
             <button
               onClick={handleSave}
-              disabled={!editor || !title.trim() || !selectedCategoryId || isSaving || isAutoSaving || !hasChanges}
+              disabled={!editor || !title.trim() || !selectedCategoryId || isSaving || !hasChanges}
               className="px-4 py-2 bg-admin-primary text-white rounded-md hover:bg-admin-primary/90 disabled:bg-admin-secondary disabled:cursor-not-allowed transition-colors text-sm font-medium"
             >
-              {isSaving ? "Saving..." : isAutoSaving ? "Auto-saving..." : mode === "create" ? "Create Post" : "Update Post"}
+              {isSaving ? "Saving..." : mode === "create" ? "Create Post" : "Update Post"}
             </button>
           </div>
         </div>
@@ -615,7 +625,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             onChange={(e) => {
               setTitle(e.target.value);
               setHasChanges(true);
-              lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Enter your blog post title..."
             className="w-full text-2xl font-bold text-admin-text placeholder-admin-muted bg-admin-card-bg border border-admin-border rounded-md p-3 outline-none resize-none overflow-hidden leading-tight focus:ring-2 focus:ring-admin-accent focus:border-admin-accent"
@@ -717,7 +726,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             onChange={(e) => {
               setExcerpt(e.target.value);
               setHasChanges(true);
-              lastChangeTimeRef.current = Date.now();
             }}
             placeholder="Write a brief description of your post..."
             className="w-full p-3 border border-admin-border rounded-md placeholder-admin-muted focus:ring-2 focus:ring-admin-accent focus:border-admin-accent outline-none bg-admin-card-bg text-admin-text"
@@ -803,7 +811,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
           {/* Tag Suggestions Dropdown */}
           {showTagSuggestions && (
             <div className="relative">
-              <div className="absolute top-1 left-0 right-0 bg-admin-card-bg border border-admin-border rounded-md shadow-lg z-40 max-h-48 overflow-y-auto">
+              <div className="absolute top-full mt-1 left-0 right-0 bg-admin-card-bg border border-admin-border rounded-md shadow-lg z-[60] max-h-48 overflow-y-auto">
                 {filteredTags.length > 0 ? (
                   <>
                     {!tagInput.trim() && (
@@ -882,17 +890,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
             )}
           </div>
         </div>
-
-        {hasChanges && !isAutoSaving && (
-          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md dark:bg-yellow-900/20 dark:border-yellow-800">
-            <p className="text-sm text-yellow-700 dark:text-yellow-400">
-              You have unsaved changes.{" "}
-              {title.trim() && selectedCategoryId
-                ? "Auto-save will occur in 5 seconds of inactivity."
-                : "Make sure to add a title and select a category to enable auto-save."}
-            </p>
-          </div>
-        )}
       </div>
 
       {/* Category Creation Modal */}
@@ -947,6 +944,31 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Floating Action Button */}
+      {showFloatingButton && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <button
+            onClick={handleSave}
+            disabled={!editor || !title.trim() || !selectedCategoryId || isSaving || !hasChanges}
+            className="px-6 py-3 bg-admin-primary text-white rounded-full shadow-lg hover:bg-admin-primary/90 disabled:bg-admin-secondary disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 disabled:scale-100 flex items-center gap-2"
+          >
+            {isSaving ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                {mode === "create" ? "Create Post" : "Update Post"}
+              </>
+            )}
+          </button>
         </div>
       )}
     </div>
