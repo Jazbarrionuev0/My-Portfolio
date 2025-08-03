@@ -3,9 +3,8 @@
 import { Editor } from "@tiptap/react";
 import MenuButton from "./MenuButton";
 import LinkDialog from "./LinkDialog";
-import VideoDialog from "./VideoDialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/src/components/ui/tooltip";
-import { Bold, Italic, Underline, Heading2, List, ListOrdered, Image as ImageIcon, Upload, FileCode2, Link, Video, VideoIcon } from "lucide-react";
+import { Bold, Italic, Underline, Heading2, List, ListOrdered, Image as ImageIcon, Upload, FileCode2, Link, Video } from "lucide-react";
 import { uploadImageAction, uploadVideoAction } from "@/src/actions/upload";
 import { toast } from "sonner";
 import { useRef, useState } from "react";
@@ -24,7 +23,6 @@ export default function MenuBar({
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isUploadingVideo, setIsUploadingVideo] = useState(false);
   const [showLinkDialog, setShowLinkDialog] = useState(false);
-  const [showVideoDialog, setShowVideoDialog] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   const [currentUrl, setCurrentUrl] = useState("");
 
@@ -190,29 +188,6 @@ export default function MenuBar({
     videoInputRef.current?.click();
   };
 
-  const handleVideoUrlInsert = () => {
-    setShowVideoDialog(true);
-  };
-
-  const handleVideoDialogConfirm = (url: string, options?: { controls?: boolean; autoplay?: boolean; muted?: boolean; loop?: boolean }) => {
-    editor
-      .chain()
-      .focus()
-      .insertContent({
-        type: "video",
-        attrs: {
-          src: url,
-          controls: options?.controls ?? true,
-          autoplay: options?.autoplay ?? false,
-          muted: options?.muted ?? false,
-          loop: options?.loop ?? false,
-        },
-      })
-      .run();
-
-    toast.success("Video inserted successfully!");
-  };
-
   return (
     <TooltipProvider>
       <div className="flex flex-wrap gap-1 p-3 border-admin-border bg-admin-secondary shadow-sm">
@@ -323,17 +298,6 @@ export default function MenuBar({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <MenuButton onClick={handleVideoUrlInsert} isActive={showVideoDialog}>
-              <VideoIcon className="h-4 w-4" />
-            </MenuButton>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Insert Video URL</p>
-          </TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
             <MenuButton onClick={() => editor.chain().focus().toggleCodeBlock().run()} isActive={editor.isActive("codeBlock")}>
               <FileCode2 className="h-4 w-4" />
             </MenuButton>
@@ -352,9 +316,6 @@ export default function MenuBar({
         initialUrl={currentUrl}
         selectedText={selectedText}
       />
-
-      {/* Video Dialog */}
-      <VideoDialog isOpen={showVideoDialog} onClose={() => setShowVideoDialog(false)} onConfirm={handleVideoDialogConfirm} />
     </TooltipProvider>
   );
 }
