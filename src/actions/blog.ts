@@ -128,15 +128,6 @@ export async function saveBlogPost(postData: {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    // Check if slug already exists
-    const existingPost = await prisma.post.findUnique({
-      where: { slug },
-    });
-
-    if (existingPost) {
-      return { success: false, error: "A post with this title already exists" };
-    }
-
     const wordCount = postData.contentText.split(/\s+/).filter((word) => word.length > 0).length;
     const readingTime = Math.ceil(wordCount / 200);
 
@@ -170,13 +161,26 @@ export async function saveBlogPost(postData: {
           })),
         },
       },
+      include: {
+        category: true,
+        tags: true,
+      },
     });
 
-    console.log(post);
+    // Verify the post was created
+    console.log("Post created successfully:", { id: post.id, title: post.title, slug: post.slug });
 
-    revalidatePath("/admin/blog");
+    // Clear Next.js cache more aggressively
+    revalidatePath("/admin/blog", "page");
+    revalidatePath("/admin");
+
     return { success: true, post };
-  } catch (error) {
+  } catch (error: any) {
+    // Handle unique constraint violation for slug
+    if (error.code === "P2002" && error.meta?.target?.includes("slug")) {
+      return { success: false, error: "A post with this title already exists" };
+    }
+
     console.error("Error saving post:", error);
     return { success: false, error: "Failed to save post" };
   }
@@ -200,15 +204,6 @@ export async function updateBlogPost(
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
-
-    // Check if slug already exists for another post
-    const existingPost = await prisma.post.findUnique({
-      where: { slug },
-    });
-
-    if (existingPost && existingPost.id !== id) {
-      return { success: false, error: "A post with this title already exists" };
-    }
 
     const wordCount = postData.contentText.split(/\s+/).filter((word) => word.length > 0).length;
     const readingTime = Math.ceil(wordCount / 200);
@@ -248,10 +243,20 @@ export async function updateBlogPost(
       },
     });
 
-    revalidatePath("/admin/blog");
-    revalidatePath(`/blog/${post.slug}`);
+    // Clear Next.js cache more aggressively
+    revalidatePath("/admin/blog", "page");
+    revalidatePath("/admin");
+    if (post.published) {
+      revalidatePath(`/blog/${post.slug}`);
+    }
+
     return { success: true, post };
-  } catch (error) {
+  } catch (error: any) {
+    // Handle unique constraint violation for slug
+    if (error.code === "P2002" && error.meta?.target?.includes("slug")) {
+      return { success: false, error: "A post with this title already exists" };
+    }
+
     console.error("Error updating post:", error);
     return { success: false, error: "Failed to update post" };
   }
@@ -264,6 +269,7 @@ export async function deleteBlogPost(id: string) {
     });
 
     revalidatePath("/admin/blog");
+    revalidatePath("/"); // Revalidate homepage in case a published project was deleted
     return { success: true, post };
   } catch (error) {
     console.error("Error deleting post:", error);
@@ -284,6 +290,7 @@ export async function publishBlogPost(id: string) {
 
     revalidatePath("/admin/blog");
     revalidatePath(`/blog/${post.slug}`);
+    revalidatePath("/"); // Revalidate homepage to show newly published projects
     return { success: true, post };
   } catch (error) {
     console.error("Error publishing post:", error);
@@ -304,6 +311,7 @@ export async function unpublishBlogPost(id: string) {
 
     revalidatePath("/admin/blog");
     revalidatePath(`/blog/${post.slug}`);
+    revalidatePath("/"); // Revalidate homepage to remove unpublished projects
     return { success: true, post };
   } catch (error) {
     console.error("Error unpublishing post:", error);

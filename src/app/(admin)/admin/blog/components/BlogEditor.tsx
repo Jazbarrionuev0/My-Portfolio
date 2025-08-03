@@ -302,9 +302,6 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
 
     setIsSaving(true);
 
-    // Show loading toast
-    const loadingToast = toast.loading(`${mode === "create" ? "Creating" : "Updating"} blog post...`);
-
     try {
       const contentData = {
         title: title.trim(),
@@ -317,6 +314,10 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         featuredImage: featuredImage,
       };
 
+      // Show immediate loading state
+      const loadingToast = toast.loading(`${mode === "create" ? "Creating" : "Updating"} blog post...`);
+
+      // Perform the actual save operation
       let result;
       if (mode === "create") {
         result = await saveBlogPost(contentData);
@@ -328,16 +329,26 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
         setHasChanges(false);
         toast.dismiss(loadingToast);
 
-        // Show success toast and wait before navigation
+        // Show success toast
         toast.success(`Blog post ${mode === "create" ? "created" : "updated"} successfully!`, {
           description: mode === "create" ? "Your new blog post has been created as a draft." : "Your changes have been saved.",
-          duration: 4000, // Show for 4 seconds
         });
 
-        // Navigate after showing the toast
+        // Multiple strategies to ensure the page refreshes properly
+        console.log("Post saved successfully:", result.post?.id, result.post?.title);
+
+        // Strategy 1: Router push + refresh
+        router.push("/admin/blog");
+        router.refresh();
+
+        // Strategy 2: If router.refresh doesn't work, use window.location as fallback
         setTimeout(() => {
-          router.push("/admin/blog");
-        }, 2000);
+          // This will only run if the user is still on this page (meaning router.refresh didn't work)
+          if (window.location.pathname.includes("/create") || window.location.pathname.includes("/edit")) {
+            console.log("Router refresh may not have worked, using window.location");
+            window.location.href = "/admin/blog";
+          }
+        }, 1000);
       } else {
         toast.dismiss(loadingToast);
         toast.error(`Failed to ${mode === "create" ? "create" : "update"} post`, {
@@ -347,7 +358,7 @@ export default function BlogEditor({ mode, post }: BlogEditorProps) {
       }
     } catch (error) {
       console.error("Save error:", error);
-      toast.dismiss(loadingToast);
+
       toast.error(`Failed to ${mode === "create" ? "create" : "update"} the blog post`, {
         description: "Please try again or contact support if the problem persists.",
         duration: 5000,

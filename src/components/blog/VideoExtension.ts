@@ -73,7 +73,18 @@ export const VideoExtension = Node.create<VideoOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["video", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
+    // For public display, force autoplay, loop, muted, and no controls
+    const publicAttributes = {
+      ...HTMLAttributes,
+      controls: false, // No controls on public site
+      autoplay: true, // Autoplay on public site
+      muted: true, // Muted for autoplay to work
+      loop: true, // Loop continuously
+      playsinline: true, // For mobile compatibility
+      style: "max-width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin: 1rem 0;",
+    };
+
+    return ["video", mergeAttributes(this.options.HTMLAttributes, publicAttributes)];
   },
 
   addNodeView() {
