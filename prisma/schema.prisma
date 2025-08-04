@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  title String @unique
+  posts Post[] @relation("PostToTag")
+
+  @@map("tags")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  title String @unique
+  posts Post[]
+
+  @@map("categories")
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  title         String
+  slug          String     @unique
+  excerpt       String?
+  contentJson   Json?
+  contentHtml   String?
+  contentText   String?
+  status        PostStatus @default(DRAFT)
+  published     Boolean    @default(false)
+  publishedAt   DateTime?
+  readingTime   Int?
+  image         String?
+  viewCount     Int        @default(0)
+  featuredImage String?
+  categoryId    String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  featured      Boolean    @default(false)
+  category      Category   @relation(fields: [categoryId], references: [id])
+  tags          Tag[]      @relation("PostToTag")
+
+  @@map("posts")
+}
+
+model UserSettings {
+  id          String  @id @default("settings")
+  firstName   String?
+  lastName    String?
+  email       String?
+  bio         String?
+  avatar      String?
+  location    String?
+  website     String?
+  githubUrl   String?
+  linkedinUrl String?
+  theme       String  @default("system")
+  language    String  @default("en")
+  timezone    String  @default("UTC")
+
+  @@map("settings")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

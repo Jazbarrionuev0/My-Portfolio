@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* Base theme colors */
-    --background: 43 77% 93%; /* #F8F3E3 - pastel light yellow/brown */
-    --foreground: 0 0% 10%; /* Dark text for good contrast */
+    --background: 43 77% 93%; /* Pure white for better readability */
+    --foreground: 222.2 84% 4.9%; /* Dark text for good contrast */
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -22,7 +22,18 @@
     --portfolio-card-bg: 0 0% 0%; /* Black for card background */
     --portfolio-card-text: 0 0% 100%; /* White for text on dark cards */
 
-    --primary: 323 100% 50%; /* #FF00CC - Using the pink accent color as primary */
+    /* Admin specific colors - Light neutral theme */
+    --admin-bg: 0 0% 98%; /* Very light gray background */
+    --admin-accent: 0 0% 20%; /* Dark gray accent */
+    --admin-primary: 0 0% 15%; /* Dark gray primary */
+    --admin-secondary: 0 0% 96%; /* Light gray secondary */
+    --admin-text: 0 0% 10%; /* Dark text */
+    --admin-text-muted: 0 0% 45%; /* Muted gray text */
+    --admin-card-bg: 0 0% 100%; /* White card background */
+    --admin-card-text: 0 0% 10%; /* Dark text on cards */
+    --admin-border: 0 0% 90%; /* Light gray border */
+
+    --primary: 323 100% 50%; /* Accessible purple instead of bright pink */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
@@ -31,15 +42,15 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 323 100% 50%; /* #FF00CC - Pink accent */
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96.1%; /* Subtle accent for hover states */
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 323 100% 50%; /* Match accent for focus rings */
+    --ring: 262 90% 50%; /* Match primary for focus rings */
 
     --radius: 0.5rem;
 
@@ -56,8 +67,22 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Keep the pink accent you like in dark mode */
+    --portfolio-accent: 323 100% 50%; /* #FF00CC - bright pink works well in dark mode */
+
+    /* Admin dark mode colors - Light neutral theme */
+    --admin-bg: 0 0% 8%; /* Dark background */
+    --admin-accent: 0 0% 80%; /* Light gray accent for dark mode */
+    --admin-primary: 0 0% 85%; /* Light gray primary for dark mode */
+    --admin-secondary: 0 0% 15%; /* Dark gray secondary */
+    --admin-text: 0 0% 95%; /* Light text */
+    --admin-text-muted: 0 0% 65%; /* Muted light text */
+    --admin-card-bg: 0 0% 12%; /* Dark card background */
+    --admin-card-text: 0 0% 95%; /* Light text on dark cards */
+    --admin-border: 0 0% 20%; /* Dark border */
+
+    --primary: 323 100% 50%; /* Keep the pink as primary in dark mode */
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -73,7 +98,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 323 100% 50%; /* Keep pink focus ring in dark mode */
   }
 }
 
@@ -146,4 +171,323 @@
   animation-name: slideRight;
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+/* Blog content image centering */
+.blog-content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+}
+
+.ProseMirror h1 {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold;
+}
+
+.ProseMirror pre {
+  background: #f3f4f6; /* Tailwind's gray-100 */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+.ProseMirror code {
+  background: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+
+/* Blog post typography fixes */
+.blog-content {
+  font-family: "Georgia", "Times New Roman", serif;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.blog-content h1 {
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.2 !important;
+  color: #111827 !important;
+}
+
+.blog-content h2 {
+  font-size: 1.875rem !important;
+  font-weight: 600 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.3 !important;
+  color: #111827 !important;
+}
+
+.blog-content h3 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.4 !important;
+  color: #111827 !important;
+}
+
+.blog-content h4 {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  color: #111827 !important;
+}
+
+.blog-content p {
+  margin-bottom: 1rem !important;
+  line-height: 1.7 !important;
+  color: #374151 !important;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1rem !important;
+  padding-left: 1.5rem !important;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.6 !important;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid #3b82f6 !important;
+  padding-left: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-style: italic !important;
+  color: #6b7280 !important;
+}
+
+.blog-content code {
+  background-color: #f3f4f6 !important;
+  padding: 0.125rem 0.25rem !important;
+  border-radius: 0.25rem !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 0.875rem !important;
+  color: #1f2937 !important;
+}
+
+.blog-content pre {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  overflow-x: auto !important;
+  margin: 1rem 0 !important;
+}
+
+.blog-content pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  color: #f9fafb !important;
+}
+
+.blog-content a {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+}
+
+.blog-content a:hover {
+  color: #1d4ed8 !important;
+}
+
+.blog-content strong {
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+.blog-content em {
+  font-style: italic !important;
+  color: #374151 !important;
+}
+
+.blog-content img {
+  border-radius: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  margin: 1rem 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Fix for TipTap generated content */
+.blog-content .ProseMirror-focused {
+  outline: none !important;
+}
+
+.blog-content [data-placeholder] {
+  color: #9ca3af !important;
+}
+
+/* Enhanced styles for blog editor images */
+.ProseMirror img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  margin: 1rem 0 !important;
+  display: block !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+/* Enhanced styles for blog editor videos */
+.ProseMirror video {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  margin: 1rem 0 !important;
+  display: block !important;
+  background: #000 !important;
+  min-height: 200px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.ProseMirror img:hover {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  transform: translateY(-1px) !important;
+}
+
+.ProseMirror video:hover {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  transform: translateY(-1px) !important;
+}
+
+.ProseMirror img.ProseMirror-selectednode {
+  border-color: hsl(var(--ring)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring)) !important;
+}
+
+.ProseMirror video.ProseMirror-selectednode {
+  border-color: hsl(var(--ring)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--ring)) !important;
+}
+
+/* Drag and drop visual feedback */
+.ProseMirror-drop-cursor {
+  border-left: 2px solid hsl(var(--primary)) !important;
+  background: transparent !important;
+}
+
+.ProseMirror {
+  min-height: 400px !important;
+  padding: 1rem !important;
+}
+
+.ProseMirror:focus {
+  outline: none !important;
+}
+
+/* Placeholder text for empty editor */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: "Start writing your blog post..." !important;
+  color: hsl(var(--muted-foreground)) !important;
+  float: left !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Enhanced code block styling */
+.ProseMirror pre {
+  background-color: #f8f9fa !important;
+  border: 1px solid #e9ecef !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  margin: 1rem 0 !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  overflow-x: auto !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  color: #495057 !important;
+}
+
+.dark .ProseMirror pre {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #e9ecef !important;
+}
+
+.ProseMirror pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+/* Public blog post code blocks - VS Code Dark Theme */
+.prose pre {
+  background-color: #1e1e1e !important; /* VS Code dark background */
+  border: 1px solid #333333 !important; /* Dark border */
+  border-radius: 8px !important;
+  padding: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  overflow-x: auto !important;
+  color: #d4d4d4 !important; /* VS Code light text */
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; /* Subtle shadow */
+}
+
+.prose pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  text-shadow: none !important;
+}
+
+/* Dark mode adjustments for public blog (in case it's ever used) */
+.dark .prose pre {
+  background-color: #0d1117 !important; /* Even darker for dark mode */
+  border-color: #21262d !important;
+  color: #e6edf3 !important;
 }

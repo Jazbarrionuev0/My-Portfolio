@@ -56,6 +56,18 @@ const config = {
           "card-bg": "hsl(var(--portfolio-card-bg))",
           "card-text": "hsl(var(--portfolio-card-text))",
         },
+        // Admin specific colors
+        admin: {
+          bg: "hsl(var(--admin-bg))",
+          accent: "hsl(var(--admin-accent))",
+          primary: "hsl(var(--admin-primary))",
+          secondary: "hsl(var(--admin-secondary))",
+          text: "hsl(var(--admin-text))",
+          muted: "hsl(var(--admin-text-muted))",
+          "card-bg": "hsl(var(--admin-card-bg))",
+          "card-text": "hsl(var(--admin-card-text))",
+          border: "hsl(var(--admin-border))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
