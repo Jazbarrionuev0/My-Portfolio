@@ -30,10 +30,7 @@ const databaseTags: Tag[] = [
 const devOpsTags: Tag[] = [
   { title: "Docker", className: "devicon-docker-plain" },
   { title: "Kubernetes", className: "devicon-kubernetes-plain" },
-  { title: "Jenkins", className: "devicon-jenkins-line" },
-  { title: "Linux", className: "devicon-linux-plain" },
-  { title: "AWS", className: "devicon-amazonwebservices-plain-wordmark" },
-  { title: "Digital Ocean", className: "devicon-digitalocean-original" },
+  { title: "Jenkins", className: "devicon-jenkins-line" }
 ];
 
 const artificialIntelligenceTags: Tag[] = [
@@ -43,8 +40,6 @@ const artificialIntelligenceTags: Tag[] = [
   { title: "OpenCV", className: "devicon-opencv-plain" },
   { title: "Numpy", className: "devicon-numpy-original" },
   { title: "Matplotlib", className: "devicon-matplotlib-plain" },
-  { title: "spaCy", className: "devicon-vscode-plain" },
-  { title: "Pytest", className: "devicon-pytest-plain" },
 ];
 const testingTags: Tag[] = [{ title: "Pytest", className: "devicon-pytest-plain" }];
 
