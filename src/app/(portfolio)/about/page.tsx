@@ -14,45 +14,36 @@ export default async function WorkPage() {
           height={420}
         />
         <p className="md:text-base text-base lg:text-lg text-justify">
-          Hi, I&apos;m Jazmin, a frontend and AI software developer with a passion for blending technology and creativity. My journey began in an
-          unexpected place—studying translation after high school. I&apos;ve always been fascinated by languages, literature, and the art of
-          communication. It seemed like the perfect fit. But as I delved into software localization, a spark ignited, leading me to the world of
-          programming.
+          Hi, I&apos;m Jazmin, a data scientist and AI enthusiast with a deep passion for uncovering the stories hidden within data. My journey into technology started in an unexpected place, studying translation after high school. I&apos;ve always been fascinated by language, communication, and meaning, and at first, that fascination led me to literature. But while working on software localization projects, I discovered something else that captivated me: code.
         </p>
       </div>
 
       <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        I vividly remember the thrill of bringing my first project to life—a small bird that could fly, stop when hungry and soar with energy after
-        eating. It was simple, yet it felt like magic. I realized then that the possibilities were limitless, and I was hooked. That sense of wonder
-        has driven me ever since, pushing me to constantly learn and create.
+        It all started with a simple interactive project: a bird that could fly, stop when hungry, and regain energy after eating. Watching it come to life sparked something in me. It was more than just programming, it was about building behavior, logic, and systems. From there, I was hooked.
       </p>
 
       <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        In my final year of translation studies, I began exploring computer science in the way I knew best—by devouring books. From algorithms to data
-        structures, I immersed myself in the fundamentals, eager to understand this new world I was entering.
+        As I approached the end of my translation degree, I began diving deep into computer science on my own, driven by curiosity. I devoured books on algorithms, data structures, and eventually machine learning. That curiosity soon evolved into a more focused interest: artificial intelligence. The idea of simulating aspects of human cognition fascinated me, especially from a data-driven lens. I&apos;m now pursuing a degree in AI and Data Science, combining my love for logical problem-solving with my passion for human understanding.
+
       </p>
 
       <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        My curiosity for the mind led me to pursue a Bachelor&apos;s in Artificial Intelligence. The idea of replicating the brain&apos;s
-        functionality through code captivated me, and I dove headfirst into the vast universe of AI. The more I learned, the more I was drawn to the
-        intersection of AI and software development.
+        My focus lies in making sense of complex data, whether through predictive models, data visualizations, or intelligent systems. I&apos;m particularly interested in the intersection of AI and software development, where frontend design meets backend intelligence. I love building tools that are not only smart, but also intuitive and meaningful to use.
       </p>
 
-      <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        Now, I&apos;m on a mission to merge my skills in frontend and backend development with my passion for AI. I&apos;m excited to see where this
-        journey will take me as I continue to explore and innovate at the crossroads of technology and intelligence.
-      </p>
-
-      <p className="mt-20 md:mt-24 lg:mt-28 md:text-2xl text-base lg:text-2xl text-justify text-gray-400 font-semibold mb-12 md:mb-14">
+      {/* <p className="mt-20 md:mt-24 lg:mt-28 md:text-2xl text-base lg:text-2xl text-justify text-gray-400 font-semibold mb-12 md:mb-14">
         What about my free time?
-      </p>
+      </p> */}
 
       <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        Beyond coding, there are a few things that truly bring me joy. First and foremost, I&apos;m a huge fan of games—whether it&apos;s video games,
-        board games, or anything in between. My weekends are often spent immersed in various worlds, strategizing, exploring, and having fun.
+        Outside of work and study, I&apos;m a big fan of games. Whether it&apos;s designing them or playing them. The logic, storytelling, and systems-thinking behind games often mirror the challenges I enjoy in data science. I also love to travel and always carry a book with me (mystery and romance are my go-to genres).
+
+      </p>
+      <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
+        Whether I&apos;m analyzing a dataset, developing an AI-powered tool or even learning the rules of a new board game, I&apos;m driven by the same motivation: to learn continuously, explore new perspectives, and use data to build things that make a difference.
       </p>
 
-      <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
+      {/* <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
         This passion extends beyond just playing; I love the process of designing and developing games as well. There&apos;s something incredibly
         satisfying about crafting a game from the ground up, from conceptual planning to the final touches. You&apos;ll likely notice some of my
         projects reflect this enthusiasm.
@@ -159,7 +150,7 @@ export default async function WorkPage() {
       <p className="mt-12 md:mt-16 lg:mt-20 mb-16 md:mb-20 md:text-base text-base lg:text-lg text-justify">
         Of course, I never travel without a good book by my side. I&apos;m particularly drawn to mystery and romance genres, so you&apos;ll always
         find me with a story that keeps me intrigued and entertained along the way.
-      </p>
+      </p> */}
     </div>
   );
 }

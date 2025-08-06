@@ -24,7 +24,7 @@ export default function AboutMe() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-5xl md:text-7xl font-bold leading-tight"
         >
-          I&apos;m a software AI <span className="text-portfolio-accent">developer</span>.
+          I&apos;m a <span className="text-portfolio-accent">Data Scientist</span>.
         </motion.h1>
 
         <motion.p
@@ -33,9 +33,7 @@ export default function AboutMe() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-xl md:text-2xl text-portfolio-text-muted leading-relaxed mt-2"
         >
-          I specialize in frontend development and artificial intelligence, creating impactful digital experiences that combine beautiful interfaces
-          with powerful technology.
-        </motion.p>
+          I love turning complex data into clear insights and creating smart tools that help people make better decisions. </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}

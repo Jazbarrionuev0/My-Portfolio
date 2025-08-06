@@ -28,10 +28,6 @@ const skills = [
     tags: databaseTags,
   },
   {
-    title: "Testing",
-    tags: testingTags,
-  },
-  {
     title: "DevOps",
     tags: devOpsTags,
   },
