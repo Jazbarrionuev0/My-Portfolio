@@ -17,13 +17,6 @@ export default async function Home() {
         I decided to build a handwritten digit recognition model. I wanted to create something that could not only recognize digits but also visualize
         the predictions.
       </p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/result.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
       <p className="my-3">
         I used TensorFlow which has been my go-to library for machine learning projects. Its flexibility and robustness make it perfect for building
         and deploying machine learning models. But what really stands out is Keras, TensorFlow’s API, which simplifies the process of building neural
@@ -68,13 +61,6 @@ export default async function Home() {
         overfitting. Training for too few epochs can result in an under-fitted model that hasn’t learned enough from the data. Conversely, training
         for too many epochs might lead to overfitting.
       </p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/training.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
       <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
         Integrating OpenCV for Image Processing and Visualizing with Matplotlib
       </h1>

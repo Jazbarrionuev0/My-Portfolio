@@ -54,7 +54,6 @@ const Neopixel: Tag[] = [
     { title: 'Nest', className: 'devicon-nestjs-original' },
     { title: 'PostgreSQL', className: 'devicon-postgresql-plain' },
     { title: 'Docker', className: 'devicon-docker-plain' },
-    { title: 'Digital Ocean', className: 'devicon-digitalocean-original' },
 ]
 const QR: Tag[] = [
     { title: 'HTML5', className: 'devicon-html5-plain' },
