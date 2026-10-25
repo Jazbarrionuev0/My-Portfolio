@@ -125,7 +125,7 @@ source_docs = response.get("source_documents", [])`}
         showLineNumbers={true}
       />
       <video className="w-full max-w-none rounded-md my-6" autoPlay muted loop playsInline poster="/projects/multimodal-chat/multimodal.png">
-        <source src="/projects/multimodal-chat/image.mp4" type="video/mp4" className="rounded-lg" />
+        <source src="/projects/multimodal-chat/Image.mp4" type="video/mp4" className="rounded-lg" />
         Your browser does not support the video tag.
       </video>
 
