@@ -1,73 +1,72 @@
 "use server";
 
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { v2 as cloudinary, type UploadApiOptions, type UploadApiResponse } from "cloudinary";
+import { requireAuth } from "@/src/lib/auth";
+
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
+
+function configureCloudinary() {
+  if (process.env.CLOUDINARY_URL) {
+    cloudinary.config({ url: process.env.CLOUDINARY_URL, secure: true });
+    return;
+  }
+
+  const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
+    throw new Error("Cloudinary credentials are missing");
+  }
+
+  cloudinary.config({
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+}
+
+async function uploadFile(formData: FormData, type: "image" | "video"): Promise<string> {
+  await requireAuth();
+
+  const file = formData.get("file");
+  if (!file || typeof file === "string") {
+    throw new Error("No file provided");
+  }
+  if (!file.type.startsWith(`${type}/`)) {
+    throw new Error(`Only ${type} files are allowed`);
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error("File must be 100 MB or smaller");
+  }
+
+  configureCloudinary();
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const folder = "portfolio-jami";
+  const folderOptions: UploadApiOptions =
+    process.env.CLOUDINARY_FOLDER_MODE === "fixed" ? { folder } : { asset_folder: folder };
+  const result = await new Promise<UploadApiResponse>((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          resource_type: type,
+          ...folderOptions,
+          use_filename: true,
+          unique_filename: true,
+        },
+        (error, uploaded) => {
+          if (error || !uploaded) reject(error ?? new Error("Upload failed"));
+          else resolve(uploaded);
+        },
+      )
+      .end(buffer);
+  });
+
+  return result.secure_url;
+}
 
 export async function uploadImageAction(formData: FormData): Promise<string> {
-  const file = formData.get("file") as File;
-
-  if (!file) {
-    const error = new Error("No file provided");
-    throw error;
-  }
-
-  // Validate file type - images only
-  if (!file.type.startsWith("image/")) {
-    throw new Error("Only image files are allowed");
-  }
-
-  return uploadFileToS3(file);
+  return uploadFile(formData, "image");
 }
 
 export async function uploadVideoAction(formData: FormData): Promise<string> {
-  const file = formData.get("file") as File;
-
-  if (!file) {
-    const error = new Error("No file provided");
-    throw error;
-  }
-
-  // Validate file type - videos only
-  if (!file.type.startsWith("video/")) {
-    throw new Error("Only video files are allowed");
-  }
-
-  return uploadFileToS3(file);
-}
-
-async function uploadFileToS3(file: File): Promise<string> {
-  const timestamp = new Date().toISOString().replace(/[:.-]/g, "");
-  const extension = file.name.split(".").pop()?.toLowerCase() || "";
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const contentType = file.type;
-
-  const filename = `${timestamp}.${extension}`;
-
-  const s3Client = new S3Client({
-    endpoint: process.env.DO_SPACES_ENDPOINT,
-    region: process.env.DO_SPACES_REGION,
-    credentials: {
-      accessKeyId: process.env.DO_SPACES_KEY || "",
-      secretAccessKey: process.env.DO_SPACES_SECRET || "",
-    },
-    forcePathStyle: true,
-  });
-
-  try {
-    const command = new PutObjectCommand({
-      Bucket: process.env.DO_SPACES_BUCKET,
-      Key: filename,
-      Body: buffer,
-      ACL: "public-read",
-      ContentType: contentType,
-    });
-
-    await s3Client.send(command);
-
-    const fileUrl = `https://${process.env.DO_SPACES_BUCKET}.${process.env.DO_SPACES_ENDPOINT?.replace("https://", "")}/${filename}`;
-
-    return fileUrl;
-  } catch (error) {
-    throw new Error("Failed to upload file");
-  }
+  return uploadFile(formData, "video");
 }
