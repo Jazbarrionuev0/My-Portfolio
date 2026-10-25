@@ -17,6 +17,22 @@ const projects: Project[] = [
     link: "/projects/restaurant-managament",
     category: "Web Development",
   },
+  {
+    image: "",
+    title: "Face Recognition",
+    description: "A real-time face recognition system using Python, OpenCV, and DeepFace.",
+    repoLink: "https://github.com/Jazbarrionuev0/FaceRecognition",
+    link: "/projects/face-recognition",
+    category: "Computer vision",
+  },
+  {
+    image: "/projects/crossword-puzzle/crosswordIMG.jpg",
+    title: "Crossword puzzle",
+    description: "A virtual recreation of the cooperative Cross Clues game, built to play with friends.",
+    repoLink: "https://github.com/Jazbarrionuev0/crossword-puzzle",
+    link: "/projects/crossword-puzzle",
+    category: "Web Development",
+  },
   // {
   //   image: "/projects/sign.jpg",
   //   title: "Sign Language Detection",

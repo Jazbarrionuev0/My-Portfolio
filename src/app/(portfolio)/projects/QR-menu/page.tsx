@@ -19,8 +19,8 @@ export default async function Home() {
       <p className="my-3">Optimized primarily for mobile devices, it ensures a easy experience for customers without any issues or complications. </p>
 
       <div className="flex flex-wrap justify-center items-center gap-5 ">
-        <Image className="w-48 rounded-sm " src={"/projects/QR-menu/areamenuweb.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
-        <Image className="w-48 rounded-sm " src={"/projects/QR-menu/areamenu.png"} alt="Jazmin Barrionuevo" width={564} height={420} />
+        <Image className="w-48 rounded-sm " src={"/projects/QR-menu/areamenuweb.PNG"} alt="Jazmin Barrionuevo" width={564} height={420} />
+        <Image className="w-48 rounded-sm " src={"/projects/QR-menu/areamenu.PNG"} alt="Jazmin Barrionuevo" width={564} height={420} />
       </div>
       <p className="my-3">The website was built using HTML, CSS, and JavaScript due to its straightforward nature and lack of complexity.</p>
     </div>

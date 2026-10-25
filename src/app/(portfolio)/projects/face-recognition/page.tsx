@@ -1,7 +1,6 @@
 import Rio from "@/src/components/Code/Rio";
 import TagContainer from "@/src/components/TagContainer/TagContainer";
 import { FaceRecognition, SnakeGame } from "@/src/utils/projectstags";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
@@ -14,14 +13,6 @@ export default async function Home() {
         <TagContainer tags={FaceRecognition} />
       </div>
       <p className="my-3">In this project, I built a simple real-time face recognition system using Python, OpenCV, and DeepFace.</p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/face.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
-
       <h1 id="sorting" className="text-2xl font-semibold my-3 text-gray-500">
         {" "}
         Grabbing Video from Your Webcam

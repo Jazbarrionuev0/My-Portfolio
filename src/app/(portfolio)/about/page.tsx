@@ -8,7 +8,7 @@ export default async function WorkPage() {
       <div className="md:flex justify-center items-center gap-8 mb-16 md:mb-20">
         <Image
           className="w-72 rounded-sm m-auto mb-8 md:mb-0"
-          src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/mainphoto.jpg"}
+          src="/jazfoto.jpg"
           alt="Jazmin Barrionuevo"
           width={564}
           height={420}
@@ -43,114 +43,6 @@ export default async function WorkPage() {
         Whether I&apos;m analyzing a dataset, developing an AI-powered tool or even learning the rules of a new board game, I&apos;m driven by the same motivation: to learn continuously, explore new perspectives, and use data to build things that make a difference.
       </p>
 
-      {/* <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        This passion extends beyond just playing; I love the process of designing and developing games as well. There&apos;s something incredibly
-        satisfying about crafting a game from the ground up, from conceptual planning to the final touches. You&apos;ll likely notice some of my
-        projects reflect this enthusiasm.
-      </p>
-
-      <div className="flex justify-center items-center w-full my-20 md:my-24">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 py-8">
-          <div className="grid gap-6 md:gap-8">
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevotenis.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/game.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/bariloche.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-          </div>
-          <div className="grid gap-6 md:gap-8">
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevojuego.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/book2.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevojuegomesa.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-          </div>
-          <div className="md:grid gap-6 md:gap-8 hidden ">
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/code.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/book.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-            <div>
-              <Image
-                className="h-auto max-w-40 rounded-lg"
-                src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/nuevocordoba.jpg"}
-                alt="Jazmin Barrionuevo"
-                width={564}
-                height={420}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p className="mt-12 md:mt-16 lg:mt-20 md:text-base text-base lg:text-lg text-justify">
-        As cliche as it may sound, the best part of my job is being able to explore the world while doing what I love. Traveling has always been one
-        of my favorite pastimes, and my computer is a constant companion on every adventure.
-      </p>
-
-      <p className="mt-12 md:mt-16 lg:mt-20 mb-16 md:mb-20 md:text-base text-base lg:text-lg text-justify">
-        Of course, I never travel without a good book by my side. I&apos;m particularly drawn to mystery and romance genres, so you&apos;ll always
-        find me with a story that keeps me intrigued and entertained along the way.
-      </p> */}
     </div>
   );
 }

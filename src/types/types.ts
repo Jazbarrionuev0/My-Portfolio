@@ -15,6 +15,15 @@ export type Project = {
   category: "All" | "Data science" | "Computer vision" | "NLP" | "Deep Learning" | "Web Development" | "Other";
 };
 
+export type PortfolioCard = {
+  id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  href: string;
+  category: string;
+};
+
 // New type for database projects (blog posts used as projects)
 export type DatabaseProject = {
   id: string;

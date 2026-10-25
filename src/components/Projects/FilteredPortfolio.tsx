@@ -1,6 +1,6 @@
 "use client";
 
-import { DatabaseProject, Category } from "@/src/types/types";
+import { PortfolioCard } from "@/src/types/types";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,27 +9,26 @@ import { Button } from "@/src/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 
 type Props = {
-  projects: DatabaseProject[];
-  categories: (Category & { _count: { posts: number } })[];
+  projects: PortfolioCard[];
 };
 
-export default function FilteredPortfolio({ projects, categories }: Props) {
+export default function FilteredPortfolio({ projects }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Create filter options with "All" plus database categories
+  const categoryCounts = projects.reduce<Record<string, number>>((counts, project) => {
+    counts[project.category] = (counts[project.category] || 0) + 1;
+    return counts;
+  }, {});
+
   const filterOptions = [
     { id: "All", title: "All", count: projects.length },
-    ...categories.map((cat) => ({
-      id: cat.id,
-      title: cat.title,
-      count: cat._count.posts,
-    })),
+    ...Object.entries(categoryCounts).map(([category, count]) => ({ id: category, title: category, count })),
   ];
 
   const filteredProjects = projects.filter((project) => {
     if (selectedCategory === "All") return true;
-    return project.category.id === selectedCategory;
+    return project.category === selectedCategory;
   });
 
   return (
@@ -56,15 +55,15 @@ export default function FilteredPortfolio({ projects, categories }: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-          {filteredProjects.map((project, i) => (
-            <Link key={project.id} href={`/blog/${project.slug}`}>
+          {filteredProjects.map((project) => (
+            <Link key={project.id} href={project.href}>
               <div className="w-full h-full p-2" onMouseEnter={() => setHoveredId(project.id)} onMouseLeave={() => setHoveredId(null)}>
                 <div className="relative h-[340px] rounded-lg cursor-pointer transition duration-200 hover:scale-105 bg-gray-900">
-                  {project.featuredImage ? (
+                  {project.image ? (
                     <>
                       <Image
                         className="object-cover rounded-lg opacity-40"
-                        src={project.featuredImage}
+                        src={project.image}
                         alt={project.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -81,7 +80,7 @@ export default function FilteredPortfolio({ projects, categories }: Props) {
                     {hoveredId === project.id && (
                       <CardContent className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 rounded-lg p-8">
                         <CardDescription className="text-white text-lg leading-relaxed">
-                          {project.excerpt || "Click to read more about this project..."}
+                          {project.description}
                         </CardDescription>
                       </CardContent>
                     )}

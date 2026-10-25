@@ -1,22 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "101mb",
+    },
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "neopixel-images.nyc3.cdn.digitaloceanspaces.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "neopixel-images.nyc3.digitaloceanspaces.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.jazminbarrionuevo.com",
+        hostname: "res.cloudinary.com",
         port: "",
         pathname: "/**",
       },

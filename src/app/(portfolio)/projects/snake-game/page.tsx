@@ -18,14 +18,6 @@ export default async function Home() {
         with the <span className="italic">cvzone.HandTrackingModule.HandDetector</span> class, which lets me detect hand landmarks like the tip of
         your index finger.
       </p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/completegame.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
-
       {/* <video className="w-full rounded-md md:p-10 my-6" autoPlay muted loop playsInline>
         <source src="/253435.mp4" type="video/mp4" className="rounded-lg" />
         Your browser does not support the video tag.
@@ -84,26 +76,11 @@ export default async function Home() {
         location each time. When the snake eats the food, it disappears and immediately reappears in a new random spot, keeping the game unpredictable
         and engaging.
       </p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/randomapple.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
-
       <p className="my-3">
         <span className="font-bold">3. Collision Detection: </span> To make sure the snake doesn&apos;t run into itself, I’m using OpenCV’s
         pointPolygonTest() function. This function checks if any part of the snake’s body collides with the polygon formed by its own body. It’s a
         crucial part of the game that adds an extra layer of difficulty, especially as the snake grows longer.
       </p>
-      <Image
-        className="w-full rounded-sm md:p-10 "
-        src={"https://neopixel-images.nyc3.cdn.digitaloceanspaces.com/PortfolioJaz/collision.gif"}
-        alt="Jazmin Barrionuevo"
-        width={564}
-        height={420}
-      />
       <p className="my-3">
         You can find the full project on my github:{" "}
         <Link href={"https://github.com/Jazbarrionuev0/Snake-Game-CV"} className="font-semibold">

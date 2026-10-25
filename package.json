@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.856.0",
     "@prisma/client": "^6.13.0",
     "@prisma/extension-accelerate": "^2.0.2",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -30,6 +29,7 @@
     "axios": "^1.6.4",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.0",
+    "cloudinary": "^2.10.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.1.7",
     "hamburger-react": "^2.5.0",
